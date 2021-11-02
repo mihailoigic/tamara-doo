@@ -1,0 +1,188 @@
+@font-face {
+  font-family: Vogue;
+  src: url(../fonts/Vogue.ttf);
+}
+
+
+@font-face {
+    font-family: Arial-Bold;
+    src: url(../fonts/FontsFree-Net-arial-bold.ttf);
+  }
+
+@font-face {
+    font-family: Gillsan-Bold;
+    src: url(../fonts/gillsan.ttf);
+  }
+
+@font-face {
+  font-family: Flemish;
+  src: url(../fonts/At\ Flemish\ Script\ II\ Regular.ttf);
+}
+
+@font-face {
+  font-family: NewYork;
+  src: url(../fonts/NewYork.otf);
+}
+
+@font-face {
+    font-family: Magazine;
+    src: url(../fonts/Magazine.ttf);
+  }
+
+.header-container {
+    height: 100px;
+    width: 100%;
+    background-color:#ddd3ee;
+}
+
+.header-container-lower {
+    height: 10px;
+    width: 100%;
+    background-color:#b28ff0;
+}
+
+.sub-header-title {
+    font-family: Vogue;
+    background-color: transparent;
+}
+
+.sub-header {
+    border-top: 2px solid #b28ff0;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+}
+
+.type-column {
+    width: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.type-column-border-left {
+    border-left: 2px solid #b28ff0;
+}
+
+.type-column-border-right {
+    border-right: 2px solid #b28ff0;
+}
+
+.header-on-mouse-hover {
+    border-top: 2px solid #b28ff0;
+    border-bottom: 2px solid #b28ff0;
+    height: auto;
+    width: 100%;
+    background-color: #ddd3ee;
+}
+
+.header-items-left {
+    padding-top: 35px;
+}
+
+.header-items-middle {
+    text-align: center;
+    /*padding-top: 35px;*/
+    padding-left: 0;
+}
+
+.header-items-right {
+    /*float:right;*/
+    padding-top: 35px;
+}
+
+.logo-item {
+    display: inline-block;
+    padding-right: 50px;
+    font-size: 70px;
+    font-family: Flemish;
+    cursor: pointer;
+}
+
+.header-item {
+    font-family: Vogue;
+    display: inline-block;
+    padding: 0 20px 0 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.type-items {
+    list-style: none;
+    padding:0;
+}
+
+.type-item {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    padding: 0 20px 0 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.bold-arial {
+    font-family: Arial-Bold;
+}
+
+.footer-container {
+    background-color: #ddd3ee;
+}
+
+.footer-item {
+    font-family: Vogue;
+    cursor: pointer;
+}
+
+.footer-lower {
+    height: 40px;
+    vertical-align: center;
+    background-color: #b28ff0;
+}
+
+.border-right-black {
+    border-right: 1px solid black;
+}
+
+.w-30 {
+    font-family: Arial;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ff-vogue {
+    font-family: Vogue;
+}
+
+.ff-arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ff-flemish {
+    font-family: Flemish;
+}
+
+.px40 {
+    width: 40px;
+    height: 40px;
+}
+
+.about-us-logo {
+    font-family: Flemish;
+    font-size: 1000%;
+}
+
+.contact-info {
+    width: auto;
+    height: auto;
+    padding: 30px;
+    background-color: #ddd3ee;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.border-bottom-black {
+    border-bottom: 1px solid #b28ff0;
+}
