@@ -27,7 +27,15 @@
 @font-face {
     font-family: Magazine;
     src: url(../fonts/Magazine.ttf);
-  }
+}
+
+.header-desktop {
+    display: block;
+}
+
+.header-mobile {
+    display: none;
+}
 
 .header-container {
     height: 100px;
@@ -185,4 +193,14 @@
 
 .border-bottom-black {
     border-bottom: 1px solid #b28ff0;
+}
+
+@media screen and (max-width: 700px){
+    .header-desktop {
+        display: none;
+    }
+
+    .header-mobile {
+        display: block;
+    }
 }

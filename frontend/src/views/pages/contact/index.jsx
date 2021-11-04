@@ -1,5 +1,6 @@
 import React from "react";
 import '../../../assets/css/styles.css';
+import './css/styles.css';
 import labels from '../../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Header from "../../components/header";
@@ -31,9 +32,8 @@ function ContactPage() {
                     <Col>
                         <div className="text-center">
                             <iframe
+                                className="map-size"
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2829.942527271884!2d20.417937915751065!3d44.82273548403519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a656fbf1b5b45%3A0x6d686d786ea8b382!2sTamara%20d.o.o.%20-%20Veleprodaja%20italijanskog%20ve%C5%A1a%2C%20%C4%8Darapa%20i%20kupa%C4%87ih%20kostima!5e0!3m2!1ssr!2srs!4v1635188415419!5m2!1ssr!2srs"
-                                width="650"
-                                height="450"
                                 allowfullscreen=""
                                 loading="lazy" />
                         </div>

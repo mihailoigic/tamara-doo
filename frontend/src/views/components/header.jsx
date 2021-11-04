@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import '../../assets/css/styles.css';
 import labels from '../../language/srb';
 import SubHeader from './subHeader';
@@ -16,39 +16,49 @@ function Header() {
     }
 
     function handleMouseOut() {
-        setTimeout(function(){ 
+        setTimeout(function () {
             setShowWoman(false);
         }, 3000);
     }
 
     return (
         <>
-            <Container fluid className="header-container-lower" />
-            <Container fluid className="header-container">
-                <Row>
-                    <Col>
-                        <ul className="header-items-left text-center">
-                            <li className="header-item" onClick={() => history.push('/product-list')} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>{labels.woman}</li>
-                            <li className="header-item" onClick={() => history.push('/product-list')} onMouseOver={handleMouseOver} >{labels.man}</li>
-                        </ul>
-                    </Col>
-                    <Col>
-                        <ul className="header-items-middle">
-                            <li className="logo-item" onClick={() => history.push('/home')}>{labels.tamara}</li>
-                        </ul>
-                    </Col>
-                    <Col>
-                        <ul className="header-items-right text-center">
-                            <li className="header-item" onClick={() => history.push('/about-us')}>{labels.aboutUs}</li>
-                            <li className="header-item" onClick={() => history.push('/contact')}>{labels.contact}</li>
-                        </ul>
-                    </Col>
-                </Row>
-            </Container>
-            {/* <Container fluid className="header-container-lower" /> */}
-            {
-                showWoman && <SubHeader gender={labels.woman}/>
-            }
+            <div className='header-desktop'>
+                <Container fluid className="header-container-lower"/>
+                <Container fluid className="header-container">
+                    <Row>
+                        <Col>
+                            <ul className="header-items-left text-center">
+                                <li className="header-item" onClick={() => history.push('/product-list')}
+                                    onMouseOut={handleMouseOut}>{labels.woman}</li>
+                                <li className="header-item"
+                                    onClick={() => history.push('/product-list')}>{labels.man}</li>
+                            </ul>
+                        </Col>
+                        <Col>
+                            <ul className="header-items-middle">
+                                <li className="logo-item" onClick={() => history.push('/home')}>{labels.tamara}</li>
+                            </ul>
+                        </Col>
+                        <Col>
+                            <ul className="header-items-right text-center">
+                                <li className="header-item"
+                                    onClick={() => history.push('/about-us')}>{labels.aboutUs}</li>
+                                <li className="header-item"
+                                    onClick={() => history.push('/contact')}>{labels.contact}</li>
+                            </ul>
+                        </Col>
+                    </Row>
+                </Container>
+                {/*<Container fluid className="header-container-lower" />*/}
+                {
+                    showWoman && <SubHeader gender={labels.woman}/>
+                }
+            </div>
+            <div className='header-mobile'>
+
+            </div>
+
 
         </>
     );

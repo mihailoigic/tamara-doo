@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import history from "../../../utilities/history";
-import firstLetter from "../../../util/util";
+import firstLetter from "../../../utilities/util";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { MdArrowLeft, MdArrowDropDown } from 'react-icons/md';
