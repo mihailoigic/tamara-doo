@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../../assets/css/styles.css';
 import labels from '../../language/srb';
 import SubHeader from './subHeader';
@@ -6,10 +6,15 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import history from '../../utilities/history';
+import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
+import data from "../../data/products";
+import Filter from "../product-list/filter";
 
 function Header() {
     const [showWoman, setShowWoman] = useState(false);
     const [showMan, setShowMan] = useState(false);
+    const [showSubMenu, setShowSubMenu] = useState(false);
+    console.log("SHOW SUB: ", showSubMenu);
 
     function handleMouseOver() {
         setShowWoman(true);
@@ -56,7 +61,43 @@ function Header() {
                 }
             </div>
             <div className='header-mobile'>
-
+                <Row>
+                    <Col>
+                        <AiOutlineMenu onClick={() => setShowSubMenu(!showSubMenu)} className='mt-3 ms-3 menu-icon'/>
+                    </Col>
+                    <Col>
+                        <ul className="header-items-middle">
+                            <li className="logo-item" onClick={() => history.push('/home')}>Tamara</li>
+                        </ul>
+                    </Col>
+                    <Col/>
+                </Row>
+                <div className={showSubMenu ? 'mobile-sub-menu show' : 'mobile-sub-menu'}>
+                    <Row>
+                        <Col/>
+                        <Col>
+                            <ul className="header-items-middle">
+                                <li className="logo-item" onClick={() => history.push('/home')}>Tamara</li>
+                            </ul>
+                        </Col>
+                        <Col>
+                            <AiOutlineClose onClick={() => setShowSubMenu(false)}
+                                            className='float-end mt-4 me-4 menu-icon'/>
+                        </Col>
+                    </Row>
+                    <div className="filter-section pt-4 ps-4 pe-4">
+                        {
+                            data.filters.woman.type.map((filter) => {
+                                return (
+                                    <>
+                                        <div className='top-line mb-3'/>
+                                        <Filter filter={filter}/>
+                                    </>
+                                );
+                            })
+                        }
+                    </div>
+                </div>
             </div>
 
 

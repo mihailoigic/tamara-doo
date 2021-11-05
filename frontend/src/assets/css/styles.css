@@ -34,7 +34,13 @@
 }
 
 .header-mobile {
+    position: fixed;
+    z-index: 2;
+    top:0;
     display: none;
+    height: 65px;
+    width: 100%;
+    background-color:#ddd3ee;
 }
 
 .header-container {
@@ -47,6 +53,20 @@
     height: 10px;
     width: 100%;
     background-color:#b28ff0;
+}
+
+.mobile-sub-menu {
+    position: fixed;
+    top:0;
+    height: 100%;
+    width: 0;
+    overflow: hidden;
+    transition: width ease 0.3s;
+    background-color: white;
+}
+
+.mobile-sub-menu.show {
+    width: 100%;
 }
 
 .sub-header-title {
@@ -180,6 +200,11 @@
     font-size: 1000%;
 }
 
+.menu-icon {
+    width: 30px;
+    height: 30px;
+}
+
 .contact-info {
     width: auto;
     height: auto;
@@ -195,6 +220,12 @@
     border-bottom: 1px solid #b28ff0;
 }
 
+.top-line {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
 @media screen and (max-width: 700px){
     .header-desktop {
         display: none;
@@ -202,5 +233,14 @@
 
     .header-mobile {
         display: block;
+    }
+
+    .logo-item {
+        display: inline-block;
+        padding-right: 0px;
+        padding-top: 5px;
+        font-size: 40px;
+        font-family: Flemish;
+        cursor: pointer;
     }
 }
