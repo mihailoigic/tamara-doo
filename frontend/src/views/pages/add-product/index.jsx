@@ -122,7 +122,7 @@ function AddProductPage() {
                                 }
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group as={Col} md="2" controlId="naziv">
+                        <Form.Group as={Col} md="2" controlId="velicina">
                             <Form.Label>Veličine:</Form.Label>
                             <Form.Control
                                 required
@@ -132,7 +132,7 @@ function AddProductPage() {
                         </Form.Group>
                     </Row>
                     <Row className="mb-3">
-                        <Form.Group as={Col} md="2" controlId="naziv">
+                        <Form.Group as={Col} md="2" controlId="boja">
                             <Form.Label>Boje:</Form.Label>
                             <Form.Control
                                 required
