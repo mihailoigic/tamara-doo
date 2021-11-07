@@ -1,0 +1,15 @@
+TODO: 
+
+1. Dodaj u sve vezujuce tabele jos FORPROIZVOD (npr. proizvodBoja)
+alter table public."proizvodBoja" add column forProizvod int4
+alter table public."proizvodBoja" add CONSTRAINT "FK_proizvodBoja_forProizvod" FOREIGN KEY (forProizvod) references public."proizvod"(id) ON UPDATE CASCADE ON DELETE CASCADE	
+
+2. Kreiras sve vezujuce entitete
+Pogledaj BojeProizvod primer
+
+3. Povezi sve te table sa prozivodom i sa sifrarnicima
+
+4. list metodi dodajes inner joine kada zavrsis
+
+5. list metodi dodajes funkcije i menjas interface
+

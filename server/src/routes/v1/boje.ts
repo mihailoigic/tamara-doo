@@ -4,7 +4,7 @@ import { list, add, destroy } from '../../controllers/boje';
 
 const router = Router();
 
-router.get('/',  list);
+router.get('/', list);
 
 router.post('/', add);
 

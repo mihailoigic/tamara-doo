@@ -6,8 +6,9 @@ import velicine from './velicine';
 import boje from "./boje";
 import brend from "./brend";
 import kategorije from "./kategorije";
-import tip from "./tip";
 import podtip from "./podtip";
+import proizvod from "./proizvod";
+import tip from "./tip";
 
 const router = Router();
 
@@ -20,7 +21,6 @@ router.use('/brend', brend);
 router.use('/kategorije', kategorije);
 router.use('/tip', tip);
 router.use('/podtip', podtip);
-
-
+router.use('/proizvod', proizvod);
 
 export default router;
