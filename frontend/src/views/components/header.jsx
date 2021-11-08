@@ -7,14 +7,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import history from '../../utilities/history';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
-import data from "../../data/products";
 import Filter from "../product-list/filter";
+import filtersData from "../../data/filtersData";
 
 function Header() {
     const [showWoman, setShowWoman] = useState(false);
     const [showMan, setShowMan] = useState(false);
     const [showSubMenu, setShowSubMenu] = useState(false);
-    console.log("SHOW SUB: ", showSubMenu);
 
     function handleMouseOver() {
         setShowWoman(true);
@@ -87,7 +86,7 @@ function Header() {
                     </Row>
                     <div className="filter-section pt-4 ps-4 pe-4">
                         {
-                            data.filters.woman.type.map((filter) => {
+                            filtersData.filters.woman.categories.map((filter) => {
                                 return (
                                     <>
                                         <div className='top-line mb-3'/>

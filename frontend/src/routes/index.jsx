@@ -9,8 +9,9 @@ import AboutUsPage from '../views/pages/about-us'
 import ContactPage from '../views/pages/contact'
 import Root from '../views/components/root'
 import LogInPage from '../views/pages/log-in';
-import ProductListPage from '../views/product-list';
 import AddProductPage from "../views/pages/add-product";
+import { ProductListPage } from "../views/product-list";
+import ProductOverviewPage from "../views/pages/product-overview";
  
 const AppRouter = () => (
     <Router history={history}>
@@ -29,6 +30,8 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/product-list`} component={ProductListPage} />
 
             <Route exact path={`${Config.prefixUrl}/add-product`} component={AddProductPage} />
+
+            <Route exact path={`${Config.prefixUrl}/product`} component={ProductOverviewPage} />
 
             <Redirect from='/' to={`${Config.prefixUrl}/home`} />
         </Switch>

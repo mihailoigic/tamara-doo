@@ -2,7 +2,7 @@ import React from "react";
 import '../../../assets/css/styles.css';
 import './css/index.css';
 import history from "../../../utilities/history";
-import firstLetter from "../../../utilities/util";
+import { firstLetter } from "../../../utilities/util";
 
 function ProductCard(props) {
     const product = props.product;
