@@ -1,6 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn
+} from 'typeorm';
 
 import { ProizvodBoja } from './BojeProizvod';
+import { ProizvodVelicina } from './VelicineProizvod';
+import { ProizvodBrend } from './BrendProizvod';
+import { ProizvodSlike } from "./SlikeProizvod";
 
 @Entity('proizvod')
 export class Proizvod {
@@ -21,6 +33,31 @@ export class Proizvod {
   })
   opis: string | null;
 
+  @Column('character varying', {
+    name: 'defaultslika',
+    nullable: true,
+    length: 1000,
+  })
+  defaultSlika: string | null;
+
+  @Column()
+  novo: boolean;
+
+  @Column()
+  moda: boolean;
+
+  @Column()
+  rod: number;
+
   @OneToMany(() => ProizvodBoja, (proizvodBoja) => proizvodBoja.forBojaProizvod)
   proizvodBoja: ProizvodBoja[];
+
+  @OneToMany(() => ProizvodVelicina, (proizvodVelicina) => proizvodVelicina.forVelicinaProizvod)
+  proizvodVelicina: ProizvodVelicina[];
+
+  @OneToMany(() => ProizvodSlike, (proizvodSlike) => proizvodSlike.forSlikeProizvod)
+  proizvodSlike: ProizvodSlike[];
+
+  @OneToOne(() => ProizvodBrend, (proizvodBrend) => proizvodBrend.forBrendProizvod)
+  proizvodBrend: ProizvodBrend;
 }

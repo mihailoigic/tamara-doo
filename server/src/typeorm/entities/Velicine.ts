@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
+import { ProizvodVelicina } from "./VelicineProizvod";
 
 @Entity('velicineSifrarnik')
 export class VelicineSifrarnik {
@@ -10,5 +11,6 @@ export class VelicineSifrarnik {
     })
     naziv: string;
 
-    // fk ka velicineProizvod
+    @OneToMany(() => ProizvodVelicina, (proizvodVelicina) => proizvodVelicina.forVelicinaProizvod)
+    velicinaProizvod: ProizvodVelicina[];
 }

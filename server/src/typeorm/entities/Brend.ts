@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne} from 'typeorm';
+import { ProizvodBrend } from "./BrendProizvod";
 
 @Entity('brendSifrarnik')
 export class BrendSifrarnik {
@@ -10,5 +11,6 @@ export class BrendSifrarnik {
     })
     naziv: string;
 
-    // fk ka bojaProizvod
+    @OneToOne(()=> ProizvodBrend)
+    brendProizvod: ProizvodBrend;
 }
