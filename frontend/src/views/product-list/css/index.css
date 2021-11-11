@@ -1,17 +1,18 @@
 @font-face {
-    font-family: Vogue;
-    src: url(../../../assets/fonts/Vogue.ttf);
-  }
+    font-family: Raleway-Medium;
+    src: url(../../../assets/fonts/Raleway-Medium.ttf);
+}
+
 
 .filters {
     height: 1000px;
 }
 
 .filter-name {
-    font-family: Vogue;
+    font-family: Raleway-Medium;
     width: 100%;
     height: 50px;
-    background-color: #ddd3ee;
+    background-color: #e3dad5;
 }
 
 .filter-section {
@@ -41,7 +42,7 @@
 }
 
 .filter-item:hover {
-    color: #b28ff0;
+    color: #e3dad5;
 }
 
 .icon {

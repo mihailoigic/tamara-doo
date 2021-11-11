@@ -18,7 +18,7 @@ export default function Footer() {
         <>
             <Container fluid>
                 <div className="pt-5 text-center">
-                    <p className="h3 pb-4 ff-vogue">Budi u toku sa novim kolekcijama, sezonskim specijalima i promocijama.</p>
+                    <p className="h3 pb-4 ff-releway">Budi u toku sa novim kolekcijama, sezonskim specijalima i promocijama.</p>
                     <Form>
                         <Form.Control className="w-30 mb-3" type="email" placeholder="Unesite svoju email adresu" />
                         <Button variant="primary">PRIJAVI ME</Button>
@@ -29,17 +29,17 @@ export default function Footer() {
                 <Row className="text-center justify-content-md-center mt-3 mb-3 p-0">
                     <Col xs lg="1" >
                         <a href="https://www.facebook.com/tamaradoo.bgd/">
-                        <Image className="px40" src={facebookIcon} />
+                        <Image className="px40 mx-auto" src={facebookIcon} />
                         </a>
                     </Col>
                     <Col xs lg="1">
                         <a href="https://www.instagram.com/tamara.intimomoda/?hl=sr">
-                        <Image className="px40" src={instagramIcon} />
+                        <Image className="px40 mx-auto" src={instagramIcon} />
                         </a>
                     </Col>
                     <Col xs lg="1">
                         <a href="https://twitter.com/home">
-                        <Image className="px40" src={twitterIcon} />
+                        <Image className="px40 mx-auto" src={twitterIcon} />
                         </a>
                     </Col>
                 </Row>

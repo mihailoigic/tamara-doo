@@ -8,7 +8,7 @@ export default class ProductFactory {
             product.id,
             product.brend,
             product.naziv,
-            product.kategorija,
+            // product.kategorija,
             product.opis,
             product.rod,
             product.novo,

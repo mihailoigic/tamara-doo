@@ -25,7 +25,8 @@ const product = {
     slike: [
         "carlaBra4",
         "carlaBra3",
-        "carlaBra2"
+        "carlaBra2",
+        "carlaBra"
     ],
     novo: false,
     moda: false,

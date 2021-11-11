@@ -28,28 +28,28 @@ function Header() {
     return (
         <>
             <div className='header-desktop'>
-                <Container fluid className="header-container-lower"/>
                 <Container fluid className="header-container">
                     <Row>
                         <Col>
-                            <ul className="header-items-left text-center">
-                                <li className="header-item" onClick={() => history.push('/product-list')}
-                                    onMouseOut={handleMouseOut}>{labels.woman}</li>
-                                <li className="header-item"
-                                    onClick={() => history.push('/product-list')}>{labels.man}</li>
-                            </ul>
-                        </Col>
-                        <Col>
-                            <ul className="header-items-middle">
+                            <ul className="header-items-left ps-3">
                                 <li className="logo-item" onClick={() => history.push('/home')}>{labels.tamara}</li>
                             </ul>
                         </Col>
                         <Col>
-                            <ul className="header-items-right text-center">
-                                <li className="header-item"
+                            <ul className="header-items-middle">
+                                <li className="header-item border-right-black" onClick={() => history.push('/product-list')}
+                                    onMouseOut={handleMouseOut}>{labels.woman}</li>
+                                <li className="header-item border-right-black"
+                                    onClick={() => history.push('/product-list')}>{labels.man}</li>
+                                <li className="header-item border-right-black"
                                     onClick={() => history.push('/about-us')}>{labels.aboutUs}</li>
                                 <li className="header-item"
                                     onClick={() => history.push('/contact')}>{labels.contact}</li>
+                            </ul>
+                        </Col>
+                        <Col>
+                            <ul className="header-items-right text-center">
+
                             </ul>
                         </Col>
                     </Row>

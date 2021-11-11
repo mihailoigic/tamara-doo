@@ -15,13 +15,13 @@ function Filter(props) {
                 <Col xs="10" lg="10" onClick={() => {
                     setFilterActive(!filterActive)
                 }}>
-                    <p className="filter-item mb-0">{filter.name.toUpperCase()}</p>
+                    <p className="filter-item mb-0">{filter.label.toUpperCase()}</p>
                     <div ref={subSectionRef} className='sub-section'
                          style={filterActive ? {height: subSectionRef.current.scrollHeight + "px"} : {height: "0px"}}>
                         {
                             filter.types.map((item) => {
                                 return (
-                                    <p className="filter-item mt-1 mb-0">{firstLetter(item)}</p>
+                                    <p className="filter-item mt-1 mb-0">{firstLetter(item.label)}</p>
                                 );
                             })
                         }

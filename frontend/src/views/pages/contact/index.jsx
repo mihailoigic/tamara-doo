@@ -16,7 +16,7 @@ function ContactPage() {
         <>
             <Header />
             <Container className="mt-5 ">
-                <p className="h3 ff-vogue mb-3">{labels.contact}</p>
+                <p className="h3 ff-releway mb-3">{labels.contact}</p>
                 <Row>
                     <Col>
                         <div className="contact-info text-center">

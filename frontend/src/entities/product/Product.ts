@@ -5,11 +5,11 @@ export default class Product implements IProduct {
     public id: number;
     public brend: string;
     public naziv: string;
-    public kategorija: {
-        kategorija: string;
-        tip: string;
-        podtip: string;
-    }
+    // public kategorija: {
+    //     kategorija: string;
+    //     tip: string;
+    //     podtip: string;
+    // }
     public opis: string;
     public rod: string;
     public novo: boolean;
@@ -24,7 +24,7 @@ export default class Product implements IProduct {
         id: number,
         brend: string,
         naziv: string,
-        kategorija: { kategorija: string; tip: string; podtip: string },
+        // kategorija: { kategorija: string; tip: string; podtip: string },
         opis: string,
         rod: string,
         novo: boolean,
@@ -38,7 +38,7 @@ export default class Product implements IProduct {
         this.id = id;
         this.brend = brend;
         this.naziv = naziv;
-        this.kategorija = kategorija;
+        // this.kategorija = kategorija;
         this.opis = opis;
         this.rod = rod;
         this.novo = novo;

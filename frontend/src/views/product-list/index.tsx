@@ -19,9 +19,13 @@ import { AnyAction, Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { AppState } from "../../app/store/rootReducers";
 import history from "../../utilities/history";
+import axios from "axios";
+import { IProduct } from "../../entities/product/types";
+import Config from "../../config/config";
 
 interface IState {
     brandState: string;
+    products: IProduct[] | null;
 }
 
 type ProductListProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & RouteComponentProps<any>;
@@ -33,14 +37,20 @@ export class ProductListPage extends Component<ProductListProps, IState>{
 
         this.state={
             brandState: '',
+            products: null
         }
     }
 
     componentDidMount(): void {
         // this.props.requestFetchAllProducts({ params: null });
+        axios.get(`${Config.api.baseUrl}v1/proizvod`)
+            .then(res=>{
+                this.setState({ products: res.data.data });
+            })
     }
 
     render() {
+        console.log(this.state.products);
         return (
             <>
                 <Header/>
@@ -70,7 +80,7 @@ export class ProductListPage extends Component<ProductListProps, IState>{
                                                 <Col lg="10">
                                                     <p onClick={() => {
                                                         this.setState({brandState: brand});
-                                                    }} className="filter-item mb-1">{brand.toUpperCase()}</p>
+                                                    }} className="filter-item mb-1">{brand.label.toUpperCase()}</p>
                                                 </Col>
                                                 <Col lg="2" className="text-center">
                                                     <input onClick={() => {

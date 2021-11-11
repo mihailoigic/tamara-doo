@@ -15,6 +15,16 @@ const data = {
                     type: 'c'
                 }
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: '1',
             color: 'crne',
             decription: 'Brushalter crne boje',
@@ -35,6 +45,16 @@ const data = {
                 subCategory: 'tanga',
                 subType: {}
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: 'M',
             color: 'bele',
             decription: 'Gaćice bele boje',
@@ -59,6 +79,16 @@ const data = {
                     type: 'c'
                 }
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: '1',
             color: 'crne',
             decription: 'Brushalter crne boje',
@@ -79,6 +109,16 @@ const data = {
                 subCategory: 'tanga',
                 subType: {}
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: 'M',
             color: 'bele',
             decription: 'Gaćice bele boje',
@@ -103,6 +143,16 @@ const data = {
                     type: 'c'
                 }
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: '1',
             color: 'crne',
             decription: 'Brushalter crne boje',
@@ -123,6 +173,16 @@ const data = {
                 subCategory: 'tanga',
                 subType: {}
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: 'M',
             color: 'bele',
             decription: 'Gaćice bele boje',
@@ -147,6 +207,16 @@ const data = {
                     type: 'c'
                 }
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: '1',
             color: 'crne',
             decription: 'Brushalter crne boje',
@@ -167,6 +237,16 @@ const data = {
                 subCategory: 'tanga',
                 subType: {}
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: 'M',
             color: 'bele',
             decription: 'Gaćice bele boje',
@@ -191,6 +271,16 @@ const data = {
                     type: 'c'
                 }
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: '1',
             color: 'crne',
             decription: 'Brushalter crne boje',
@@ -211,6 +301,16 @@ const data = {
                 subCategory: 'tanga',
                 subType: {}
             },
+            boje: [
+                "crna",
+                "bojakoze"
+            ],
+            velicine: [
+                "S/M",
+                "XS/S",
+                "2",
+                "1"
+            ],
             size: 'M',
             color: 'bele',
             decription: 'Gaćice bele boje',

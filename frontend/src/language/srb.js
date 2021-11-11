@@ -1,7 +1,7 @@
 const labels = {
-    home: "POČETNA",
-    man: "MUŠKARCI",
-    woman: "ŽENE",
+    home: "Početna",
+    man: "Muškarci",
+    woman: "Žene",
     tamara: "Tamara",
     aboutUs: "O nama",
     contact: "Kontakt",

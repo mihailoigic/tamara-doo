@@ -2,11 +2,11 @@ export interface IProduct {
     id: number;
     brend: string;
     naziv: string;
-    kategorija: {
-        kategorija: string;
-        tip: string;
-        podtip: string;
-    }
+    // kategorija: {
+    //     kategorija: string;
+    //     tip: string;
+    //     podtip: string;
+    // }
     opis: string;
     rod: string;
     novo: boolean;
