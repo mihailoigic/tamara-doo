@@ -9,6 +9,7 @@ import kategorije from "./kategorije";
 import podtip from "./podtip";
 import proizvod from "./proizvod";
 import tip from "./tip";
+import kategorijatip from "./kategorijatip";
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/kategorije', kategorije);
 router.use('/tip', tip);
 router.use('/podtip', podtip);
 router.use('/proizvod', proizvod);
+router.use('/kategorijatip', kategorijatip);
 
 export default router;

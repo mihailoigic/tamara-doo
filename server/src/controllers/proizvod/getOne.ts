@@ -4,15 +4,10 @@ import { getRepository } from 'typeorm';
 import { Proizvod } from '../../typeorm/entities/Proizvod';
 import { CustomError } from '../../utils/response/custom-error/CustomError';
 
-const COUNT = 20;
-
-export const list = async (req: Request, res: Response, next: NextFunction) => {
-  const { start, searchTerm = null, pol, tip, kategorija } = req.query;
-  const filters = req.query.filters ? JSON.parse(req.query.filters.toString()) : null;
-
-  console.log(filters);
+export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
   try {
-    const proizvodData = await getRepository(Proizvod)
+    const proizvodSingle = await getRepository(Proizvod)
       .createQueryBuilder('proizvod')
       .innerJoinAndSelect('proizvod.proizvodBoja', 'boje')
       .innerJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
@@ -25,30 +20,20 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
       .innerJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
       .innerJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
       .innerJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
-      .skip(Number(start) - 1)
-      .take(COUNT)
-      .andWhere(searchTerm ? `proizvod.naziv ILike '%${searchTerm}%'` : 'TRUE')
-      .andWhere(pol ? `proizvod.rod = ${ePol[pol.toString()]}` : 'TRUE')
-      .andWhere(filters?.boje ? `bojeNaziv.id in (${filters.boje})` : 'TRUE')
-      .andWhere(kategorija ? `kategorijaTipPodTip.forKategorija = ${Number(kategorija)}` : 'TRUE')
-      .andWhere(tip ? `kategorijaTipPodTip.forTip = ${Number(tip)}` : 'TRUE')
-      .getManyAndCount();
+      .where(`proizvod.id = ${id}`)
+      .getOne();
 
-    const returnObject = { proizvodi: makeResponseData(proizvodData[0]), total: proizvodData[1] };
+    if(!proizvodSingle){
+      const customError = new CustomError(400, 'Raw', `Can't proizvod.`, null);
+      return next(customError);
+    }
+
+    const returnObject = makeSingleResponseItem(proizvodSingle);
     res.customSuccess(200, 'List of products.', returnObject);
   } catch (err) {
     const customError = new CustomError(400, 'Raw', `Can't retrieve list of products.`, null, err);
     return next(customError);
   }
-};
-
-const makeResponseData = (items: Proizvod[]): proizvodResponseModel[] => {
-  const responseArray: proizvodResponseModel[] = [];
-  for (const item of items) {
-    responseArray.push(makeSingleResponseItem(item));
-  }
-
-  return responseArray;
 };
 
 const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
@@ -114,8 +99,3 @@ const getRod = (proizvod: Proizvod): string => {
 const getPodtip = (proizvod: Proizvod): string[] => {
   return proizvod.kategorijaTipPodtip.map((proizvodPodtip) => proizvodPodtip.forPodtipSifrarnik.naziv);
 };
-
-enum ePol {
-  'zenski' = 1,
-  'muski' = 2,
-}

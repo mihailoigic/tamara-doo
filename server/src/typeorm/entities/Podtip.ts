@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
+import {KategorijaTipPodtip} from "./KategorijaTipPodtip";
 
 @Entity('podtipSifrarnik')
 export class PodtipSifrarnik {
@@ -10,5 +11,6 @@ export class PodtipSifrarnik {
     })
     naziv: string;
 
-    // fk ka bojaProizvod
+    @OneToMany(() => KategorijaTipPodtip, (kategorijaTipPodtip) => kategorijaTipPodtip.forPodtipSifrarnik)
+    kategorijaTipPodtip: KategorijaTipPodtip[];
 }

@@ -13,6 +13,8 @@ import { ProizvodBoja } from './BojeProizvod';
 import { ProizvodVelicina } from './VelicineProizvod';
 import { ProizvodBrend } from './BrendProizvod';
 import { ProizvodSlike } from "./SlikeProizvod";
+import {KategorijeSifrarnik} from "./Kategorije";
+import {KategorijaTipPodtip} from "./KategorijaTipPodtip";
 
 @Entity('proizvod')
 export class Proizvod {
@@ -60,4 +62,7 @@ export class Proizvod {
 
   @OneToOne(() => ProizvodBrend, (proizvodBrend) => proizvodBrend.forBrendProizvod)
   proizvodBrend: ProizvodBrend;
+
+  @OneToMany(() => KategorijaTipPodtip, (kategorijaTipPodtip) => kategorijaTipPodtip.forKategorijaProizvod)
+  kategorijaTipPodtip: KategorijaTipPodtip[];
 }
