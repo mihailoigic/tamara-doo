@@ -66,273 +66,273 @@ const filtersData: any = {
             categories: [
                 {
                     label: "Grudnjak",
-                    value: "grudnjak",
+                    value: 1,
                     types: [
                         {
                             label: "Push up",
-                            value: "push up"
+                            value: 38
                         },
                         {
                             label: "Blago punjenje",
-                            value: "blago punjenje"
+                            value: 1
                         },
                         {
                             label: "Bez punjenja",
-                            value: "bez punjenja"
+                            value: 2
                         },
                         {
                             label: "Sa žicom",
-                            value: "sa žicom"
+                            value: 4
                         },
                         {
                             label: "Bez žice",
-                            value: "bez žice"
+                            value: 3
                         },
                         {
                             label: "Sportski",
-                            value: "sportski"
+                            value: 5
                         },
                         {
                             label: "Za dojenje",
-                            value: "za dojenje"
+                            value: 6
                         }
                     ],
                     subTypes: [
                         {
                             label: "Korpa B",
-                            value: "korpa B"
+                            value: 1
                         },
                         {
                             label: "Korpa C",
-                            value: "korpa C"
+                            value: 2
                         },
                         {
                             label: "Korpa D",
-                            value: "korpa D"
+                            value: 3
                         },
                         {
                             label: "Korpa E",
-                            value: "korpa E"
+                            value: 4
                         },
                         {
                             label: "Korpa F",
-                            value: "korpa F"
+                            value: 5
                         },
                         {
                             label: "Topić",
-                            value: "topić"
+                            value: 19
                         }
                     ]
                 },
                 {
                     label: "Gaćice",
-                    value: "gaćice",
+                    value: 2,
                     types: [
                         {
                             label: "Slip",
-                            value: "slip"
+                            value: 7
                         },
                         {
                             label: "Brasiliana",
-                            value: "brasiliana"
+                            value: 8
                         },
                         {
                             label: "Tanga",
-                            value: "tanga"
+                            value: 9
                         },
                         {
                             label: "Box",
-                            value: "box"
+                            value: 10
                         },
                         {
                             label: "Steznik",
-                            value: "steznik"
+                            value: 11
                         },
                         {
                             label: "Za trudnice",
-                            value: "za trudnice"
+                            value: 12
                         },
                         {
                             label: "Duge gaćice",
-                            value: "duge gaćice"
+                            value: 13
                         }
                     ]
                 },
                 {
                     label: "Bodi",
-                    value: "bodi",
+                    value: 3,
                     types: [
                         {
                             label: "Sa žicom",
-                            value: "sa žicom"
+                            value: 39
                         },
                         {
                             label: "Bez žice",
-                            value: "bez žice"
+                            value: 40
                         },
                         {
                             label: "Korset",
-                            value: "korset"
+                            value: 14
                         }
                     ],
                     subTypes: [
                         {
                             label: "Korpa B",
-                            value: "korpa B"
+                            value: 1
                         },
                         {
                             label: "Korpa C",
-                            value: "korpa C"
+                            value: 2
                         },
                         {
                             label: "Korpa D",
-                            value: "korpa D"
+                            value: 3
                         }
                     ]
                 },
                 {
                     label: "Majica",
-                    value: "majica",
+                    value: 4,
                     types: [
                         {
                             label: "Dug rukav",
-                            value: "dug rukav"
+                            value: 15
                         },
                         {
                             label: "Kratak ruka",
-                            value: "kratak ruka"
+                            value: 16
                         },
                         {
                             label: "Bretela",
-                            value: "bretela"
+                            value: 17
                         }
                     ]
                 },
                 {
                     label: "Halter",
-                    value: "halter",
+                    value: 5,
                     types: []
                 },
                 {
                     label: "Kombinezon",
-                    value: "kombinezon",
+                    value: 6,
                     types: []
                 },
                 {
                     label: "Podvezica",
-                    value: "podvezica",
+                    value: 7,
                     types: []
                 },
                 {
                     label: "Podsuknja",
-                    value: "podsuknja",
+                    value: 8,
                     types: [
                         {
                             label: "Kratka",
-                            value: "kratka"
+                            value: 36
                         },
                         {
                             label: "Duža",
-                            value: "duža"
+                            value: 37
                         },
                     ]
                 },
                 {
-                    label: "Spavaćni program",
-                    value: "spavaćni program",
+                    label: "Spavaći program",
+                    value: 9,
                     types: [
                         {
                             label: "Pidžama",
-                            value: "pidžama"
+                            value: 18
                         },
                         {
                             label: "Spavaćica",
-                            value: "spavaćica"
+                            value: 19
                         },
                         {
                             label: "Bebi dol",
-                            value: "bebi dol"
+                            value: 20
                         },
                         {
                             label: "Ogrtač",
-                            value: "ogrtač"
+                            value: 21
                         }
                     ]
                 },
                 {
                     label: "Kompleti",
-                    value: "kompleti",
+                    value: 10,
                     types: []
                 },
                 {
                     label: "Kupaći kostimi i plažni program",
-                    value: "kupaći kostimi i plažni program",
+                    value: 11,
                     types: [
                         {
                             label: "Jednodelni",
-                            value: "jednodelni"
+                            value: 22
                         },
                         {
                             label: "Dvodelni",
-                            value: "dvodelni"
+                            value: 23
                         },
                         {
                             label: "Peškiri",
-                            value: "peškiri"
+                            value: 24
                         },
                         {
                             label: "Bokserice",
-                            value: "bokserice"
+                            value: 25
                         },
                         {
                             label: "Slip",
-                            value: "slip"
+                            value: 41
                         },
                         {
                             label: "Ostalo",
-                            value: "ostalo"
+                            value: 26
                         }
                     ]
                 },
                 {
                     label: "Čarape",
-                    value: "čarape",
+                    value: 12,
                     types: [
                         {
                             label: "Hulahop",
-                            value: "hulahop"
+                            value: 27
                         },
                         {
                             label: "Samodržeće",
-                            value: "samodržeće"
+                            value: 28
                         },
                         {
                             label: "Nadkolenice",
-                            value: "nadkolenice"
+                            value: 29
                         },
                         {
                             label: "Dokolenice",
-                            value: "dokolenice"
+                            value: 30
                         },
                         {
                             label: "Sokne",
-                            value: "sokne"
+                            value: 31
                         },
                         {
                             label: "Nazuvci",
-                            value: "nazuvci"
+                            value: 32
                         },
                         {
                             label: "Helanke",
-                            value: "helanke"
+                            value: 33
                         },
                         {
                             label: "Pantalone",
-                            value: "pantalone"
+                            value: 34
                         },
                         {
                             label: "Papuče za kuću",
-                            value: "papuče za kuću"
+                            value: 35
                         }
                     ],
                     subTypes: [
@@ -406,6 +406,7 @@ const filtersData: any = {
         ],
         sizes: [
             {
+                id: 1,
                 category: "grudnjak",
                 options: [
                     { value: '2', label: '2' },
@@ -440,6 +441,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 2,
                 category: "gaćice",
                 options: [
                     { value: '2', label: '2' },
@@ -469,6 +471,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 3,
                 category: "bodi",
                 options: [
                     { value: '2/70', label: '2/70' },
@@ -498,6 +501,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 4,
                 category: "majica",
                 options: [
                     { value: '4/M', label: '4/M' },
@@ -518,6 +522,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 5,
                 category: "halter",
                 options: [
                     { value: '2', label: '2' },
@@ -527,6 +532,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 6,
                 category: "kombinezon",
                 options: [
                     { value: '2', label: '2' },
@@ -540,12 +546,14 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 7,
                 category: "podvezica",
                 options: [
                     { value: 'UNIVERZALNA', label: 'UNIVERZALNA' },
                 ]
             },
             {
+                id: 8,
                 category: "podsuknja",
                 options: [
                     { value: '2', label: '2' },
@@ -559,7 +567,8 @@ const filtersData: any = {
                 ]
             },
             {
-                category: "spavaćni program",
+                id: 9,
+                category: "spavaći program",
                 options: [
                     { value: 'S', label: 'S' },
                     { value: 'M', label: 'M' },
@@ -574,6 +583,7 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 10,
                 category: "kompleti",
                 options: [
                     { value: '2', label: '2' },
@@ -587,22 +597,61 @@ const filtersData: any = {
                 ]
             },
             {
+                id: 11,
                 category: "kupaći kostimi i plažni program",
                 options: [
-                    { value: 'S', label: 'S' },
-                    { value: 'M', label: 'M' },
-                    { value: 'L', label: 'L' },
-                    { value: 'XL', label: 'XL' },
+                    { value: '42', label: '42' },
+                    { value: '44', label: '44' },
+                    { value: '46', label: '46' },
+                    { value: '48', label: '48' },
+                    { value: '50', label: '50' },
+                    { value: '52', label: '52' },
+                    { value: '54', label: '54' },
+                    { value: '56', label: '56' },
+                    { value: '58', label: '58' },
+                    { value: '60', label: '60' },
+                    { value: '4/M', label: '4/M' },
+                    { value: '5/L', label: '5/L' },
+                    { value: '6/XL', label: '6/XL' },
+                    { value: '7/XXL', label: '7/XXL' },
+                    { value: '8/3XL', label: '8/3XL' },
+                    { value: '9/4XL', label: '9/4XL' },
+                    { value: '10/5XL', label: '10/5XL' },
+                    { value: '90x170', label: '90x170' },
+                    { value: '100x200', label: '100x200' },
 
                 ]
             },
             {
+                id: 12,
                 category: "čarape",
                 options: [
+                    { value: '2/S', label: '2/S' },
+                    { value: '3/M', label: '3/M' },
+                    { value: '4/L', label: '4/L' },
+                    { value: '5/XL', label: '5/XL' },
+                    { value: '6/XXL', label: '6/XXL' },
+                    { value: '1/2', label: '1/2' },
+                    { value: '2/3', label: '2/3' },
+                    { value: '3/4', label: '3/4' },
+                    { value: 'XS', label: 'XS' },
                     { value: 'S', label: 'S' },
+                    { value: 'S/M', label: 'S/M' },
                     { value: 'M', label: 'M' },
+                    { value: 'M/L', label: 'M/L' },
                     { value: 'L', label: 'L' },
+                    { value: 'L/XL', label: 'L/XL' },
                     { value: 'XL', label: 'XL' },
+                    { value: '2', label: '2' },
+                    { value: '3', label: '3' },
+                    { value: '4', label: '4' },
+                    { value: '36/41', label: '36/41' },
+                    { value: '39/46', label: '39/46' },
+                    { value: '35/38', label: '35/38' },
+                    { value: '39/41', label: '39/41' },
+                    { value: '41/45', label: '41/45' },
+                    { value: '42/44', label: '42/44' },
+                    { value: '45/46', label: '45/46' },
                 ]
             }
         ]

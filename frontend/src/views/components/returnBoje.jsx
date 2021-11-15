@@ -11,9 +11,14 @@ export default function Boje(props) {
                         <li className={props.nameOfClass}>
                             <img
                                 className={props.imgClass}
-                                src={process.env.PUBLIC_URL + `/Imgs/${boja}.jpg`}
+                                src={process.env.PUBLIC_URL + `/Imgs/boje/${boja}.jpg`}
                                 alt={boja}
-                            /></li>
+                            />
+                            {
+                                props.showName &&
+                                <p className="colorName text-center">{boja}</p>
+                            }
+                        </li>
                     );
                 })
             }

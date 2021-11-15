@@ -31,5 +31,8 @@ export const detectIE = (): number | boolean => {
 };
 
 export const firstLetter = (string: string): string => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    const lower = string.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
 }
+
+

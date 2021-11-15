@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import '../../../assets/css/styles.css';
 import './css/index.css';
 import labels from '../../../language/srb';
@@ -10,9 +10,25 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Select from 'react-select';
 import filtersData from "../../../data/filtersData";
+import axios from "axios";
+import Config from "../../../config/config";
 
 function AddProductPage() {
     const [category, setCategory] = useState(null);
+    const [apiBrands, setApiBrands] = useState(null);
+    const [pol, setPol] = useState('zenski');
+    const [apiCategories, setApiCategories] = useState(null);
+
+    useEffect(() => {
+        axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${pol}`)
+            .then(res=>{
+                setApiCategories(res.data.data);
+            })
+        axios.get(`${Config.api.baseUrl}v1/brend`)
+            .then(res=>{
+                setApiBrands(res.data.data);
+            })
+    }, [pol]);
 
     function getDefaultSlika() {
         try {
@@ -34,6 +50,10 @@ function AddProductPage() {
 
     const onChange = (selectedOption) => {
         setCategory(selectedOption.value);
+    }
+
+    const onChangePol = (selectedOption) => {
+        setPol(selectedOption.target.value);
     }
 
     function getValueFromMultiSelect(selectedOptions) {
@@ -72,7 +92,6 @@ function AddProductPage() {
             alert('Uspesno dodat proizvod!');
         }
     };
-
     return (
         <>
             <Header/>
@@ -84,7 +103,7 @@ function AddProductPage() {
                             <Form.Label>Brend:</Form.Label>
                             <Select
                                 name="brend"
-                                options={filtersData.filters.woman.brands}
+                                options={apiBrands}
                                 className="basic-select"
                                 placeholder="Izaberi.."
                             />
@@ -98,17 +117,17 @@ function AddProductPage() {
                             />
                         </Form.Group>
                         <Form.Group as={Col} md="2" controlId="rod">
-                            <Form.Label>Rod:</Form.Label>
-                            <Form.Select aria-label="Default select example">
-                                <option key={1}>Ženski</option>
-                                <option key={2}>Muški</option>
+                            <Form.Label>Pol:</Form.Label>
+                            <Form.Select aria-label="Default select example" onChange={onChangePol}>
+                                <option key={1} value='zenski'>Ženski</option>
+                                <option key={2} value='muski'>Muški</option>
                             </Form.Select>
                         </Form.Group>
                         <Col md="2">
                             <Form.Label>Kategorija:</Form.Label>
                             <Select
                                 name="kategorija"
-                                options={filtersData.filters.woman.categories}
+                                options={apiCategories}
                                 className="basic-select"
                                 placeholder="Izaberi.."
                                 classNamePrefix="Izaberi.."
@@ -119,9 +138,9 @@ function AddProductPage() {
                             <Form.Label>Tip:</Form.Label>
                             <Select
                                 name="tip"
-                                options={filtersData.filters.woman.categories.find(item => {
+                                options={apiCategories?.find(item => {
                                     return item.value === category
-                                })?.types}
+                                })?.tip}
                                 className="basic-select"
                                 placeholder="Izaberi.."
                                 classNamePrefix="Izaberi.."
@@ -146,7 +165,7 @@ function AddProductPage() {
                                 isMulti
                                 name="velicina"
                                 options={filtersData.filters.sizes.find(item => {
-                                    return item.category === category
+                                    return item.id === category
                                 })?.options}
                                 className="basic-multi-select"
                                 placeholder="Izaberi.."
@@ -190,9 +209,6 @@ function AddProductPage() {
                                 type="file"
                                 id="slike"
                                 name="slike"
-                                onChange={() => {
-                                    console.log(document.getElementById('slike').files)
-                                }}
                                 multiple/>
                         </Col>
                     </Row>

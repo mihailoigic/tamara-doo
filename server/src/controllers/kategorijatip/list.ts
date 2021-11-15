@@ -16,8 +16,6 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
       .where(pol ? `kategorijaTip.pol = ${Boolean(ePol[pol.toString()])}` : 'kategorijaTip.pol = null')
       .getMany();
 
-    console.log(kategorijaTipList);
-
     res.customSuccess(200, 'List of kategorija tip.', makeResponseData(kategorijaTipList));
   } catch (err) {
     const customError = new CustomError(400, 'Raw', `Can't retrieve list of brands.`, null, err);
@@ -36,28 +34,28 @@ const makeResponseData = (items: KategorijeSifrarnik[]): kategorijaTipResponseMo
 
 const makeSingleResponseItem = (item: KategorijeSifrarnik): kategorijaTipResponseModel => {
   return <kategorijaTipResponseModel>{
-    id: item.id,
-    kategorija: item.naziv,
+    value: item.id,
+    label: item.naziv,
     tip: getTip(item.kategorijaTip),
   };
 };
 
 interface kategorijaTipResponseModel {
-  id: number;
-  kategorija: string;
+  value: number;
+  label: string;
   tip: tipModel[];
 }
 
 interface tipModel {
-  id: number;
-  naziv: string;
+  value: number;
+  label: string;
 }
 
 const getTip = (kategorijaTip: KategorijaTip[]): tipModel[] => {
   return kategorijaTip.map((kategorijaTip) => {
     return <tipModel>{
-      id: kategorijaTip.forTipSifrarnik.id,
-      naziv: kategorijaTip.forTipSifrarnik.naziv
+      value: kategorijaTip.forTipSifrarnik.id,
+      label: kategorijaTip.forTipSifrarnik.naziv
     };
   });
 };

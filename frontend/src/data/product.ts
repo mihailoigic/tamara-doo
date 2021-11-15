@@ -10,16 +10,16 @@ const product = {
         "Korpa E"
     ],
     naziv: "Carla bra",
-    opis: "Brushalter sa zicom i bez zice ovo ono...",
+    opis: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     boje: [
         "crna",
-        "bojakoze"
+        "boja kože"
     ],
     velicine: [
         "S/M",
         "XS/S",
-        "2",
-        "1"
+        "7/XXL",
+        "XL"
     ],
     defaultSlika: "carlaBra",
     slike: [

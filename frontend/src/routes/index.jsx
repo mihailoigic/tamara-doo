@@ -31,7 +31,7 @@ const AppRouter = () => (
 
             <Route exact path={`${Config.prefixUrl}/add-product`} component={AddProductPage} />
 
-            <Route exact path={`${Config.prefixUrl}/product`} component={ProductOverviewPage} />
+            <Route path={`${Config.prefixUrl}/product/:id`} component={ProductOverviewPage} />
 
             <Redirect from='/' to={`${Config.prefixUrl}/home`} />
         </Switch>

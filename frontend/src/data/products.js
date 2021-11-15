@@ -17,7 +17,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -47,7 +47,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -81,7 +81,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -111,7 +111,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -145,7 +145,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -175,7 +175,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -209,7 +209,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -239,7 +239,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -273,7 +273,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",
@@ -303,7 +303,7 @@ const data = {
             },
             boje: [
                 "crna",
-                "bojakoze"
+                "boja kože"
             ],
             velicine: [
                 "S/M",

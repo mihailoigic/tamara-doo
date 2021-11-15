@@ -4,8 +4,11 @@ import labels from '../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import filtersData from "../../data/filtersData";
+import history from "../../utilities/history";
 
 function SubHeader(props) {
+    const filters = props.gender === 'Žene' ? filtersData.filters.woman : filtersData.filters.man;
     return (
         <div className="sub-header">
             <Container fluid className="sub-header-title">
@@ -13,92 +16,39 @@ function SubHeader(props) {
             </Container>
             <Container fluid className="header-on-mouse-hover">
                 <Row>
-                    <Col />
-                    <Col />
-                    <Col className="type-column type-column-border-right">
-                        <ul className="type-items">
-                            <li className="type-item bold-arial">
-                                <p className="h6">DONJI VEŠ</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Brushalteri</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Gaćice</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Majice</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Bodi</p>
-                            </li>
-                        </ul>
-                    </Col>
-                    <Col className="type-column type-column-border-right">
-                        <ul className="type-items">
-                            <li className="type-item bold-arial">
-                                <p className="h6">SPAVAĆI PROGRAM</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Pidžame</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Spavaćice</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Bademantili</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Maska za spavanje</p>
-                            </li>
-                        </ul>
-                    </Col>
-                    <Col className="type-column type-column-border-right">
-                        <ul className="type-items">
-                            <li className="type-item bold-arial">
-                                <p className="h6">KLASIKA</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Gaćice</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Brushalteri</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Majice</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Bodi</p>
-                            </li>
-                        </ul>
-                    </Col>
-                    <Col className="type-column">
-                        <ul className="type-items">
-                            <li className="type-item bold-arial">
-                                <p className="h6">KUPAĆI KOSTIMI</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Jednodelni kupaći</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Bikini kupaći</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Kupaći sa B korpom</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Kupaći sa C korpom</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Kupaći sa D korpom</p>
-                            </li>
-                            <li className="type-item">
-                                <p className="h6">Donji deo</p>
-                            </li>
-                        </ul>
-                    </Col>
-                    <Col />
-                    <Col />
+                    {
+                        filters !== null && filters.categories !== undefined &&
+                        filters.categories.map((item) => {
+                            const label = item.label === 'Kupaći kostimi i plažni program' ? `Kupaći kostimi` : item.label;
+                            return (
+                                <Col className='p-1'>
+                                    <p
+                                        className={label.length > 20 ? 'fs-6 mt-2 sub-menu-item fw-bold' : 'fw-bold fs-6 sub-menu-item sub-item'}
+                                        onClick={() => {
+                                            history.push({
+                                                pathname: '/product-list',
+                                                state: {kategorija: item.value}
+                                            })
+                                        }}>{label}</p>
+                                    <hr/>
+                                    {
+                                        item.types.map((type) => {
+                                            return (
+                                                <p
+                                                    className='fs-6 sub-menu-item'
+                                                    onClick={() => {
+                                                        history.push({
+                                                            pathname: '/product-list',
+                                                            state: {kategorija: item.value, tip: type.value}
+                                                        })
+                                                    }}>{type.label}</p>
+                                            );
+                                        })
+                                    }
+                                </Col>
+                            );
+                        })
+                    }
                 </Row>
             </Container>
         </div>

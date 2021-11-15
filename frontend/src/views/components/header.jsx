@@ -10,20 +10,8 @@ import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import Filter from "../product-list/filter";
 import filtersData from "../../data/filtersData";
 
-function Header() {
-    const [showWoman, setShowWoman] = useState(false);
-    const [showMan, setShowMan] = useState(false);
+function Header(props) {
     const [showSubMenu, setShowSubMenu] = useState(false);
-
-    function handleMouseOver() {
-        setShowWoman(true);
-    }
-
-    function handleMouseOut() {
-        setTimeout(function () {
-            setShowWoman(false);
-        }, 3000);
-    }
 
     return (
         <>
@@ -37,11 +25,25 @@ function Header() {
                         </Col>
                         <Col>
                             <ul className="header-items-middle">
-                                <li className="header-item border-right-black" onClick={() => history.push('/product-list')}
-                                    onMouseOut={handleMouseOut}>{labels.woman}</li>
-                                <li className="header-item border-right-black"
-                                    onClick={() => history.push('/product-list')}>{labels.man}</li>
-                                <li className="header-item border-right-black"
+                                <li className="header-item border-right-nav">
+                                    <p
+                                        className='mb-0'
+                                        onClick={() => {
+                                            history.push('/product-list', {pol: 'zenski'})
+                                        }}>{labels.woman}</p>
+                                    <div className='woman'><SubHeader gender={labels.woman}/></div>
+                                </li>
+                                <li
+                                    className="header-item border-right-nav"
+
+                                ><p
+                                    className='mb-0'
+                                    onClick={() => {
+                                        history.push('/product-list', {pol: 'zenski'})
+                                    }}>{labels.man}</p>
+                                    <div className='man'><SubHeader gender={labels.man}/></div>
+                                </li>
+                                <li className="header-item border-right-nav"
                                     onClick={() => history.push('/about-us')}>{labels.aboutUs}</li>
                                 <li className="header-item"
                                     onClick={() => history.push('/contact')}>{labels.contact}</li>
@@ -55,9 +57,7 @@ function Header() {
                     </Row>
                 </Container>
                 {/*<Container fluid className="header-container-lower" />*/}
-                {
-                    showWoman && <SubHeader gender={labels.woman}/>
-                }
+
             </div>
             <div className='header-mobile'>
                 <Row>

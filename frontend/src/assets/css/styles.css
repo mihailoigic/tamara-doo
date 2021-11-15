@@ -63,6 +63,14 @@
     background-color: white;
 }
 
+.sub-menu-item {
+    color: black;
+}
+
+.sub-menu-item:hover {
+    color: #c4bebb;
+}
+
 .mobile-sub-menu.show {
     width: 100%;
 }
@@ -72,11 +80,30 @@
     background-color: transparent;
 }
 
+.sub-item {
+    margin-top: 25px;
+    padding-bottom: 7px;
+}
+
+.border-right-black {
+    border-right: 1px solid black;
+}
+
+.border-right-nav {
+    border-right: 1px solid #c4bebb;
+}
+
+.border-bottom-nav {
+    border-bottom: 1px solid #c4bebb;
+}
+
 .sub-header {
-    border-top: 2px solid #e3dad5;
+    box-shadow: 0px 0px 20px 0px grey;
+    margin-top: 20px;
     width: 100%;
+    left: 0;
     position: absolute;
-    z-index: 2;
+    z-index: 11;
     background-color: white;
 }
 
@@ -107,8 +134,8 @@
 }
 
 .header-items-middle {
+    height: 100%;
     text-align: center;
-    padding-top: 20px;
 }
 
 .header-items-right {
@@ -126,8 +153,9 @@
 
 .header-item {
     font-family: Raleway-Medium;
+    height: 70px !important;
     display: inline-block;
-    padding: 0 20px 0 20px;
+    padding: 20px 20px 0 20px;
     font-size: 20px;
     cursor: pointer;
 }
@@ -168,8 +196,44 @@
     background-color: #c4bebb;
 }
 
-.border-right-black {
-    border-right: 1px solid black;
+.border-black {
+    height: 30px !important;
+    width: 1px;
+    background-color: black;
+}
+
+.filter-boje {
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    transition: height ease 0.3s;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.filter-boje::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.filter-boje::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.filter-boje::-webkit-scrollbar-thumb {
+    background: #e3dad5;
+}
+
+/* Handle on hover */
+.filter-boje::-webkit-scrollbar-thumb:hover {
+    background: #c4bebb;
+}
+
+
+
+.filter-boje-title {
+    cursor: pointer;
 }
 
 .w-30 {
@@ -236,7 +300,70 @@
     background-color: black;
 }
 
+Link {
+    text-decoration: none;
+    text-underline: none;
+
+}
+
+.loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    display: grid;
+    place-items: center;
+}
+
+.loader {
+    border: 16px solid #e3e3e3;
+    border-top: 16px solid #a37155;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+ul li .woman {
+    visibility: hidden;
+    opacity: 0;
+}
+
+ul li:hover .woman {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+ul li .man {
+    visibility: hidden;
+    opacity: 0;
+}
+
+ul li:hover .man {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
 @media screen and (max-width: 700px){
+    .header-items-middle {
+        text-align: center;
+        padding-top: 0px;
+    }
+
     .header-desktop {
         display: none;
     }
