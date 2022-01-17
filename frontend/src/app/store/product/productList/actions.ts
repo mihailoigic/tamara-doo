@@ -1,5 +1,10 @@
 import ActionTypes from "../../../../constants/ActionTypes";
-import { IFetchProductsAction, IProductsState, ISetProductsAction, IEnrichProductsAction } from "./types";
+import {
+    IFetchProductsAction,
+    IProductsState,
+    ISetProductsAction,
+    IEnrichProductsAction,
+} from "./types";
 
 export function requestFetchAllProducts(params: object): IFetchProductsAction {
     return {

@@ -29,6 +29,9 @@ export class KategorijaTipPodtip {
     @Column('int', { name: 'forpodtip', nullable: true })
     forPodtip: number | null;
 
+    @Column('int', { name: 'forproizvod', nullable: true })
+    forProizvodId: number | null;
+
     // fk ka katergoija
     @ManyToOne(() => KategorijeSifrarnik, (kategorija) => kategorija.kategorijaTipPodtip, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn([{ name: 'forkategorija', referencedColumnName: 'id' }])

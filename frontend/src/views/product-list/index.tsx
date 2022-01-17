@@ -1,16 +1,11 @@
 import React, {Component} from "react";
 import '../../assets/css/styles.css';
 import './css/index.css';
-import labels from '../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Header from "../components/header";
 import Footer from "../components/footer";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import data from "../../data/products";
-import filtersData from "../../data/filtersData";
 import ProductCard from "../pages/product-info";
 import Filter from "./filter";
 import {requestFetchAllProducts} from '../../app/store/product/productList/actions';
@@ -23,9 +18,17 @@ import axios from "axios";
 import {IProduct} from "../../entities/product/types";
 import Config from "../../config/config";
 import Loader from "../components/Loader";
-import Pagination from "react-js-pagination";
 import FilterBoje from "../components/filterBoje";
 import FilterBrendovi from "../components/filterBrendovi";
+import {filterSearchParams, firstLetter} from "../../utilities/util";
+import {ISearchParams} from "../../app/store/searchParams/types";
+import store from "../../app/store";
+import {
+    clearSearchParams,
+    setKategorijaTipSearchParam,
+    setPolSearchParams,
+    setStartSearchParams
+} from "../../app/store/searchParams/actions";
 
 interface IState {
     brendState: string;
@@ -40,14 +43,13 @@ interface IState {
     apiState: string;
     bojeState: string;
     filterState: boolean | null;
+    categoriesData: any;
+    searchParams: ISearchParams | null;
 }
 
-type ProductListProps =
-    ReturnType<typeof mapStateToProps>
-    & ReturnType<typeof mapDispatchToProps>
-    & RouteComponentProps<any>;
+type ProductListProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & RouteComponentProps<any>;
 
-export class ProductListPage extends Component<ProductListProps, IState, {}> {
+export class ProductListPage extends Component<ProductListProps, IState> {
 
     constructor(props: ProductListProps) {
         super(props);
@@ -65,21 +67,37 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
             apiState: '',
             bojeState: '',
             filterState: null,
+            categoriesData: null,
+            searchParams: null,
         }
     }
 
     componentDidMount(): void {
-        // this.props.requestFetchAllProducts({ params: null });
-        const api = `${Config.api.baseUrl}v1/proizvod?start=${this.state.start}&pol=${this.state.pol}`;
+        console.log(filterSearchParams(this.props.searchParams));
+        const api = `${Config.api.baseUrl}v1/proizvod${filterSearchParams(this.props.searchParams)}`;
         axios.get(api)
             .then(res => {
                 this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: api});
             })
-
+        axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${this.props.searchParams.pol}`)
+            .then(res => {
+                this.setState({categoriesData: res.data.data});
+            })
     }
 
     componentDidUpdate(prevProps: Readonly<ProductListProps>, prevState: Readonly<IState>, snapshot?: any) {
-
+        if (prevProps.searchParams !== this.props.searchParams) {
+            console.log(filterSearchParams(this.props.searchParams));
+            const api = `${Config.api.baseUrl}v1/proizvod${filterSearchParams(this.props.searchParams)}`;
+            axios.get(api)
+                .then(res => {
+                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: api});
+                })
+            axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${this.props.searchParams.pol}`)
+                .then(res => {
+                    this.setState({categoriesData: res.data.data});
+                })
+        }
         if (prevState.bojeState !== this.state.bojeState) {
             if (this.state.bojeState !== '') {
                 let api = `${this.state.apiState}&filters={"boje": [${this.state.bojeState}]}`;
@@ -90,7 +108,6 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
                     .then(res => {
                         this.setState({products: res.data.data.proizvodi, total: res.data.data.total});
                     })
-                console.log(api);
             } else if (this.state.brendState === '') {
                 axios.get(this.state.apiState)
                     .then(res => {
@@ -115,7 +132,6 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
                     .then(res => {
                         this.setState({products: res.data.data.proizvodi, total: res.data.data.total});
                     })
-                console.log(api);
             } else if (this.state.bojeState === '') {
                 axios.get(this.state.apiState)
                     .then(res => {
@@ -129,116 +145,62 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
                     })
             }
         }
-
-        if (this.props.location.state !== undefined) {
-            const location = this.props.location.state;
-            // @ts-ignore
-            if (location.kategorija !== undefined && prevState.kategorija !== location.kategorija) {
-                // @ts-ignore
-                this.setState({kategorija: this.props.location.state.kategorija, tip: null})
-            }
-            // @ts-ignore
-            if (this.props.location.state.tip !== undefined && prevState.tip !== location.tip) {
-                // @ts-ignore
-                this.setState({kategorija: this.props.location.state.kategorija, tip: this.props.location.state.tip})
-            }
-            // @ts-ignore
-            if (location.pol !== undefined && prevState.pol !== location.pol) {
-                // @ts-ignore
-                this.setState({pol: this.props.location.state.pol})
-            }
-        }
-
-        if (prevState.apiState !== this.state.apiState) {
-            axios.get(this.state.apiState)
-                .then(res => {
-                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total});
-                })
-        }
-
-        if (prevState.start !== this.state.start) {
-            let string = `${Config.api.baseUrl}v1/proizvod?start=${this.state.start}&pol=${this.state.pol}`;
-            if (this.state.kategorija !== null ){
-                string += `&kategorija=${this.state.kategorija}`;
-            }
-            if (this.state.tip !== null ){
-                string += `&tip=${this.state.tip}`;
-            }
-            axios.get(string)
-                .then(res => {
-                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: string});
-                })
-        }
-
-        if ((prevState.kategorija !== this.state.kategorija || prevState.renderKategorija !== this.state.renderKategorija) && this.state.kategorija !== null) {
-            const api = `${Config.api.baseUrl}v1/proizvod?start=${this.state.start}&pol=${this.state.pol}&kategorija=${this.state.kategorija}`;
-            axios.get(api)
-                .then(res => {
-                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: api});
-                })
-        }
-        if (prevState.tip !== this.state.tip && this.state.tip !== null) {
-            const api = `${Config.api.baseUrl}v1/proizvod?start=${this.state.start}&pol=${this.state.pol}&tip=${this.state.tip}`;
-            axios.get(api)
-                .then(res => {
-                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: api});
-                })
-        }
-        if (prevState.pol !== this.state.pol) {
-            const api = `${Config.api.baseUrl}v1/proizvod?start=${this.state.start}&pol=${this.state.pol}`;
-            axios.get(api)
-                .then(res => {
-                    this.setState({products: res.data.data.proizvodi, total: res.data.data.total, apiState: api});
-                })
-        }
     }
 
     handlePageChange(pageNumber: any) {
+        console.log('uslo');
         this.setState({activePage: pageNumber});
         this.setState({start: Number(pageNumber*20-19)});
+        store.dispatch(setStartSearchParams(pageNumber*20-19));
+    }
+
+    iteratePages() {
+        let pages = [];
+        for (let i = 1; i <= this.state.total/10; i++) {
+            pages.push(<li className="cursor-pointer" onClick={()=>this.handlePageChange(i)}><a className="page-link color-tamara">{i}</a></li>);
+        }
+        return pages;
     }
 
     render() {
         return (
             <>
                 {
-                    this.state.products === null ? <Loader/> :
+                    this.state.products === null && this.state.categoriesData === null ? <Loader/> :
                         <>
                             <Header state={this}/>
-                            <Container className="justify-content-center">
+                            <Container className="justify-content-center mt-5 pt-2 mt-md-0 pt-md-0">
                                 <div className='mt-5 mb-0 breadcrumb'>
-                                    <a className='breadcrumb-item'
-                                       href="/product-list">{this.state.pol === 'zenski' ? 'Žene' : 'Muškarci'} </a>
+                                    <a className='breadcrumb-item' onClick={()=> {
+                                        // @ts-ignore
+                                        store.dispatch(clearSearchParams());
+                                        store.dispatch(setPolSearchParams(this.props.searchParams.pol ? this.props.searchParams.pol : "zenski"));
+                                    }}>{this.props.searchParams.pol === 'zenski' ? 'Žene' : 'Muškarci'} </a>
                                     {
-                                        this.state.kategorija !== null &&
-                                        <a onClick={() => this.setState({
-                                            renderKategorija: !this.state.renderKategorija,
-                                            tip: null
-                                        })}
-                                           className='breadcrumb-item'>{`${filtersData.filters.woman.categories.find((item: any) => item.value === this.state.kategorija).label}`}</a>
+                                        this.props.searchParams.kategorija !== 0 &&
+                                        <a
+                                            onClick={() => store.dispatch(setKategorijaTipSearchParam(Number(this.props.searchParams.kategorija), 0))}
+                                           className='breadcrumb-item'>{firstLetter(`${this.state.categoriesData?.find((item: any) => item.value === this.props.searchParams.kategorija)?.label}`)}</a>
                                     }
                                     {
-                                        this.state.tip !== null && this.state.kategorija !== null &&
+                                        this.props.searchParams.tip !== 0 &&
                                         <a href="/product-list"
-                                           className='breadcrumb-item'>{`${filtersData.filters.woman.categories.find((item: any) => item.value === this.state.kategorija).types.find((item: any) => item.value === this.state.tip).label}`}</a>
+                                           className='breadcrumb-item'>{firstLetter(`${this.state.categoriesData?.find((item: any) => item.value === this.props.searchParams.kategorija)?.tip.find((item: any) => item.value === this.props.searchParams.tip)?.label}`)}</a>
                                     }
                                 </div>
                                 <Row>
                                     <Col xs="12" md="3" className="filters mt-4 d-none d-md-block">
                                         <div className="filter-name rounded-3 text-center pt-3">
-                                            <a href="/product-list">{this.state.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
+                                            <a onClick={()=>window.location.reload()}>{this.state.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
                                         </div>
                                         <div className="filter-section ps-3 pt-4">
                                             {
-                                                filtersData.filters.woman.categories.map((category: any) => {
+                                                this.state.categoriesData?.map((catData: any) => {
                                                     return (
-                                                        <Filter filter={category} parent={this}/>
+                                                        <Filter filter={catData} parent={this}/>
                                                     );
                                                 })
                                             }
-                                            {/*<div className='delete-filters'>*/}
-                                            {/*    OBRISI FILTERE*/}
-                                            {/*</div>*/}
                                         </div>
                                         <div className="filter-name rounded-3 text-center pt-3">
                                             <p>FILTERI</p>
@@ -262,15 +224,25 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
                                             }
                                         </Row>
                                     </Col>
-                                    <Pagination
-                                        itemClass='page-item'
-                                        linkClass="page-link"
-                                        activePage={this.state.activePage}
-                                        itemsCountPerPage={20}
-                                        totalItemsCount={this.state.total}
-                                        pageRangeDisplayed={5}
-                                        onChange={this.handlePageChange.bind(this)}
-                                    />
+                                </Row>
+                                <Row className='mt-5'>
+                                    <nav aria-label="Page navigation example">
+                                        <ul className="pagination cursor-pointer color-tamara">
+                                            <li onClick={()=>this.handlePageChange(this.state.activePage-1)}>
+                                                <p className="page-link color-tamara" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </p>
+                                            </li>
+                                            {
+                                                this.iteratePages()
+                                            }
+                                            <li onClick={()=>this.handlePageChange(this.state.activePage+1)}>
+                                                <a className="page-link color-tamara" href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </Row>
                             </Container>
                             <Footer/>
@@ -284,18 +256,14 @@ export class ProductListPage extends Component<ProductListProps, IState, {}> {
 
 const mapStateToProps = (state: AppState) => {
     return {
-        products: state.products.items
+        searchParams: state.searchParams
     };
 };
-
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => bindActionCreators(
     {
         requestFetchAllProducts,
     }, dispatch
 );
-
-export default (withRouter(connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ProductListPage)));
+// @ts-ignore
+ProductListPage = connect(mapStateToProps)(ProductListPage);

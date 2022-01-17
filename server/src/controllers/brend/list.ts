@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import { CustomError } from '../../utils/response/custom-error/CustomError';
 
 import { BrendSifrarnik } from '../../typeorm/entities/Brend';
-import {Proizvod} from "../../typeorm/entities/Proizvod";
 
 export const list = async (req: Request, res: Response, next: NextFunction) => {
     const brendSifrarnikRepository = getRepository(BrendSifrarnik);
@@ -28,7 +27,7 @@ const makeResponseData = (items: any): any => {
 
 const makeSingleResponseItem = (item: any): any => {
     return {
-        value: item.id,
-        label: item.naziv,
+        id: item.id,
+        naziv: item.naziv,
     };
 };

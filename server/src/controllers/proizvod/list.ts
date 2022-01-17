@@ -7,7 +7,7 @@ import {CustomError} from '../../utils/response/custom-error/CustomError';
 const COUNT = 20;
 
 export const list = async (req: Request, res: Response, next: NextFunction) => {
-    const {start, searchTerm = null, pol, tip, kategorija} = req.query;
+    const {start, searchTerm = null, pol, tip, kategorija, count = 20} = req.query;
     const filters = req.query.filters ? JSON.parse(req.query.filters.toString()) : null;
 
     try {
@@ -22,10 +22,10 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
             .innerJoinAndSelect('proizvod.proizvodSlike', 'slike')
             .innerJoinAndSelect('proizvod.kategorijaTipPodtip', 'kategorijaTipPodTip')
             .innerJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
-            .innerJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
-            .innerJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
+            .leftJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
+            .leftJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
             .skip(Number(start) - 1)
-            .take(COUNT)
+            .take(Number(count))
             .andWhere(searchTerm ? `proizvod.naziv ILike '%${searchTerm}%'` : 'TRUE')
             .andWhere(pol ? `proizvod.rod = ${ePol[pol.toString()]}` : 'TRUE')
             .andWhere(filters?.boje ? `bojeNaziv.id in (${filters.boje})` : 'TRUE')
@@ -37,6 +37,7 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
         const returnObject = {proizvodi: makeResponseData(proizvodData[0]), total: proizvodData[1]};
         res.customSuccess(200, 'List of products.', returnObject);
     } catch (err) {
+        console.log(err);
         const customError = new CustomError(400, 'Raw', `Can't retrieve list of products.`, null, err);
         return next(customError);
     }
@@ -65,7 +66,7 @@ const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
         moda: item.moda,
         rod: getRod(item),
         kategorija: item.kategorijaTipPodtip[0]?.forKategorijaSifrarnik.naziv,
-        tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik.naziv,
+        tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik?.naziv,
         podtip: getPodtip(item),
     };
 };
@@ -103,7 +104,7 @@ const getRod = (proizvod: Proizvod): string => {
     switch (proizvod.rod) {
         case 1:
             return 'ženski';
-        case 2:
+        case 0:
             return 'muški';
         case 3:
             return 'unisex';
@@ -113,11 +114,11 @@ const getRod = (proizvod: Proizvod): string => {
 };
 
 const getPodtip = (proizvod: Proizvod): string[] => {
-    return proizvod.kategorijaTipPodtip?.map((proizvodPodtip) => proizvodPodtip.forPodtipSifrarnik.naziv);
+    return proizvod.kategorijaTipPodtip?.map((proizvodPodtip) => proizvodPodtip.forPodtipSifrarnik?.naziv);
 };
 
 enum ePol {
     'zenski' = 1,
-    'muski' = 2,
-    'unisex' = 3,
+    'muski' = 0,
+    'unisex' = 2,
 }

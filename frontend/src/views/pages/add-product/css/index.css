@@ -3,3 +3,17 @@
     position: absolute;
     background-color: #fbecda;
 }
+
+.product-list {
+    height: 500px;
+    width: 90%;
+    overflow-y: scroll;
+}
+
+.bg-masa {
+    background-color: #e3dad5;
+}
+
+.popup-delete {
+ top: 600px;
+}

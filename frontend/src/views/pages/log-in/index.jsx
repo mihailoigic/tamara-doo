@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import '../../../assets/css/styles.css';
-import labels from '../../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -9,23 +8,30 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Config from "../../../config/config";
 import axios from "axios";
+import querystring from "querystring";
+import history from "../../../utilities/history";
 
 function LogInPage() {
-    const [users, setUsers] = useState(null);
+    const [notValidLogin, setNotValidLogin] = useState(false);
 
-    function handleSubmit(event) {
-        const form = event.currentTarget;
-        const username = form.formBasicEmail.value;
-        const password = form.formBasicPassword.value;
+    function handleSubmit() {
+        const username = document.getElementById('formBasicEmail').value;
+        const password = document.getElementById('formBasicPassword').value;
 
-        const headers = {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IldhbHRlciBXaGl0ZSIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicm9sZSI6IkFETUlOSVNUUkFUT1IiLCJjcmVhdGVkX2F0IjoiMjAyMS0xMS0wN1QxNDozNzo0My44NzhaIiwiaWF0IjoxNjM2NjgwNTg4LCJleHAiOjE2MzY2ODE0ODh9.AMjmWmhbzj-RirjbV9wRGPBdRyvb2K4iB0kmhRwcsgs',
-        };
-        axios.get(`${Config.api.baseUrl}v1/users`, { headers })
-            .then(response => setUsers(response.data.data));
-        console.log(users);
-        if (username === users.username && password === users.password) {
-            //ubaci u store
+        try {
+            axios.post(`${Config.api.baseUrl}v1/auth/login`, querystring.stringify({
+                email: username.toString(),
+                password: password.toString(),
+            })).then((response) => {
+                if (response.status === 200) {
+                    sessionStorage.setItem('BearerToken', response.data.data);
+                    history.push('/admin-page');
+                } else {
+                    setNotValidLogin(true);
+                }
+            });
+        } catch (err) {
+            setNotValidLogin(true);
         }
     }
 
@@ -33,7 +39,11 @@ function LogInPage() {
         <>
             <Header />
             <Container className="mt-5 justify-content-center">
-                <Form onSubmit={handleSubmit}>
+                {
+                    notValidLogin &&
+                        <p className='p4 text-danger text-center'>Username i password se ne podudaraju!</p>
+                }
+                <Form>
                     <Form.Group as={Col} md="4" className="mb-3 mx-auto" controlId="formBasicEmail">
                         <Form.Label>Username:</Form.Label>
                         <Form.Control type="email" placeholder="Unesi username" />
@@ -48,13 +58,12 @@ function LogInPage() {
                     </Form.Group>
 
                     <div className="text-center">
-                        <Button as={Col} className="text-center" variant="primary" type="submit">
+                        <Button as={Col} className="text-center" variant="primary" type="button" onClick={()=>handleSubmit()}>
                             PRIJAVI SE
                         </Button>
                     </div>
                 </Form>
             </Container>
-            <Footer />
         </>
     );
 }

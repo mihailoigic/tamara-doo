@@ -9,17 +9,17 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const proizvodSingle = await getRepository(Proizvod)
       .createQueryBuilder('proizvod')
-      .innerJoinAndSelect('proizvod.proizvodBoja', 'boje')
-      .innerJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
-      .innerJoinAndSelect('proizvod.proizvodVelicina', 'velicina')
-      .innerJoinAndSelect('velicina.forVelicinaSifrarnik', 'velicinaNaziv')
-      .innerJoinAndSelect('proizvod.proizvodBrend', 'brend')
-      .innerJoinAndSelect('brend.forBrendSifrarnik', 'brendNaziv')
-      .innerJoinAndSelect('proizvod.proizvodSlike', 'slike')
-      .innerJoinAndSelect('proizvod.kategorijaTipPodtip', 'kategorijaTipPodTip')
-      .innerJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
-      .innerJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
-      .innerJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
+      .leftJoinAndSelect('proizvod.proizvodBoja', 'boje')
+      .leftJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
+      .leftJoinAndSelect('proizvod.proizvodVelicina', 'velicina')
+      .leftJoinAndSelect('velicina.forVelicinaSifrarnik', 'velicinaNaziv')
+      .leftJoinAndSelect('proizvod.proizvodBrend', 'brend')
+      .leftJoinAndSelect('brend.forBrendSifrarnik', 'brendNaziv')
+      .leftJoinAndSelect('proizvod.proizvodSlike', 'slike')
+      .leftJoinAndSelect('proizvod.kategorijaTipPodtip', 'kategorijaTipPodTip')
+      .leftJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
+      .leftJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
+      .leftJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
       .where(`proizvod.id = ${id}`)
       .getOne();
 
@@ -31,6 +31,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
     const returnObject = makeSingleResponseItem(proizvodSingle);
     res.customSuccess(200, 'List of products.', returnObject);
   } catch (err) {
+    console.log(err)
     const customError = new CustomError(400, 'Raw', `Can't retrieve list of products.`, null, err);
     return next(customError);
   }
@@ -39,7 +40,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
 const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
   return <proizvodResponseModel>{
     id: item.id,
-    brend: item.proizvodBrend.forBrendSifrarnik.naziv,
+    brend: item.proizvodBrend?.forBrendSifrarnik.naziv,
     naziv: item.naziv,
     opis: item.opis,
     boje: getBoje(item),
@@ -50,7 +51,7 @@ const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
     moda: item.moda,
     rod: getRod(item),
     kategorija: item.kategorijaTipPodtip[0]?.forKategorijaSifrarnik.naziv,
-    tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik.naziv,
+    tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik?.naziv,
     podtip: getPodtip(item),
   };
 };
@@ -97,5 +98,5 @@ const getRod = (proizvod: Proizvod): string => {
 };
 
 const getPodtip = (proizvod: Proizvod): string[] => {
-  return proizvod.kategorijaTipPodtip.map((proizvodPodtip) => proizvodPodtip.forPodtipSifrarnik.naziv);
+  return proizvod.kategorijaTipPodtip?.map((proizvodPodtip) => proizvodPodtip.forPodtipSifrarnik?.naziv);
 };

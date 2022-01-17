@@ -3,7 +3,6 @@
     src: url(../../../assets/fonts/Raleway-Medium.ttf);
 }
 
-
 .filters {
     height: 1000px;
 }
@@ -18,6 +17,14 @@
 .filter-section {
     font-family: Raleway-Medium;
     width: 100%;
+}
+
+.color-tamara {
+    color: black;
+}
+
+.color-tamara:hover {
+    color: black;
 }
 
 .pagination {

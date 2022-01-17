@@ -31,11 +31,11 @@ export default function Slider() {
 
     setTimeout(() => {
         nextSlide();
-    }, 10000);
+    }, 5000);
 
     return (
         <>
-            <div className="container-slider">
+            <div className="container-slider d-none d-md-block">
                 {dataSlider.map((obj, index) => {
                     return (
                         <div
@@ -51,7 +51,7 @@ export default function Slider() {
                 })}
 
                 <div className="container-dots">
-                    {Array.from({ length: 5 }).map((item, index) => (
+                    {Array.from({ length: 4 }).map((item, index) => (
                         <div
                             onClick={() => moveDot(index + 1)}
                             className={slideIndex === index + 1 ? "dot active" : "dot"}

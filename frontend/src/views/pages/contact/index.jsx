@@ -15,7 +15,7 @@ function ContactPage() {
     return (
         <>
             <Header />
-            <Container className="mt-5 ">
+            <Container className="mt-5 pt-xs-5">
                 <p className="h3 ff-releway mb-3">{labels.contact}</p>
                 <Row>
                     <Col>

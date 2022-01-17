@@ -10,6 +10,13 @@ import podtip from "./podtip";
 import proizvod from "./proizvod";
 import tip from "./tip";
 import kategorijatip from "./kategorijatip";
+import proizvodVelicine from "./proizvodVelicine";
+import proizvodBoje from "./proizvodBoje";
+import proizvodBrend from "./proizvodBrend";
+import proizvodSlike from "./proizvodSlike";
+import kategorijaTipPodtip from "./kategorijaTipPodtip";
+import proizvodLast from "./proizvodLast";
+import emailList from "./emailList";
 
 const router = Router();
 
@@ -24,5 +31,14 @@ router.use('/tip', tip);
 router.use('/podtip', podtip);
 router.use('/proizvod', proizvod);
 router.use('/kategorijatip', kategorijatip);
+router.use('/proizvod-last', proizvodLast);
+router.use('/email-list', emailList);
+
+
+router.use('/proizvod/velicine', proizvodVelicine);
+router.use('/proizvod/boje', proizvodBoje);
+router.use('/proizvod/brend', proizvodBrend);
+router.use('/proizvod/slike', proizvodSlike);
+router.use('/proizvod/kategorijatippodtip', kategorijaTipPodtip);
 
 export default router;

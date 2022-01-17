@@ -9,7 +9,6 @@ const apiMiddleware: Middleware = (store: MiddlewareAPI) => (next: Dispatch) => 
 
     if (action.type === ActionTypes.API_REQUEST) {
         const { entity } = action.payload.meta;
-        localStorage.setItem("latestRequest", JSON.stringify(action.payload.meta));
         try {
             const response = await HttpRequest.request(action.payload.meta);
             store.dispatch(apiSuccess(response.data, entity, action.payload.meta.params, action.payload.meta.data));

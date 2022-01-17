@@ -7,10 +7,10 @@ import { KategorijeSifrarnik } from '../../typeorm/entities/Kategorije';
 export const list = async (req: Request, res: Response, next: NextFunction) => {
     const kategorijeSifrarnikRepository = getRepository(KategorijeSifrarnik);
 
-    const kategorijeTipData = await getRepository(KategorijeSifrarnik)
-        .createQueryBuilder('proizvod')
-        .innerJoinAndSelect('proizvod.proizvodBoja', 'boje')
-        .innerJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
+    // const kategorijeTipData = await getRepository(KategorijeSifrarnik)
+    //     .createQueryBuilder('proizvod')
+    //     .innerJoinAndSelect('proizvod.proizvodBoja', 'boje')
+    //     .innerJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
 
     try {
         const kategorije = await kategorijeSifrarnikRepository.find();

@@ -5,7 +5,7 @@ import { apiRequest } from "../../api/actions";
 // import { getSessionData } from "../../sessionData/actions";
 // import { setPageDataProductListAction } from "../../pageData/actions";
 // import { createSearchParamsProductListAction } from "../../searchParams/actions";
-import { setProductsAction, enrichProductsAction } from './actions';
+import {setProductsAction, enrichProductsAction} from './actions';
 // import { setLoader } from "../../ui/actions";
 import _ from "lodash";
 

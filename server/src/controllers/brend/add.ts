@@ -11,7 +11,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
         const brandExists = await getManager().findOne(BrendSifrarnik, { naziv: brend.naziv});
         if(!brandExists){
             const brendSaved = await getManager().save(BrendSifrarnik, brend);
-            res.customSuccess(200, 'boja added.', { code: 0, id: brendSaved.id});
+            res.customSuccess(200, 'brend added.', { code: 0, id: brendSaved.id});
         } else{
             const customError = new CustomError(400, 'Raw', `Brend already exists!`, null);
             return next(customError);

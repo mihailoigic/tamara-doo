@@ -1,3 +1,6 @@
+import {ISifrarnik} from "../entities/sifrarnik/types";
+import Sifrarnik from "../entities/sifrarnik/Sifrarnik";
+
 export const detectIE = (): number | boolean => {
     const userAgent = window.navigator.userAgent;
     const msie = userAgent.indexOf('MSIE ');
@@ -35,4 +38,24 @@ export const firstLetter = (string: string): string => {
     return lower.charAt(0).toUpperCase() + lower.slice(1);
 }
 
+export const prepareForSelect = (niz: any): ISifrarnik[] | undefined => {
+    let sifrarnikArray: ISifrarnik[] = [];
+    niz?.forEach((item: any)=>{
+        sifrarnikArray.push(new Sifrarnik(item.naziv, item.id));
+    });
+    return sifrarnikArray;
+}
 
+export const filterSearchParams = (searchParams: any) => {
+    let api = `?start=${searchParams.start}&pol=${searchParams.pol}`;
+    if (searchParams.kategorija !== 0) {
+        api+=`&kategorija=${searchParams.kategorija}`;
+    }
+    if (searchParams.tip !== 0) {
+        api+=`&tip=${searchParams.tip}`;
+    }
+    if (searchParams.search !== "") {
+        api+=`&searchTerm=${searchParams.search}`;
+    }
+    return api;
+}

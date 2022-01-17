@@ -10,16 +10,22 @@
     margin: 20px;
     padding: 0;
     cursor: pointer;
+    box-shadow: 0 3px 6px 0 rgb(0, 0, 0, 0.16);
 }
 
 .product-info-container:hover {
-    box-shadow: 0px 0px 4px #888888;
+    box-shadow: 0 0px 6px 0 rgb(0, 0, 0, 0.40);
+}
+
+.shadow {
+    box-shadow: 0 3px 6px 0 rgb(0, 0, 0, 0.16);
 }
 
 .product-img {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 200px;
+    height: 266px;
 }
 
 .bold-arial {

@@ -1,13 +1,14 @@
 import { Router } from 'express';
 
 import { list, add, destroy } from '../../controllers/velicine';
+import {checkJwt} from "../../middleware/checkJwt";
 
 const router = Router();
 
 router.get('/',  list);
 
-router.post('/', add);
+router.post('/', [checkJwt], add);
 
-router.delete('/:id', destroy);
+router.delete('/:id', [checkJwt], destroy);
 
 export default router;

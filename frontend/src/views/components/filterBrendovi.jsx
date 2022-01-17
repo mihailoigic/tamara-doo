@@ -93,19 +93,18 @@ export default function FilterBrendovi(props) {
                 <div className='filter-boje ps-3 pe-3' ref={subSectionRef}
                      style={filterActive && !props.state.state.filterState ? {height: subSectionRef.current.scrollHeight - 100 + "px"} : {height: "0px"}}>
                     {
-                        brendovi !== null &&
-                        brendovi.map((item) => {
+                        brendovi?.map((item) => {
                             return (
                                 <>
                                     <Row>
                                         <Col md='6'>
-                                            <label htmlFor={item.label}>{item.label}</label>
+                                            <label htmlFor={item.naziv}>{item.naziv}</label>
                                         </Col>
                                         <Col md='6'>
                                             <input
                                                 className='float-end me-2 cursor-pointer'
-                                                name={item.label}
-                                                value={item.value}
+                                                name={item.naziv}
+                                                value={item.id}
                                                 type="checkbox"
                                                 onChange={handleInputChange}/>
                                         </Col>

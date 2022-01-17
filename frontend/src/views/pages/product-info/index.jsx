@@ -12,7 +12,7 @@ function ProductCard(props) {
     const moda = product.moda ? 'Moda' : 'Klasika';
     return (
         <>
-            <div className="product-info-container" onClick={() => history.push('/product')} onMouseOver={()=>setShowSizes(true)} onMouseLeave={()=>setShowSizes(false)}>
+            <div className={props.shadow ? `shadow product-info-container` : `product-info-container`} onClick={() => history.push(`/product/${product.id}`)} onMouseOver={()=>setShowSizes(true)} onMouseLeave={()=>setShowSizes(false)}>
                 <div className="product">
                     <img
                         className="product-img"

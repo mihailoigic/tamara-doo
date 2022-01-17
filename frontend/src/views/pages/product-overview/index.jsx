@@ -48,12 +48,12 @@ function ProductOverviewPage() {
                 proizvod === null ? <Loader/> :
                     <>
                         <Header/>
-                        <Container className='product-overview'>
-                            <div className='cursor-pointer' onClick={()=> history.goBack()}>
+                        <Container className='product-overview mt-5 pt-5 pt-md-0'>
+                            <div className='cursor-pointer d-none d-md-block' onClick={()=> history.goBack()}>
                                 <IoArrowBackCircleSharp className='back-button'/><p className='d-inline-block nazad'>Nazad</p>
                             </div>
                             <Row>
-                                <Col xs='6' md='2' className='p-0 text-center'>
+                                <Col xs='12' md='2' className='d-none d-md-block p-0 text-center'>
                                     {
                                         proizvod !== null ?
                                         proizvod?.slike.map((slika) => {
@@ -63,9 +63,7 @@ function ProductOverviewPage() {
                                                     src={process.env.PUBLIC_URL + `/Imgs/${slika}`}
                                                     alt={slika}
                                                     onMouseEnter={()=>setDefaultSlika(slika)}
-                                                    onMouseLeave={()=>setDefaultSlika(proizvod.defaultSlika)}
                                                     onClick={() => {
-                                                        setDefaultSlika(slika);
                                                         window.scrollTo({
                                                             top: 0,
                                                             behavior: "smooth"
@@ -76,7 +74,7 @@ function ProductOverviewPage() {
                                         }) : null
                                     }
                                 </Col>
-                                <Col xs='6' md='4'>
+                                <Col xs='12' md='4'>
                                     <figure onMouseMove={(e) => handleMouseMove(e)} style={backgroundPosition}>
                                         <img
                                             className="product-overview-img rounded-3"
@@ -85,8 +83,32 @@ function ProductOverviewPage() {
                                         />
                                     </figure>
                                 </Col>
+                                <Col xs='12' md='2' className='d-block d-md-none p-0 text-center'>
+                                    <Row>
+                                        {
+                                            proizvod !== null ?
+                                                proizvod?.slike.map((slika) => {
+                                                    return (
+                                                        <Col xs='6'>
+                                                        <img
+                                                            className={slika === defaultSlika ? 'active img-item mb-3 mx-auto rounded-3 p-0' : 'img-item mb-3 mx-auto rounded-3 p-0'}
+                                                            src={process.env.PUBLIC_URL + `/Imgs/${slika}`}
+                                                            alt={slika}
+                                                            onClick={() => {
+                                                                setDefaultSlika(slika);
+                                                                window.scrollTo({
+                                                                    top: 0,
+                                                                    behavior: "smooth"
+                                                                });
+                                                            }}
+                                                        /></Col>
+                                                    );
+                                                }) : null
+                                        }
+                                    </Row>
+                                </Col>
                                 <Col xs='12' md='6' className='float-start'>
-                                    <p className="h4 fw-bold">{`${proizvod.rod.toUpperCase()} ${proizvod.kategorija.toUpperCase()} ${proizvod?.tip.toUpperCase()} ${proizvod.naziv.toUpperCase()}`}</p>
+                                    <p className="h4 fw-bold">{`${proizvod.kategorija.toUpperCase()} ${proizvod.tip?.toUpperCase()} ${proizvod.naziv.toUpperCase()}`}</p>
                                     <div className='mt-3 hr'/>
                                     <p className='mt-3 mb-0'>Brend : {proizvod.brend.toUpperCase()}</p>
                                     <p className='mt-3 mb-0'>Veličine :</p>
@@ -95,9 +117,9 @@ function ProductOverviewPage() {
                                         <li className='d-inline-block'>
                                             <p className='mt-3 mb-0'>Stil : {proizvod.moda ? 'Moda' : 'Klasika'}</p>
                                         </li>
-                                        <li className='d-inline-block'>
-                                            <p className='ps-5 mt-3 mb-0'>Novo : {proizvod.novo ? ' DA' : 'NE'}</p>
-                                        </li>
+                                        {/*<li className='d-inline-block'>*/}
+                                        {/*    <p className='ps-5 mt-3 mb-0'>Novo : {proizvod.novo ? ' DA' : 'NE'}</p>*/}
+                                        {/*</li>*/}
                                     </ul>
                                     <p className='mt-3 mb-0'>Boje :</p>
                                     <Boje nameOfClass='color-item' product={proizvod} imgClass='rounded-3'

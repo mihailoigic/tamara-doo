@@ -11,7 +11,15 @@ import instagramIcon from '../../assets/img/instagram-icon.svg';
 import twitterIcon from '../../assets/img/twitter-icon.svg';
 import labels from '../../language/srb';
 import history from '../../utilities/history';
+import axios from "axios";
+import Config from "../../config/config";
 
+function handleOnSubmit(e) {
+    e.preventDefault();
+    axios.post(`${Config.api.baseUrl}v1/email-list`, {
+        email: e.target.emailLista.value
+    });
+}
 
 export default function Footer() {
     return (
@@ -19,9 +27,9 @@ export default function Footer() {
             <Container fluid>
                 <div className="pt-5 text-center">
                     <p className="h3 pb-4 ff-releway">Budi u toku sa novim kolekcijama, sezonskim specijalima i promocijama.</p>
-                    <Form>
-                        <Form.Control className="w-30 mb-3" type="email" placeholder="Unesite svoju email adresu" />
-                        <Button variant="primary">PRIJAVI ME</Button>
+                    <Form onSubmit={(e)=>handleOnSubmit(e)}>
+                        <Form.Control name="emailLista" className="w-30 mb-3 sign-me-input" type="email" placeholder="Unesite svoju email adresu" />
+                        <Button type='submit' className="sign-me-btn" variant="primary">PRIJAVI ME</Button>
                     </Form>
                 </div>
             </ Container>

@@ -20,9 +20,6 @@ class HttpRequest {
         }
 
         options.withCredentials = true;
-
-        // Deal with IE aggressive caching
-        // http://stackoverflow.com/questions/2848945/prevent-ie-caching
         if (detectIE() && options.method === 'get') {
             options.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
             options.headers.Pragma = 'no-cache';

@@ -18,6 +18,7 @@ import {KategorijaTipPodtip} from "./KategorijaTipPodtip";
 
 @Entity('proizvod')
 export class Proizvod {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -50,6 +51,9 @@ export class Proizvod {
 
   @Column()
   rod: number;
+
+  @Column()
+  cena: number;
 
   @OneToMany(() => ProizvodBoja, (proizvodBoja) => proizvodBoja.forBojaProizvod)
   proizvodBoja: ProizvodBoja[];

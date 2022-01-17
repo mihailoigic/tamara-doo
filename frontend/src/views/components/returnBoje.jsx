@@ -6,7 +6,7 @@ export default function Boje(props) {
     return (
         <ul className='d-inline-block'>
             {
-                props.product.boje.map((boja) => {
+                props.product.boje?.map((boja) => {
                     return (
                         <li className={props.nameOfClass}>
                             <img
