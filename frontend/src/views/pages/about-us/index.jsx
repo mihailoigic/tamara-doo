@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import '../../../assets/css/styles.css';
 import labels from '../../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Image from 'react-bootstrap/Image';
-import logo from '../../../assets/img/logo.jpg';
+import {scrollToTop} from "../../../utilities/util";
 
 function AboutUsPage() {
+
+    useEffect(() => {
+        scrollToTop();
+    }, [])
 
     return (
         <>

@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import Container from 'react-bootstrap/Container';
 import axios from "axios";
 import Config from "../../../config/config";
+import {scrollToTop} from "../../../utilities/util";
 
 function EmailList() {
     const [emails, setEmails] = useState(null);
 
     useEffect(() => {
+        scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/email-list`, {
             headers: {"Authorization": sessionStorage.getItem("BearerToken")}
         }).then(res => {

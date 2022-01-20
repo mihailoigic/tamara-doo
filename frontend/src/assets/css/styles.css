@@ -90,7 +90,7 @@
 
 .popup-delete {
     z-index: 2;
-    width: 30%;
+    width: 45%;
     height: 20%;
     border-radius: 20px;
     border: 1px solid #86b7fe;
@@ -468,9 +468,10 @@ ul li:hover .man {
 }
 
 .gender-text {
-    opacity: 70%;
+    z-index: 1;
     background-color: #e3dad5;
     padding: 5px 10px 5px 10px;
+    border-radius: 15px;
     position: absolute;
     top: 50%;
     left: 50%;

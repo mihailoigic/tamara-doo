@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import '../../../assets/css/styles.css';
 import Container from 'react-bootstrap/Container';
 import Header from "../../components/header";
@@ -10,8 +10,14 @@ import Config from "../../../config/config";
 import axios from "axios";
 import querystring from "querystring";
 import history from "../../../utilities/history";
+import {scrollToTop} from "../../../utilities/util";
 
 function LogInPage() {
+
+    useEffect(() => {
+        scrollToTop();
+    }, [])
+
     const [notValidLogin, setNotValidLogin] = useState(false);
 
     function handleSubmit() {
@@ -38,7 +44,7 @@ function LogInPage() {
     return (
         <>
             <Header />
-            <Container className="mt-5 justify-content-center">
+            <Container className="justify-content-center mt-20">
                 {
                     notValidLogin &&
                         <p className='p4 text-danger text-center'>Username i password se ne podudaraju!</p>

@@ -7,17 +7,27 @@ import Col from 'react-bootstrap/Col';
 import '../../assets/css/styles.css';
 import CenterMode from "./itemCarousel";
 import history from "../../utilities/history";
+import {useEffect} from "react";
+import {scrollToTop} from "../../utilities/util";
+import store from "../../app/store";
+import {setPolSearchParams} from "../../app/store/searchParams/actions";
 
 export default function Root() {
+
+    useEffect(() => {
+        scrollToTop();
+    }, [])
+
     return (
         <>
             <Header />
             <Slider />
-            <Container className='mt-5 mb-5' fluid>
+            <Container className='mt-1 mb-5' fluid>
                 <Row>
-                    <Col md='6'>
+                    <Col md='6 mt-3'>
                         <div className='gender-box mt-50-mobile cursor-pointer' onClick={() => {
-                            history.push('/product-list', {pol: 'zenski'})
+                            history.push('/product-list');
+                            store.dispatch(setPolSearchParams('zenski'));
                         }}>
                             <p className='gender-text ff-releway fs-3 fw-bold'>ŽENE</p>
                             <img
@@ -26,9 +36,10 @@ export default function Root() {
                             </img>
                         </div>
                     </Col>
-                    <Col md='6'>
+                    <Col md='6 mt-3'>
                         <div className='gender-box cursor-pointer' onClick={() => {
-                            history.push('/product-list', {pol: 'muski'})
+                            history.push('/product-list');
+                            store.dispatch(setPolSearchParams('muski'));
                         }}>
                             <img
                                 className='box-img'

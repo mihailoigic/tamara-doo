@@ -11,7 +11,7 @@ import Select from 'react-select';
 import filtersData from "../../../data/filtersData";
 import axios from "axios";
 import Config from "../../../config/config";
-import {prepareForSelect} from "../../../utilities/util";
+import {prepareForSelect, scrollToTop} from "../../../utilities/util";
 import querystring from "querystring";
 import history from "../../../utilities/history";
 
@@ -32,6 +32,7 @@ function AddProductPage() {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
+        scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/auth/login`, {
             headers: {"Authorization": sessionStorage.getItem("BearerToken")}
         }).then(res => {
@@ -230,7 +231,8 @@ function AddProductPage() {
             }
             {
                 renderPage ?
-                    <Container className="mt-5 mb-5">
+                    <div className='mt-5'>
+                    <Container className="mt-5 mb-5 mt-20">
                         <p className="mt-5 text-center h4">Dodavanje proizvoda u listu proizvoda</p>
                         <form onSubmit={handleSubmit} className="mb-5">
                             <Row className="mb-3">
@@ -365,52 +367,54 @@ function AddProductPage() {
                         }
                         <p className='text-center h4 mb-5'>Brisanje proizvoda</p>
                         <Row className='mb-4'>
-                            <Col md='4'></Col>
-                            <Col md='4'>
+                            <Col md='4 mt-3'></Col>
+                            <Col md='4 mt-3'>
                                 <input className='w-100 mt-1' type='text' id='pretraga'/>
                             </Col>
-                            <Col md='4'>
+                            <Col md='4 mt-3 text-center'>
                                 <Button className='mx-2' type='button' onClick={()=>setSearch(`&searchTerm=${document.getElementById('pretraga').value}`)}>Pretraži</Button>
                                 <Button className='mx-2' type='button' onClick={()=>setSearch('')}>Otkaži pretragu</Button>
                             </Col>
                         </Row>
                         <Row>
+                            <div className='product-list-nav mx-auto'>
+                            <Row className='bg-masa text-center'>
+                                <Col md='1' className='pt-3 p-0 col-2'>
+                                    <p>{`ID`}</p>
+                                </Col>
+                                <Col md='3' className='pt-3 p-0 col-2'>
+                                    <p>{`NAZIV`}</p>
+                                </Col>
+                                <Col md='3' className='pt-3 p-0 col-2'>
+                                    <p>{`BREND`}</p>
+                                </Col>
+                                <Col md='3' className='pt-3 p-0 col-3'>
+                                    <p>{`KATEGORIJA`}</p>
+                                </Col>
+                                <Col md='2' className='pt-3 p-0 col-3'>
+                                    <p>{`BRISANJE`}</p>
+                                </Col>
+                            </Row>
+                            </div>
                             <div className='product-list mx-auto'>
-                                <Row className='bg-masa text-center'>
-                                    <Col md='1' className='pt-3 p-0'>
-                                        <p>{`ID`}</p>
-                                    </Col>
-                                    <Col md='3' className='pt-3 p-0'>
-                                        <p>{`NAZIV`}</p>
-                                    </Col>
-                                    <Col md='3' className='pt-3 p-0'>
-                                        <p>{`BREND`}</p>
-                                    </Col>
-                                    <Col md='3' className='pt-3 p-0'>
-                                        <p>{`KATEGORIJA`}</p>
-                                    </Col>
-                                    <Col md='2' className='pt-3 p-0'>
-                                        <p>{`BRISANJE`}</p>
-                                    </Col>
-                                </Row>
                                 {
                                     proizvodi && proizvodi.proizvodi.map((proizvod) => {
                                         return(
                                             <>
                                             <Row className='text-center border-bottom-black'>
-                                                <Col md='1' className='pt-3 p-0'>
+                                                <Col md='1' className='pt-3 p-0 col-2'>
                                                     <p>{`${proizvod.id}`}</p>
                                                 </Col>
-                                                <Col md='3' className='pt-3 p-0'>
+                                                <Col md='3' className='pt-3 p-0 col-2'>
                                                     <p>{`${proizvod.naziv}`}</p>
                                                 </Col>
-                                                <Col md='3' className='pt-3 p-0'>
+                                                <Col md='3' className='pt-3 p-0 col-2'>
                                                     <p>{`${proizvod.brend}`}</p>
                                                 </Col>
-                                                <Col md='3' className='pt-3 p-0'>
+                                                <Col md='3' className='pt-3 p-0 col-3'>
                                                     <p>{`${proizvod.kategorija}`}</p>
                                                 </Col>
-                                                <Col md='2' className='pt-2 p-0'>
+                                                <Col md='2' className='pt-2 p-0 col-3'>
                                                     <Button
                                                         variant="danger"
                                                         onClick={() => {
@@ -427,8 +431,9 @@ function AddProductPage() {
                                 }
                             </div>
                         </Row>
-                    </Container> :
-                    <p className='text-center h4 mt-5'>Molimo ulogujte se <a href="" className="link"
+                    </Container>
+                    </div> :
+                    <p className='text-center h4 mt-20'>Molimo ulogujte se <a href="" className="link"
                                                                              onClick={() => history.push('/admin')}>ovde</a>
                     </p>
             }

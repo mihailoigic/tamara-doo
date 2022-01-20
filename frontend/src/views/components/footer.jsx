@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import '../../assets/css/styles.css';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -22,6 +22,7 @@ function handleOnSubmit(e) {
 }
 
 export default function Footer() {
+    const [showSuccess, setShowSuccess] = useState(false);
     return (
         <>
             <Container fluid>
@@ -29,7 +30,11 @@ export default function Footer() {
                     <p className="h3 pb-4 ff-releway">Budi u toku sa novim kolekcijama, sezonskim specijalima i promocijama.</p>
                     <Form onSubmit={(e)=>handleOnSubmit(e)}>
                         <Form.Control name="emailLista" className="w-30 mb-3 sign-me-input" type="email" placeholder="Unesite svoju email adresu" />
-                        <Button type='submit' className="sign-me-btn" variant="primary">PRIJAVI ME</Button>
+                        {
+                            showSuccess &&
+                            <p className='text-success text-center mt-3 fw-bold'>Uspešno ste se prijavili na mailing listu!</p>
+                        }
+                        <Button type='submit' className="sign-me-btn" variant="primary" onClick={()=>setShowSuccess(true)}>PRIJAVI ME</Button>
                     </Form>
                 </div>
             </ Container>

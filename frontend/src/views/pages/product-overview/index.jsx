@@ -14,10 +14,16 @@ import {useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 import {IoArrowBackCircleSharp} from 'react-icons/io5';
 import history from "../../../utilities/history";
+import {scrollToTop} from "../../../utilities/util";
 
 function ProductOverviewPage() {
     const {id} = useParams();
     const [proizvod, setProizvod] = useState(null);
+
+    useEffect(() => {
+        scrollToTop();
+    }, [])
+
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/proizvod/${id}`)
@@ -127,7 +133,7 @@ function ProductOverviewPage() {
 
                                     <div className='mt-3 hr'/>
                                     {
-                                        proizvod.opis !== '' &&
+                                        proizvod.opis !== ' ' &&
                                         <p className='mt-3 mb-0 text-justify'>Opis : {proizvod.opis}</p>
                                     }
                                 </Col>

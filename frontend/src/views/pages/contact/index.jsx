@@ -1,21 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import '../../../assets/css/styles.css';
 import './css/styles.css';
 import labels from '../../../language/srb';
 import Container from 'react-bootstrap/Container';
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Image from 'react-bootstrap/Image';
-import logo from '../../../assets/img/logo.jpg';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import {scrollToTop} from "../../../utilities/util";
 
 function ContactPage() {
+
+    useEffect(() => {
+        scrollToTop();
+    }, [])
 
     return (
         <>
             <Header />
-            <Container className="mt-5 pt-xs-5">
+            <Container className="mt-5 mt-20 pt-xs-5">
                 <p className="h3 ff-releway mb-3">{labels.contact}</p>
                 <Row>
                     <Col>

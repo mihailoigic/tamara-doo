@@ -16,6 +16,7 @@ import Loader from "../../components/Loader";
 import history from "../../../utilities/history";
 import querystring from "querystring";
 import Select from "react-select";
+import {scrollToTop} from "../../../utilities/util";
 
 
 export default function AddToDBPage(props) {
@@ -30,6 +31,7 @@ export default function AddToDBPage(props) {
 
     let location = useLocation();
     useEffect(() => {
+        scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/auth/login`, {
             headers: {"Authorization": sessionStorage.getItem("BearerToken")}
         }).then(res => {
@@ -248,7 +250,7 @@ export default function AddToDBPage(props) {
                             </>
                     }
                 </> :
-                <p className='text-center h4 mt-5'>Molimo ulogujte se <a href="" className="link" onClick={()=>history.push('/admin')}>ovde</a></p>
+                <p className='text-center h4  mt-20'>Molimo ulogujte se <a href="" className="link" onClick={()=>history.push('/admin')}>ovde</a></p>
         }
         </>
     );

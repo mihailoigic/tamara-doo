@@ -10,9 +10,9 @@ const config: ConnectionOptions = {
   database: process.env.POSTGRES_DB,
   synchronize: false,
   logging: true,
-  entities: ['src/typeorm/entities/**/*.ts'],
-  migrations: ['src/typeorm/migrations/**/*.ts'],
-  subscribers: ['src/typeorm/subscriber/**/*.ts'],
+  entities: ['typeorm/entities/**/*.*'],
+  migrations: ['typeorm/migrations/**/*.*'],
+  subscribers: ['typeorm/subscriber/**/*.*'],
   cli: {
     entitiesDir: 'src/typeorm/entities',
     migrationsDir: 'src/typeorm/migrations',

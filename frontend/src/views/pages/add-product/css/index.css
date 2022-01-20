@@ -10,6 +10,27 @@
     overflow-y: scroll;
 }
 
+.product-list-nav {
+    width: 90%;
+}
+
+.mt-20 {
+    margin-top: 25px !important;
+}
+
+
+@media screen and (max-width: 700px){
+    .product-list {
+        width: 100%;
+    }
+    .product-list-nav {
+        width: 100%;
+    }
+    .mt-20 {
+        margin-top: 100px !important;
+    }
+}
+
 .bg-masa {
     background-color: #e3dad5;
 }

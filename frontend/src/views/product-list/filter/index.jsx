@@ -29,6 +29,7 @@ function Filter(props) {
                             filter.tip.map((item) => {
                                 return (
                                     <p className="filter-item mt-1 mb-0" onClick={() => {
+                                        history.push('/product-list');
                                         store.dispatch(setPolSearchParams(gender));
                                         store.dispatch(setKategorijaTipSearchParam(filter.value, item.value));
                                     }}>{firstLetter(item.label)}</p>

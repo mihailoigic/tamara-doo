@@ -20,7 +20,7 @@ import Config from "../../config/config";
 import Loader from "../components/Loader";
 import FilterBoje from "../components/filterBoje";
 import FilterBrendovi from "../components/filterBrendovi";
-import {filterSearchParams, firstLetter} from "../../utilities/util";
+import {filterSearchParams, firstLetter, scrollToTop} from "../../utilities/util";
 import {ISearchParams} from "../../app/store/searchParams/types";
 import store from "../../app/store";
 import {
@@ -73,7 +73,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
     }
 
     componentDidMount(): void {
-        console.log(filterSearchParams(this.props.searchParams));
+        scrollToTop();
         const api = `${Config.api.baseUrl}v1/proizvod${filterSearchParams(this.props.searchParams)}`;
         axios.get(api)
             .then(res => {
@@ -86,6 +86,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
     }
 
     componentDidUpdate(prevProps: Readonly<ProductListProps>, prevState: Readonly<IState>, snapshot?: any) {
+        scrollToTop();
         if (prevProps.searchParams !== this.props.searchParams) {
             console.log(filterSearchParams(this.props.searchParams));
             const api = `${Config.api.baseUrl}v1/proizvod${filterSearchParams(this.props.searchParams)}`;
@@ -191,7 +192,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
                                 <Row>
                                     <Col xs="12" md="3" className="filters mt-4 d-none d-md-block">
                                         <div className="filter-name rounded-3 text-center pt-3">
-                                            <a onClick={()=>window.location.reload()}>{this.state.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
+                                            <a onClick={()=>window.location.reload()}>{this.props.searchParams.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
                                         </div>
                                         <div className="filter-section ps-3 pt-4">
                                             {
@@ -215,10 +216,12 @@ export class ProductListPage extends Component<ProductListProps, IState> {
                                             {
                                                 this.state.products?.map((product) => {
                                                     return (
+                                                        <div className='col-xs-6 col-md-6 col-lg-4 col-xl-3'>
                                                         <ProductCard
                                                             product={product}
                                                             onClick={() => history.push(`/product/${product.id}`)}
                                                         />
+                                                        </div>
                                                     );
                                                 })
                                             }
