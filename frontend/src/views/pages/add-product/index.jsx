@@ -12,7 +12,6 @@ import filtersData from "../../../data/filtersData";
 import axios from "axios";
 import Config from "../../../config/config";
 import {prepareForSelect, scrollToTop} from "../../../utilities/util";
-import querystring from "querystring";
 import history from "../../../utilities/history";
 
 function AddProductPage() {
@@ -34,7 +33,7 @@ function AddProductPage() {
     useEffect(() => {
         scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/auth/login`, {
-            headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
         }).then(res => {
             setRenderPage(res.status === 200);
         })
@@ -186,10 +185,10 @@ function AddProductPage() {
                         boje: product.boje,
                         slike: product.slike,
                     }, {
-                        headers: {'Authorization': sessionStorage.getItem('BearerToken')}
+                        headers: {'Authorization': localStorage.getItem('BearerToken')}
                     }
                 ).then((response) => {
-                    if(response.status === 200);
+                    if (response.status === 200) ;
                     alert("Uspesno dodat proizvod!");
                     window.location.reload();
                 });
@@ -201,7 +200,7 @@ function AddProductPage() {
         if (item !== null) {
             axios.delete(`${Config.api.baseUrl}v1/proizvod/${item.id}`, {
                 data: {naziv: item.naziv},
-                headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+                headers: {"Authorization": localStorage.getItem("BearerToken")}
             }).then((response) => {
                 if (response.status === 200) {
                     alert(`Uspešno obrisana komponenta: ${item.naziv}`);
@@ -232,209 +231,228 @@ function AddProductPage() {
             {
                 renderPage ?
                     <div className='mt-5'>
-                    <Container className="mt-5 mb-5 mt-20">
-                        <p className="mt-5 text-center h4">Dodavanje proizvoda u listu proizvoda</p>
-                        <form onSubmit={handleSubmit} className="mb-5">
-                            <Row className="mb-3">
-                                <Col md="2">
-                                    <Form.Label>Brend:</Form.Label>
-                                    <Select
-                                        name="brend"
-                                        options={apiBrands}
-                                        className="basic-select"
-                                        placeholder="Izaberi.."
-                                        required={true}
-                                    />
-                                </Col>
-                                <Form.Group as={Col} md="2" controlId="naziv">
-                                    <Form.Label>Naziv:</Form.Label>
-                                    <Form.Control
-                                        required
-                                        type="text"
-                                        placeholder="Naziv"
-                                    />
-                                </Form.Group>
-                                <Form.Group as={Col} md="2" controlId="rod">
-                                    <Form.Label>Pol:</Form.Label>
-                                    <Form.Select aria-label="Default select example" onChange={onChangePol}>
-                                        <option key={1} value='zenski'>Ženski</option>
-                                        <option key={2} value='muski'>Muški</option>
-                                        {/*<option key={3} value='zenski'>UNISEX</option>*/}
-                                    </Form.Select>
-                                </Form.Group>
-                                <Col md="2">
-                                    <Form.Label>Kategorija:</Form.Label>
-                                    <Select
-                                        name="kategorija"
-                                        options={apiCategories}
-                                        className="basic-select"
-                                        placeholder="Izaberi.."
-                                        classNamePrefix="Izaberi.."
-                                        onChange={onChange}
-                                    />
-                                </Col>
-                                <Col md="2">
-                                    <Form.Label>Tip:</Form.Label>
-                                    <Select
-                                        name="tip"
-                                        options={apiCategories?.find(item => {
-                                            return item.value === category
-                                        })?.tip}
-                                        className="basic-select"
-                                        placeholder="Izaberi.."
-                                        classNamePrefix="Izaberi.."
-                                    />
-                                </Col>
-                                <Col md="2">
-                                    <Form.Label>Podtip:</Form.Label>
-                                    <Select
-                                        isMulti
-                                        name="podtip"
-                                        options={filtersData.filters.woman.categories.find(item => {
-                                            return item.value === category
-                                        })?.subTypes}
-                                        className="basic-select"
-                                        placeholder="Izaberi.."
-                                    />
-                                </Col>
-                            </Row>
-                            <Row className="mb-3">
-                                <Col md="4">
-                                    <Form.Label>Veličine:</Form.Label>
-                                    <Select
-                                        isMulti
-                                        name="velicina"
-                                        options={apiSizes}
-                                        // options={filtersData.filters.sizes.find(item => {
-                                        //     return item.id === category
-                                        // })?.options}
-                                        className="basic-multi-select"
-                                        placeholder="Izaberi.."
-                                    />
-                                </Col>
-                                <Col md="4">
-                                    <Form.Label>Boje:</Form.Label>
-                                    <Select
-                                        isMulti
-                                        name="boja"
-                                        options={apiColors}
-                                        className="basic-multi-select"
-                                        placeholder="Izaberi.."
-                                    />
-                                </Col>
-                                <Form.Group as={Col} md="2" controlId="novo">
-                                    <Form.Label>Novo:</Form.Label>
-                                    <Form.Select aria-label="Default select example">
-                                        <option key={1} value='Da'>Da</option>
-                                        <option key={2} value='Ne'>Ne</option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group as={Col} md="2" controlId="moda">
-                                    <Form.Label>Moda:</Form.Label>
-                                    <Form.Select aria-label="Default select example">
-                                        <option key={1}>Da</option>
-                                        <option key={2}>Ne</option>
-                                    </Form.Select>
-                                </Form.Group>
-                                <Form.Group as={Col} md="2" controlId="cena">
-                                    <Form.Label>Cena:</Form.Label>
-                                    <Form.Control
-                                        required
-                                        type="text"
-                                        placeholder="3000"
-                                    />
-                                </Form.Group>
-                                <Col md="2">
-                                    <input
-                                        className="mt-3 pt-3"
-                                        type="file"
-                                        id="slike"
-                                        name="slike"
-                                        multiple/>
-                                </Col>
-                            </Row>
-                            <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="opis">
-                                    <Form.Label>Opis:</Form.Label>
-                                    <Form.Control type="text" defaultValue=" " required/>
-                                </Form.Group>
-                            </Row>
-                            <Button type="submit">Dodaj proizvod</Button>
-                        </form>
-                        {
-                            badSubmit &&
+                        <Container className="mt-5 mb-5 mt-20">
+                            <p className="mt-5 text-center h4">Dodavanje proizvoda u listu proizvoda</p>
+                            <form onSubmit={handleSubmit} className="mb-5">
+                                <Row className="mb-3">
+                                    <Col md="2">
+                                        <Form.Label>Brend:</Form.Label>
+                                        <Select
+                                            name="brend"
+                                            options={apiBrands}
+                                            className="basic-select"
+                                            placeholder="Izaberi.."
+                                            required={true}
+                                        />
+                                    </Col>
+                                    <Form.Group as={Col} md="2" controlId="naziv">
+                                        <Form.Label>Naziv:</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            placeholder="Naziv"
+                                        />
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="2" controlId="rod">
+                                        <Form.Label>Pol:</Form.Label>
+                                        <Form.Select aria-label="Default select example" onChange={onChangePol}>
+                                            <option key={1} value='zenski'>Ženski</option>
+                                            <option key={2} value='muski'>Muški</option>
+                                            {/*<option key={3} value='zenski'>UNISEX</option>*/}
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Col md="2">
+                                        <Form.Label>Kategorija:</Form.Label>
+                                        <Select
+                                            name="kategorija"
+                                            options={apiCategories}
+                                            className="basic-select"
+                                            placeholder="Izaberi.."
+                                            classNamePrefix="Izaberi.."
+                                            onChange={onChange}
+                                        />
+                                    </Col>
+                                    <Col md="2">
+                                        <Form.Label>Tip:</Form.Label>
+                                        <Select
+                                            name="tip"
+                                            options={apiCategories?.find(item => {
+                                                return item.value === category
+                                            })?.tip}
+                                            className="basic-select"
+                                            placeholder="Izaberi.."
+                                            classNamePrefix="Izaberi.."
+                                        />
+                                    </Col>
+                                    <Col md="2">
+                                        <Form.Label>Podtip:</Form.Label>
+                                        <Select
+                                            isMulti
+                                            name="podtip"
+                                            options={filtersData.filters.woman.categories.find(item => {
+                                                return item.value === category
+                                            })?.subTypes}
+                                            className="basic-select"
+                                            placeholder="Izaberi.."
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row className="mb-3">
+                                    <Col md="4">
+                                        <Form.Label>Veličine:</Form.Label>
+                                        <Select
+                                            isMulti
+                                            name="velicina"
+                                            options={apiSizes}
+                                            // options={filtersData.filters.sizes.find(item => {
+                                            //     return item.id === category
+                                            // })?.options}
+                                            className="basic-multi-select"
+                                            placeholder="Izaberi.."
+                                        />
+                                    </Col>
+                                    <Col md="4">
+                                        <Form.Label>Boje:</Form.Label>
+                                        <Select
+                                            isMulti
+                                            name="boja"
+                                            options={apiColors}
+                                            className="basic-multi-select"
+                                            placeholder="Izaberi.."
+                                        />
+                                    </Col>
+                                    <Form.Group as={Col} md="2" controlId="novo">
+                                        <Form.Label>Novo:</Form.Label>
+                                        <Form.Select aria-label="Default select example">
+                                            <option key={1} value='Da'>Da</option>
+                                            <option key={2} value='Ne'>Ne</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="2" controlId="moda">
+                                        <Form.Label>Moda:</Form.Label>
+                                        <Form.Select aria-label="Default select example">
+                                            <option key={1}>Da</option>
+                                            <option key={2}>Ne</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group as={Col} md="2" controlId="cena">
+                                        <Form.Label>Cena:</Form.Label>
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            placeholder="3000"
+                                        />
+                                    </Form.Group>
+                                    <Col md="2">
+                                        <input
+                                            className="mt-3 pt-3"
+                                            type="file"
+                                            id="slike"
+                                            name="slike"
+                                            multiple/>
+                                    </Col>
+                                    <Col md="5 text-center mt-4 bg-warning rounded pt-2 ms-2">
+                                        <p className={"d-inline"}>Slike imenovati u
+                                            formatu: <b><i>šifra</i>_<i>tipProizvoda</i></b> npr: [020_Podsuknja.jpg]
+                                        </p>
+                                    </Col>
+                                </Row>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} md="12" controlId="opis">
+                                        <Form.Label>Opis:</Form.Label>
+                                        <Form.Control as="textarea" defaultValue=" " required/>
+                                    </Form.Group>
+                                </Row>
+                                <Button type="submit">Dodaj proizvod</Button>
+                            </form>
+                            {
+                                badSubmit &&
                                 <p className='h4 text-center text-danger'>{`Nepravilan unos podataka! ${badSubmitDesc}`}</p>
-                        }
-                        <p className='text-center h4 mb-5'>Brisanje proizvoda</p>
-                        <Row className='mb-4'>
-                            <Col md='4 mt-3'></Col>
-                            <Col md='4 mt-3'>
-                                <input className='w-100 mt-1' type='text' id='pretraga'/>
-                            </Col>
-                            <Col md='4 mt-3 text-center'>
-                                <Button className='mx-2' type='button' onClick={()=>setSearch(`&searchTerm=${document.getElementById('pretraga').value}`)}>Pretraži</Button>
-                                <Button className='mx-2' type='button' onClick={()=>setSearch('')}>Otkaži pretragu</Button>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <div className='product-list-nav mx-auto'>
-                            <Row className='bg-masa text-center'>
-                                <Col md='1' className='pt-3 p-0 col-2'>
-                                    <p>{`ID`}</p>
+                            }
+                            <p className='text-center h4 mb-5'>Brisanje proizvoda</p>
+                            <Row className='mb-4'>
+                                <Col md='4 mt-3'></Col>
+                                <Col md='4 mt-3'>
+                                    <input className='w-100 mt-1' type='text' id='pretraga'/>
                                 </Col>
-                                <Col md='3' className='pt-3 p-0 col-2'>
-                                    <p>{`NAZIV`}</p>
-                                </Col>
-                                <Col md='3' className='pt-3 p-0 col-2'>
-                                    <p>{`BREND`}</p>
-                                </Col>
-                                <Col md='3' className='pt-3 p-0 col-3'>
-                                    <p>{`KATEGORIJA`}</p>
-                                </Col>
-                                <Col md='2' className='pt-3 p-0 col-3'>
-                                    <p>{`BRISANJE`}</p>
+                                <Col md='4 mt-3 text-center'>
+                                    <Button className='mx-2' type='button'
+                                            onClick={() => setSearch(`&searchTerm=${document.getElementById('pretraga').value}`)}>Pretraži</Button>
+                                    <Button className='mx-2' type='button' onClick={() => setSearch('')}>Otkaži
+                                        pretragu</Button>
                                 </Col>
                             </Row>
-                            </div>
-                            <div className='product-list mx-auto'>
-                                {
-                                    proizvodi && proizvodi.proizvodi.map((proizvod) => {
-                                        return(
-                                            <>
-                                            <Row className='text-center border-bottom-black'>
-                                                <Col md='1' className='pt-3 p-0 col-2'>
-                                                    <p>{`${proizvod.id}`}</p>
-                                                </Col>
-                                                <Col md='3' className='pt-3 p-0 col-2'>
-                                                    <p>{`${proizvod.naziv}`}</p>
-                                                </Col>
-                                                <Col md='3' className='pt-3 p-0 col-2'>
-                                                    <p>{`${proizvod.brend}`}</p>
-                                                </Col>
-                                                <Col md='3' className='pt-3 p-0 col-3'>
-                                                    <p>{`${proizvod.kategorija}`}</p>
-                                                </Col>
-                                                <Col md='2' className='pt-2 p-0 col-3'>
-                                                    <Button
-                                                        variant="danger"
-                                                        onClick={() => {
-                                                            setItem(proizvod);
-                                                            setShowPopup(true);
-                                                        }}>
-                                                        Obriši
-                                                    </Button>
-                                                </Col>
-                                            </Row>
-                                            </>
-                                        );
-                                    })
-                                }
-                            </div>
-                        </Row>
-                    </Container>
+                            <Row>
+                                <div className='product-list-nav mx-auto'>
+                                    <Row className='bg-masa text-center'>
+                                        <Col md='1' className='pt-3 p-0 col-2'>
+                                            <p>{`ID`}</p>
+                                        </Col>
+                                        <Col md='3' className='pt-3 p-0 col-2'>
+                                            <p>{`NAZIV`}</p>
+                                        </Col>
+                                        <Col md='2' className='pt-3 p-0 col-2'>
+                                            <p>{`BREND`}</p>
+                                        </Col>
+                                        <Col md='2' className='pt-3 p-0 col-3'>
+                                            <p>{`KATEGORIJA`}</p>
+                                        </Col>
+                                        <Col md='2' className='pt-3 p-0 col-3'>
+                                            <p>{`IZMENA`}</p>
+                                        </Col>
+                                        <Col md='2' className='pt-3 p-0 col-3'>
+                                            <p>{`BRISANJE`}</p>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <div className='product-list mx-auto'>
+                                    {
+                                        proizvodi && proizvodi.proizvodi.map((proizvod) => {
+                                            return (
+                                                <>
+                                                    <Row className='text-center border-bottom-black'>
+                                                        <Col md='1' className='pt-3 p-0 col-2'>
+                                                            <p>{`${proizvod.id}`}</p>
+                                                        </Col>
+                                                        <Col md='3' className='pt-3 p-0 col-2'>
+                                                            <p>{`${proizvod.naziv}`}</p>
+                                                        </Col>
+                                                        <Col md='2' className='pt-3 p-0 col-2'>
+                                                            <p>{`${proizvod.brend}`}</p>
+                                                        </Col>
+                                                        <Col md='2' className='pt-3 p-0 col-3'>
+                                                            <p>{`${proizvod.kategorija}`}</p>
+                                                        </Col>
+                                                        <Col md='2' className='pt-2 p-0 col-3'>
+                                                            <Button
+                                                                variant="info"
+                                                                onClick={() => {
+                                                                    history.push('/edit-product', {state: proizvod.id})
+                                                                }}>
+                                                                Izmeni
+                                                            </Button>
+                                                        </Col>
+                                                        <Col md='2' className='pt-2 p-0 col-3'>
+                                                            <Button
+                                                                variant="danger"
+                                                                onClick={() => {
+                                                                    setItem(proizvod);
+                                                                    setShowPopup(true);
+                                                                }}>
+                                                                Obriši
+                                                            </Button>
+                                                        </Col>
+                                                    </Row>
+                                                </>
+                                            );
+                                        })
+                                    }
+                                </div>
+                            </Row>
+                        </Container>
                     </div> :
                     <p className='text-center h4 mt-20'>Molimo ulogujte se <a href="" className="link"
-                                                                             onClick={() => history.push('/admin')}>ovde</a>
+                                                                              onClick={() => history.push('/admin')}>ovde</a>
                     </p>
             }
         </>

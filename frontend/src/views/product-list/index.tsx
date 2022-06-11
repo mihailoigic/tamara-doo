@@ -45,6 +45,7 @@ interface IState {
     filterState: boolean | null;
     categoriesData: any;
     searchParams: ISearchParams | null;
+    renderPage: boolean;
 }
 
 type ProductListProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & RouteComponentProps<any>;
@@ -69,6 +70,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
             filterState: null,
             categoriesData: null,
             searchParams: null,
+            renderPage: false,
         }
     }
 
@@ -83,12 +85,12 @@ export class ProductListPage extends Component<ProductListProps, IState> {
             .then(res => {
                 this.setState({categoriesData: res.data.data});
             })
+        this.setState({ renderPage: true });
     }
 
     componentDidUpdate(prevProps: Readonly<ProductListProps>, prevState: Readonly<IState>, snapshot?: any) {
         scrollToTop();
         if (prevProps.searchParams !== this.props.searchParams) {
-            console.log(filterSearchParams(this.props.searchParams));
             const api = `${Config.api.baseUrl}v1/proizvod${filterSearchParams(this.props.searchParams)}`;
             axios.get(api)
                 .then(res => {
@@ -149,7 +151,6 @@ export class ProductListPage extends Component<ProductListProps, IState> {
     }
 
     handlePageChange(pageNumber: any) {
-        console.log('uslo');
         this.setState({activePage: pageNumber});
         this.setState({start: Number(pageNumber*20-19)});
         store.dispatch(setStartSearchParams(pageNumber*20-19));
@@ -157,8 +158,8 @@ export class ProductListPage extends Component<ProductListProps, IState> {
 
     iteratePages() {
         let pages = [];
-        for (let i = 1; i <= this.state.total/10; i++) {
-            pages.push(<li className="cursor-pointer" onClick={()=>this.handlePageChange(i)}><a className="page-link color-tamara">{i}</a></li>);
+        for (let i = 1; i <= this.state.total/19; i++) {
+            pages.push(<li className="cursor-pointer" onClick={()=>this.handlePageChange(i)}><a className={this.state.activePage === i ? `page-link color-tamara active-page` : `page-link color-tamara`}>{i}</a></li>);
         }
         return pages;
     }
@@ -211,12 +212,12 @@ export class ProductListPage extends Component<ProductListProps, IState> {
                                             <FilterBrendovi state={this} />
                                         </div>
                                     </Col>
-                                    <Col xs="12" md="9">
+                                    <Col xs="12" md="9" className={'min-height-500'}>
                                         <Row>
                                             {
                                                 this.state.products?.map((product) => {
                                                     return (
-                                                        <div className='col-xs-6 col-md-6 col-lg-4 col-xl-3'>
+                                                        <div className='col-6 col-xs-6 col-md-6 col-lg-4 col-xl-3 p-0'>
                                                         <ProductCard
                                                             product={product}
                                                             onClick={() => history.push(`/product/${product.id}`)}
@@ -229,6 +230,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
                                     </Col>
                                 </Row>
                                 <Row className='mt-5'>
+                                    <div className={` ${this.state.total > 180 ? 'mobile-max-width' : ''} p-0`}>
                                     <nav aria-label="Page navigation example">
                                         <ul className="pagination cursor-pointer color-tamara">
                                             <li onClick={()=>this.handlePageChange(this.state.activePage-1)}>
@@ -246,6 +248,7 @@ export class ProductListPage extends Component<ProductListProps, IState> {
                                             </li>
                                         </ul>
                                     </nav>
+                                    </div>
                                 </Row>
                             </Container>
                             <Footer/>

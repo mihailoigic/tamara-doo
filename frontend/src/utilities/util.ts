@@ -33,10 +33,28 @@ export const detectIE = (): number | boolean => {
     return false;
 };
 
+export const removeUnderline = (string: string): string => {
+    return string.replaceAll(' ', '_');
+}
+
 export const firstLetter = (string: string): string => {
     const lower = string.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
 }
+
+export const firstLetterAllWords = (string: string): string => {
+    const array = string.split(" ");
+    let returnArray = "";
+        array.forEach((item)=> {
+            returnArray += `${firstLetter(item)} `;
+            }
+        )
+    return returnArray;
+}
+export const maxCharacters = (string: string): string => {
+    return string.substring(0, 9);
+}
+
 
 export const prepareForSelect = (niz: any): ISifrarnik[] | undefined => {
     let sifrarnikArray: ISifrarnik[] = [];

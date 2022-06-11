@@ -33,7 +33,7 @@ export default function AddToDBPage(props) {
     useEffect(() => {
         scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/auth/login`, {
-            headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
         }).then(res => {
             setRenderPage(res.status === 200);
         })
@@ -75,7 +75,7 @@ export default function AddToDBPage(props) {
         if (item !== null) {
             axios.delete(`${Config.api.baseUrl}v1/${component}/${item.id}`, {
                 data: {naziv: item.naziv},
-                headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+                headers: {"Authorization": localStorage.getItem("BearerToken")}
             }).then((response) => {
                 if (response.status === 200) {
                     alert(`Uspešno obrisana komponenta: ${item.naziv}`);
@@ -103,7 +103,7 @@ export default function AddToDBPage(props) {
         } else {
             event.preventDefault();
             const value = form.naziv.value;
-            axios.post(`${Config.api.baseUrl}v1/${component}`, {naziv: value}, {headers: {'Authorization': sessionStorage.getItem('BearerToken')}})
+            axios.post(`${Config.api.baseUrl}v1/${component}`, {naziv: value}, {headers: {'Authorization': localStorage.getItem('BearerToken')}})
                 .then((response) => {
                     if (response.status === 200) {
                         if (component === 'kategorije') {
@@ -113,7 +113,7 @@ export default function AddToDBPage(props) {
                                 kategorija: response.data.data.id,
                                 tip: 42
                                 },{
-                                headers: {'Authorization': sessionStorage.getItem('BearerToken')}
+                                headers: {'Authorization': localStorage.getItem('BearerToken')}
                             });
                             alert(`Uspešno dodata komponenta: ${value}`);
                         }
@@ -125,7 +125,7 @@ export default function AddToDBPage(props) {
                                 kategorija: kategorijaForm,
                                 tip: response.data.data.id
                             },{
-                                headers: {'Authorization': sessionStorage.getItem('BearerToken')}
+                                headers: {'Authorization': localStorage.getItem('BearerToken')}
                             });
                             alert(`Uspešno dodata komponenta: ${value}`);
                         }

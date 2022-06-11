@@ -1,37 +1,47 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../../../assets/css/styles.css';
 import './css/index.css';
 import history from "../../../utilities/history";
-import { firstLetter } from "../../../utilities/util";
+import {firstLetter, removeUnderline, scrollToTop} from "../../../utilities/util";
 import Boje from "../../components/returnBoje";
 import Velicine from "../../components/returnVelicine";
 
 function ProductCard(props) {
     const [showSizes, setShowSizes] = useState(false);
+    const noImage = process.env.PUBLIC_URL + `/Imgs/no-image.jpg`;
+    const [src, setSrc] = useState(noImage);
     const product = props.product;
     const moda = product.moda ? 'Moda' : 'Klasika';
+
+    useEffect(() => {
+        setSrc(process.env.PUBLIC_URL + `/Imgs/${removeUnderline(product.defaultSlika)}`);
+    }, [product.defaultSlika])
+
     return (
         <>
-            <div className={props.shadow ? `shadow product-info-container` : `product-info-container`} onClick={() => history.push(`/product/${product.id}`)} onMouseOver={()=>setShowSizes(true)} onMouseLeave={()=>setShowSizes(false)}>
+            <div className={`${props.shadow && 'shadow'} product-info-container ${props.carousel && 'carousel-size'}`} onClick={() => history.push(`/product/${product.id}`)} onMouseOver={()=>setShowSizes(true)} onMouseLeave={()=>setShowSizes(false)}>
                 <div className="product">
                     <img
-                        className="product-img"
-                        src={process.env.PUBLIC_URL + `/Imgs/${product.defaultSlika}`}
-                        alt="slider-photo"
+                        className={props.carousel ? "carousel-img" : "product-img"}
+                        src={src}
+                        alt={product.defaultSlika}
+                        onError={
+                            ()=>setSrc(noImage)
+                        }
                     />
                 </div>
                 {
                     showSizes &&
-                    <div className='velicine text-center'>
+                    <div className={`velicine text-center ${props.carousel && 'w-250'}`}>
                         <p className='ff-releway mb-0'>Veličine:</p>
-                        <Velicine nameOfClass='size-item-product' product={product} />
+                        <Velicine nameOfClass='size-item-product' product={product} floatEnd={false}/>
                     </div>
                 }
                 <div className="product-details pt-1 ps-2">
                     <p className="ff-releway color-first mb-0">{firstLetter(product.naziv)}</p>
                     <p className="mb-0 color-secondary">{(product.brend).toUpperCase()}</p>
                     <p className="mb-0 color-secondary">{moda}</p>
-                    <Boje nameOfClass='color-item-product' product={product} imgClass='rounded-1' showName={false}/>
+                    <Boje nameOfClass='color-item-product' product={product} imgClass='rounded-1' showName={false} floatEnd={false}/>
                 </div>
             </div>
         </>

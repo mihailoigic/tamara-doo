@@ -7,7 +7,7 @@ function EmailListRemove() {
     const email = window.location.pathname.split("/");
     console.log(email);
     axios.delete(`${Config.api.baseUrl}v1/email-list/${email[3]}`, {
-        headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+        headers: {"Authorization": localStorage.getItem("BearerToken")}
     })
 
     return (

@@ -92,7 +92,8 @@ figure:hover img {
 
 .hr {
     background-color: #e3dad5;
-    width: 90%;
+    width: 100%;
+    float: right;
     height: 0.1em;
 }
 

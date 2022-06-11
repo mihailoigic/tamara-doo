@@ -30,7 +30,7 @@ function LogInPage() {
                 password: password.toString(),
             })).then((response) => {
                 if (response.status === 200) {
-                    sessionStorage.setItem('BearerToken', response.data.data);
+                    localStorage.setItem('BearerToken', response.data.data);
                     history.push('/admin-page');
                 } else {
                     setNotValidLogin(true);

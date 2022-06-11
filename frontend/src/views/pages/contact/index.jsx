@@ -28,7 +28,8 @@ function ContactPage() {
                             <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">YBC ul. Bulevar Mihajla Pupina 10D / II Jug N.P. 21, Novi Beograd</p>
                             <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">Tel / Fax : Čarape : 011 / 2130 535, 311 0254</p>
                             <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">Veš : 011 / 314 97 35, 313 9732, 2145 675</p>
-                            <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">Radno vreme : Ponedeljak – Subota : 09h – 17h</p>
+                            <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">(Veleprodaja) Radno vreme : Ponedeljak – Subota : 09h – 17h</p>
+                            <p className="h5 ff-arial pb-3 pt-2 border-bottom-black">(Maloprodaja) Radno vreme : Ponedeljak – Petak : 09h – 20h : Subota : 09h - 16h</p>
                             <p className="h5 ff-arial mt-2 ">Email : tamara_doo@yahoo.com</p>
                         </div>
                     </Col>

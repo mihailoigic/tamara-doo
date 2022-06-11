@@ -4,7 +4,7 @@ import '../pages/product-overview/css/index.css';
 
 export default function Velicine(props) {
     return (
-        <ul className='d-inline-block'>
+        <ul className={props.floatEnd ? 'd-inline-block float-end' : 'd-inline-block'}>
             {
                 props.product.velicine.map((velicina) => {
                     return (

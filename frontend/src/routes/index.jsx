@@ -16,6 +16,7 @@ import AdminPage from "../views/pages/admin-page";
 import AddToDBPage from "../views/pages/add-to-db";
 import EmailList from "../views/pages/email-list/emailList";
 import EmailListRemove from "../views/pages/email-list/emailListRemove";
+import EditProduct from "../views/pages/edit-product/index";
  
 const AppRouter = () => (
     <Router history={history}>
@@ -36,7 +37,9 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/admin-page`} component={AdminPage} />
 
             <Route exact path={`${Config.prefixUrl}/add-product`} component={AddProductPage} />
+            <Route exact path={`${Config.prefixUrl}/edit-product`} component={EditProduct} />
             <Route exact path={`${Config.prefixUrl}/add-to-db`} component={AddToDBPage} />
+
 
             <Route exact path={`${Config.prefixUrl}/email-list-remove/:id`} component={EmailListRemove} />
             <Route exact path={`${Config.prefixUrl}/email-list`} component={EmailList} />

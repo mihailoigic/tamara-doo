@@ -17,7 +17,7 @@ export default function AdminPage() {
     useEffect(() => {
         scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/auth/login`, {
-            headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
         }).then(res => {
             setRenderPage(res.status === 200 ? true : false);
         })

@@ -14,13 +14,28 @@
     background-color: #e3dad5;
 }
 
+.min-height-500{
+    min-height: 1200px;
+}
+
 .filter-section {
     font-family: Raleway-Medium;
     width: 100%;
 }
 
+.active-page {
+    background-color: #e3dad5;
+}
+
 .color-tamara {
     color: black;
+}
+
+@media screen and (max-width: 500px){
+    .mobile-max-width {
+        padding-left: 150px !important;
+        overflow: scroll;
+    }
 }
 
 .color-tamara:hover {

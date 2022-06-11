@@ -42,9 +42,9 @@ function Header(props) {
             .then(res => {
                 setCategoriesMan(res.data.data);
             })
-        if (sessionStorage.getItem('BearerToken')) {
+        if (localStorage.getItem('BearerToken')) {
             axios.get(`${Config.api.baseUrl}v1/auth/login`, {
-                headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+                headers: {"Authorization": localStorage.getItem("BearerToken")}
             }).then(res => {
                 setShowAdmin(res.status === 200 ? true : false);
             })
@@ -63,7 +63,7 @@ function Header(props) {
                         </Col>
                         <Col md='8'>
                             <ul className="header-items-middle">
-                                <li className="header-item border-right-nav">
+                                <li className="header-item ">
                                     <p
                                         className='mb-0'
                                         onClick={() => {
@@ -73,10 +73,11 @@ function Header(props) {
                                             history.push('/product-list');
                                         }}>{labels.woman}</p>
                                     <div id='subwoman' onClick={() => changeStyle('subwoman')} className='woman'>
-                                        <SubHeader gender='zenski' data={categoriesWoman}/></div>
+                                        <SubHeader gender='zenski' data={categoriesWoman}/>
+                                    </div>
                                 </li>
                                 <li
-                                    className="header-item border-right-nav"
+                                    className="header-item "
 
                                 ><p
                                     className='mb-0'
@@ -86,28 +87,53 @@ function Header(props) {
                                         store.dispatch(setPolSearchParams('muski'));
                                         history.push('/product-list');
                                     }}>{labels.man}</p>
-                                    <div id='subman' onClick={() => changeStyle('subman')} className='man'><SubHeader
-                                        gender='muski' data={categoriesMan}/></div>
+                                    <div id='subman' onClick={() => changeStyle('subman')} className='man'>
+                                        <SubHeader gender='muski' data={categoriesMan}/>
+                                    </div>
                                 </li>
-                                <li className="header-item border-right-nav"
+                                <li className="header-item "
                                     onClick={() => history.push('/')}>Početna
                                 </li>
-                                <li className="header-item border-right-nav"
+                                <li className="header-item "
                                     onClick={() => history.push('/about-us')}>{labels.aboutUs}</li>
                                 <li className="header-item"
                                     onClick={() => history.push('/contact')}>{labels.contact}</li>
                             </ul>
                         </Col>
-                        <Col>
+                        <Col className='p-0'>
                             {
-                                props.state !== undefined &&
+                                props.state !== undefined && !searchActive &&
                                 <>
-                                    <FaSearch className='search-img mt-4 float-end me-2 cursor-pointer' onClick={() => {
+                                    <FaSearch className='search-img mt-4 float-end me-4 cursor-pointer' onClick={() => {
                                         setSearchActive(!searchActive)
                                     }}/>
                                 </>
                             }
                             {/*<FaUser className='user-icon cursor-pointer' onClick={()=>history.push('/admin')}/>*/}
+                            {
+                                searchActive &&
+                                <div className='search-bar mt-3 float-end'>
+                                    <Row>
+                                        <Col md='3 p-0'>
+                                            <AiOutlineClose onClick={() => setShowInfoMenu(false)}
+                                                            className='float-end mt-2 w-20 h-20 cursor-pointer'
+                                                            onClick={() => {
+                                                                store.dispatch(setSearchSearchParams(''));
+                                                                setSearchActive(false);
+                                                            }}/>
+                                        </Col>
+                                        <Col md='6'>
+                                            <input id='search-input' className='search-input w-100' type='text'/>
+                                        </Col>
+                                        <Col md='3 p-0'>
+                                            <FaSearch className='w-20 h-20 mt-2 me-2 cursor-pointer' onClick={() => {
+                                                const searchTerm = document.getElementById('search-input').value;
+                                                store.dispatch(setSearchSearchParams(searchTerm));
+                                            }}/>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            }
                             {
                                 showAdmin &&
                                 <IoAddCircle className='user-icon cursor-pointer'
@@ -115,29 +141,6 @@ function Header(props) {
                             }
                         </Col>
                     </Row>
-                    {
-                        searchActive &&
-                        <div className='search-bar mx-auto'>
-                            <Row>
-                                <Col md='3'>
-                                    <AiOutlineClose onClick={() => setShowInfoMenu(false)} className='float-end mt-2 menu-icon cursor-pointer'
-                                    onClick={()=> {
-                                        store.dispatch(setSearchSearchParams(''));
-                                        setSearchActive(false);
-                                    }}/>
-                                </Col>
-                                <Col md='6'>
-                                    <input id='search-input' className='search-input w-100 mt-2' type='text'/>
-                                </Col>
-                                <Col md='3'>
-                                    <FaSearch className='search-img mt-2 me-2 cursor-pointer' onClick={() => {
-                                        const searchTerm = document.getElementById('search-input').value;
-                                        store.dispatch(setSearchSearchParams(searchTerm));
-                                    }}/>
-                                </Col>
-                            </Row>
-                        </div>
-                    }
                 </Container>
 
             </div>
@@ -192,7 +195,7 @@ function Header(props) {
                                     return (
                                         <>
                                             <div className='border-top pt-2'/>
-                                            <Filter filter={catData} mobile={true} gender='zenski'/>
+                                            <Filter filter={catData} mobile={true} gender='zenski' setShowSubMenu={setShowSubMenu}/>
                                         </>
                                     );
                                 }) :

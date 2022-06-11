@@ -97,13 +97,13 @@ export default function FilterBoje(props) {
                         boje.map((item) => {
                             return (
                                 <>
-                                    <Row>
-                                        <Col md='6'>
+                                    <Row className={'filter-background'}>
+                                        <Col md='8'>
                                             <label htmlFor={item.naziv}>{item.naziv}</label>
                                         </Col>
-                                        <Col md='6'>
+                                        <Col md='4'>
                                             <input
-                                                className='float-end me-2 cursor-pointer'
+                                                className='float-end me-2 cursor-pointer mt-1'
                                                 name={item.naziv}
                                                 value={item.id}
                                                 type="checkbox"

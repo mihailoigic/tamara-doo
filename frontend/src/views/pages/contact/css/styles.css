@@ -1,12 +1,12 @@
 .map-size {
     width: 650px;
-    height: 450px;
+    height: 530px;
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1350px){
     .map-size {
         width: 500px;
-        height: 450px;
+        height: 530px;
     }
 }
 

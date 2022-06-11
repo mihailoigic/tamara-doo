@@ -18,10 +18,12 @@ function Filter(props) {
     return (
         <>
             <Row className="pb-3">
-                <Col xs="10" lg="10">
+                <Col>
                     <p className="filter-item mb-0 pt-1" onClick={() => {
                         store.dispatch(setKategorijaTipSearchParam(filter.value,0));
-                        setFilterActive(!filterActive)
+                        !props.mobile && setFilterActive(!filterActive);
+                        history.push('/product-list');
+                        props.mobile && props.setShowSubMenu(false);
                     }}>{filter.label.toUpperCase()}</p>
                     <div ref={subSectionRef} className='sub-section'
                          style={filterActive ? {height: subSectionRef.current.scrollHeight + "px"} : {height: "0px"}}>
@@ -30,6 +32,7 @@ function Filter(props) {
                                 return (
                                     <p className="filter-item mt-1 mb-0" onClick={() => {
                                         history.push('/product-list');
+                                        props.mobile && props.setShowSubMenu(false);
                                         store.dispatch(setPolSearchParams(gender));
                                         store.dispatch(setKategorijaTipSearchParam(filter.value, item.value));
                                     }}>{firstLetter(item.label)}</p>
@@ -38,7 +41,7 @@ function Filter(props) {
                         }
                     </div>
                 </Col>
-                <Col xs="2" lg="2" className="clickable float-end" onClick={() => {
+                <Col className="clickable" onClick={() => {
                     setFilterActive(!filterActive)
                 }}>
                     {
@@ -46,9 +49,9 @@ function Filter(props) {
                         <>
                             {
                                 filterActive ?
-                                    <MdArrowDropDown onClick={() => {
+                                    <MdArrowDropDown className='float-end mt-2 me-2' onClick={() => {
                                         setFilterActive(false)
-                                    }}/> : <MdArrowLeft onClick={() => {
+                                    }}/> : <MdArrowLeft className='float-end mt-2 me-2' onClick={() => {
                                         setFilterActive(true)
                                     }}/>
                             }

@@ -10,7 +10,7 @@ function EmailList() {
     useEffect(() => {
         scrollToTop();
         axios.get(`${Config.api.baseUrl}v1/email-list`, {
-            headers: {"Authorization": sessionStorage.getItem("BearerToken")}
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
         }).then(res => {
             setEmails(res.data.data);
         })

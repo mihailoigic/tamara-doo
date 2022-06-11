@@ -24,83 +24,83 @@ export default class CenterMode extends Component {
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[0]}
-                            onClick={() => history.push(`/product/2`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[1]}
-                            onClick={() => history.push(`/product/3`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[2]}
-                            onClick={() => history.push(`/product/4`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[0]}
-                            onClick={() => history.push(`/product/2`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[1]}
-                            onClick={() => history.push(`/product/3`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[2]}
-                            onClick={() => history.push(`/product/4`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[0]}
-                            onClick={() => history.push(`/product/2`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[1]}
-                            onClick={() => history.push(`/product/3`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[2]}
-                            onClick={() => history.push(`/product/4`)}
+                            carousel={true}
                         />
                     </div><div>
                     <ProductCard
                         shadow={true}
                         product={productsCarouselData[0]}
-                        onClick={() => history.push(`/product/2`)}
+                        carousel={true}
                     />
                 </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[1]}
-                            onClick={() => history.push(`/product/3`)}
+                            carousel={true}
                         />
                     </div>
                     <div>
                         <ProductCard
                             shadow={true}
                             product={productsCarouselData[2]}
-                            onClick={() => history.push(`/product/4`)}
+                            carousel={true}
                         />
                     </div>
                 </Slider>

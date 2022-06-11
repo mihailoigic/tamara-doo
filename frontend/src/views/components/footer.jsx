@@ -41,7 +41,7 @@ export default function Footer() {
             <Container fluid className="footer-container pt-5 mt-5">
                 <Row className="text-center justify-content-md-center mt-3 mb-3 p-0">
                     <Col xs lg="1" >
-                        <a href="https://www.facebook.com/tamaradoo.bgd/">
+                        <a href="https://sr-rs.facebook.com/tamara.doo.5">
                         <Image className="px40 mx-auto" src={facebookIcon} />
                         </a>
                     </Col>

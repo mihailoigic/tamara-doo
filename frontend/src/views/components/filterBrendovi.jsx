@@ -5,6 +5,7 @@ import Config from "../../config/config";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {MdArrowDropDown, MdArrowLeft} from "react-icons/md";
+import {firstLetterAllWords} from "../../utilities/util";
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
@@ -96,13 +97,13 @@ export default function FilterBrendovi(props) {
                         brendovi?.map((item) => {
                             return (
                                 <>
-                                    <Row>
-                                        <Col md='6'>
-                                            <label htmlFor={item.naziv}>{item.naziv}</label>
+                                    <Row className={'filter-background'}>
+                                        <Col md='10'>
+                                            <label htmlFor={item.naziv}>{firstLetterAllWords(item.naziv)}</label>
                                         </Col>
-                                        <Col md='6'>
+                                        <Col md='2'>
                                             <input
-                                                className='float-end me-2 cursor-pointer'
+                                                className='float-end me-2 cursor-pointer mt-1'
                                                 name={item.naziv}
                                                 value={item.id}
                                                 type="checkbox"

@@ -11,9 +11,9 @@ import {setKategorijaTipSearchParam, setPolSearchParams} from "../../app/store/s
 function SubHeader(props) {
     return (
         <div className="sub-header">
-            <Container fluid className="sub-header-title">
-                <p className="h4 ps-3 pt-3">{props.gender === 'zenski' ? 'Žene' : 'Muškarci'}</p>
-            </Container>
+            {/*<Container fluid className="sub-header-title">*/}
+            {/*    <p className="h4 ps-3 pt-3">{props.gender === 'zenski' ? 'Žene' : 'Muškarci'}</p>*/}
+            {/*</Container>*/}
             <Container fluid className="header-on-mouse-hover">
                 <Row>
                     {
@@ -28,7 +28,7 @@ function SubHeader(props) {
                                             store.dispatch(setKategorijaTipSearchParam(item.value, 0));
                                             history.push({pathname: '/product-list'});
                                         }}>{label}</p>
-                                    <hr/>
+                                    {/*<hr/>*/}
                                     {
                                         item.tip.map((type) => {
                                             return (

@@ -1,27 +1,21 @@
 const productsCarouselData: any = [
     {
-        "id": 2,
-        "brend": "Selene",
-        "naziv": "VIOLETA",
+        "id": 132,
+        "brend": "INFIORE",
+        "naziv": "3003",
         "opis": "",
         "boje": [
             "crna",
-            "tiera",
-            "marfil"
+            "bela"
         ],
         "velicine": [
+            "2",
             "3",
             "4",
-            "5",
-            "6",
-            "7",
-            "8"
         ],
-        "defaultSlika": "violeta.jpg",
+        "defaultSlika": "3003.jpg",
         "slike": [
-            "violeta.jpg",
-            "violeta2.jpg",
-            "violeta3.jpg"
+            "3003.jpg"
         ],
         "novo": false,
         "moda": false,
@@ -36,14 +30,14 @@ const productsCarouselData: any = [
         ]
     },
     {
-        "id": 3,
-        "brend": "Lormar",
-        "naziv": "Prestige",
+        "id": 125,
+        "brend": "INFIORE",
+        "naziv": "2001",
         "opis": "Čipka",
         "boje": [
             "crna",
             "bela",
-            "noisete"
+            "nudo"
         ],
         "velicine": [
             "2",
@@ -51,11 +45,9 @@ const productsCarouselData: any = [
             "4",
             "5"
         ],
-        "defaultSlika": "prestige.jpg",
+        "defaultSlika": "2001.jpg",
         "slike": [
-            "prestige.jpg",
-            "prestige2.jpg",
-            "prestige3.jpg"
+            "2001.jpg"
         ],
         "novo": false,
         "moda": false,
@@ -67,26 +59,24 @@ const productsCarouselData: any = [
         ]
     },
     {
-        "id": 4,
+        "id": 161,
         "brend": "Sielei",
-        "naziv": "1978",
+        "naziv": "1558",
         "opis": "Top varijanta, skidaju se bretele",
         "boje": [
             "crna",
             "bela",
-            "cipria"
+            "cipria",
+            "stone"
         ],
         "velicine": [
-            "2",
-            "3",
-            "4",
-            "5"
+            "2/75",
+            "3/80",
+            "4/85"
         ],
-        "defaultSlika": "1978.jpg",
+        "defaultSlika": "1558.jpg",
         "slike": [
-            "1978.jpg",
-            "19782.jpg",
-            "19783.jpg"
+            "1558.jpg"
         ],
         "novo": false,
         "moda": false,
