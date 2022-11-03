@@ -17,6 +17,7 @@ import proizvodSlike from "./proizvodSlike";
 import kategorijaTipPodtip from "./kategorijaTipPodtip";
 import proizvodLast from "./proizvodLast";
 import emailList from "./emailList";
+import izmeniProizvod from "./izmeniProizvod";
 
 const router = Router();
 
@@ -33,6 +34,7 @@ router.use('/proizvod', proizvod);
 router.use('/kategorijatip', kategorijatip);
 router.use('/proizvod-last', proizvodLast);
 router.use('/email-list', emailList);
+router.use('/izmeni-proizvod', izmeniProizvod);
 
 
 router.use('/proizvod/velicine', proizvodVelicine);
