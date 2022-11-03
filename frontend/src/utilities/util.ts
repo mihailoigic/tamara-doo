@@ -78,6 +78,22 @@ export const filterSearchParams = (searchParams: any) => {
     return api;
 }
 
+export const getSearchParams = (searchParams: any) => {
+    let params: any = {};
+    params.start = searchParams.start;
+    params.pol = searchParams.pol;
+    if (searchParams.kategorija !== 0) {
+        params.kategorija = searchParams.kategorija;
+    }
+    if (searchParams.tip !== 0) {
+        params.tip = searchParams.tip;
+    }
+    if (searchParams.search !== "") {
+        params.search = searchParams.search;
+    }
+    return params;
+}
+
 export const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }

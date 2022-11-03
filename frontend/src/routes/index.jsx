@@ -10,7 +10,8 @@ import ContactPage from '../views/pages/contact'
 import Root from '../views/components/root'
 import LogInPage from '../views/pages/log-in';
 import AddProductPage from "../views/pages/add-product";
-import { ProductListPage } from "../views/product-list";
+// import { ProductListPage } from "../views/product-list";
+import { ProductListPage } from "../views/product-list/index1";
 import ProductOverviewPage from "../views/pages/product-overview";
 import AdminPage from "../views/pages/admin-page";
 import AddToDBPage from "../views/pages/add-to-db";

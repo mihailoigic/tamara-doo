@@ -5,6 +5,9 @@ import Config from "../../config/config";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {MdArrowDropDown, MdArrowLeft} from "react-icons/md";
+import {useSelector} from "react-redux";
+import store from "../../app/store";
+import {setFilterColor} from "../../app/store/colorFilter/actions";
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
@@ -14,6 +17,9 @@ export default function FilterBoje(props) {
     const subSectionRef = useRef();
     const [boje, setBoje] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
+    const [colors, setColors] = useState([]);
+    const colorsInfo = useSelector(state => state.colors.colors);
+    const colorsArray = colorsInfo ? colorsInfo : [];
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/boje`)
@@ -25,13 +31,8 @@ export default function FilterBoje(props) {
     function handleInputChange(event) {
         const target = event.target;
         if (target.checked) {
-            let state;
-            if (props.state.state.bojeState === '') {
-                state = `${target.value}`;
-            } else {
-                state = `${props.state.state.bojeState},${target.value}`;
-            }
-            props.state.setState({bojeState: state});
+            colorsArray.push(target.value);
+            store.dispatch(setFilterColor(colorsArray));
         } else {
             let state = props.state.state.bojeState.split(',');
             for (var i = 0; i < state.length; i++) {
@@ -71,16 +72,14 @@ export default function FilterBoje(props) {
                         className='filter-boje-title ps-2 mb-2'
                         onClick={() => {
                             setFilterActive(!filterActive)
-                            props.state.setState({ filterState: true })
                         }}>Boje
                     </div>
                 </Col>
                 <Col xs="2" lg="2" className="clickable float-end" onClick={() => {
                     setFilterActive(!filterActive)
-                    props.state.setState({ filterState: true })
                 }}>
                     {
-                        filterActive && props.state.state.filterState ?
+                        filterActive ?
                             <MdArrowDropDown onClick={() => {
                                 setFilterActive(false)
                             }}/> : <MdArrowLeft onClick={() => {
@@ -91,7 +90,7 @@ export default function FilterBoje(props) {
             </Row>
             <Row className='ps-3 pe-3 pt-2'>
                 <div className='filter-boje ps-3 pe-3' ref={subSectionRef}
-                     style={filterActive && props.state.state.filterState ? {height: subSectionRef.current.scrollHeight - 300 + "px"} : {height: "0px"}}>
+                     style={filterActive ? {height: subSectionRef.current.scrollHeight - 300 + "px"} : {height: "0px"}}>
                     {
                         boje !== null &&
                         boje.map((item) => {
