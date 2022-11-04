@@ -185,6 +185,8 @@ function ProductOverviewPage() {
                                             })
                                         }</p>
                                     }
+                                    {console.log(proizvod)}
+                                    <p className='mt-3 mb-0 text-justify'>Cena : {proizvod.cena} RSD</p>
                                 </Col>
                             </Row>
                         </Container>

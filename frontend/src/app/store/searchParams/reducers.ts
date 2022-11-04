@@ -41,16 +41,6 @@ const searchParamsReducer = (
                 ...state,
                 search: action.payload,
             }
-        case ActionTypes.SET_FILTER_BRAND:
-            return {
-                ...state,
-                filters.brend: action.payload,
-            }
-        case ActionTypes.SET_FILTER_COLOR:
-            return {
-                ...state,
-                filters.boje: action.payload,
-            }
         case ActionTypes.CLEAR_SEARCH_PARAMS:
             return {
                 ...state,

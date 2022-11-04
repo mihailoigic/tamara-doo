@@ -78,7 +78,7 @@ export const filterSearchParams = (searchParams: any) => {
     return api;
 }
 
-export const getSearchParams = (searchParams: any) => {
+export const getSearchParams = (searchParams: any, colors: any, brands: any) => {
     let params: any = {};
     params.start = searchParams.start;
     params.pol = searchParams.pol;
@@ -91,6 +91,16 @@ export const getSearchParams = (searchParams: any) => {
     if (searchParams.search !== "") {
         params.search = searchParams.search;
     }
+    if (colors?.length > 0 || brands?.length > 0) {
+        params.filters = {};
+    }
+    if (colors?.length > 0) {
+        params.filters.boje = colors;
+    }
+    if (brands?.length > 0) {
+        params.filters.brend = brands;
+    }
+
     return params;
 }
 

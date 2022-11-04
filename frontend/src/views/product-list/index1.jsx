@@ -25,30 +25,54 @@ import Filter from "./filter";
 import ProductCard from "../pages/product-info";
 
 export const ProductListPage = () => {
+    const state = useSelector(state => state);
     const [total, setTotal] = useState(0);
     const [products, setProducts] = useState(null);
     const [categoriesData, setCategoriesData] = useState(null);
     const [renderPage, setRenderPage] = useState(false);
     const [activePage, setActivePage] = useState(1);
     const [searchParams, setSearchParams] = useState({});
-    const state = useSelector(state => state);
     const [start, setStart] = useState(1);
+    const [colors, setColors] = useState([]);
+    const [brands, setBrands] = useState([]);
+
     useEffect(()=>{
         scrollToTop();
-        setSearchParams(state.searchParams);
-        const params = getSearchParams(searchParams);
-        const api = `${Config.api.baseUrl}v1/proizvod`;
+        const params = getSearchParams(state.searchParams, colors, brands);
+        let api = `${Config.api.baseUrl}v1/proizvod`;
+        if (!params.start) {
+            api+='?start=1&pol=zenski'
+        }
         axios.get(api, { params })
             .then(res => {
                 setProducts(res.data.data.proizvodi);
                 setTotal(res.data.data.total);
             })
-        axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${searchParams.pol}`)
+        axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${state.searchParams.pol}`)
             .then(res => {
                 setCategoriesData(res.data.data);
             })
         setRenderPage(true);
-    },[state]);
+    },[])
+
+    useEffect(()=>{
+        scrollToTop();
+        const params = getSearchParams(state.searchParams, colors, brands);
+        let api = `${Config.api.baseUrl}v1/proizvod`;
+        if (!params.start) {
+            api+='?start=1&pol=zenski'
+        }
+        axios.get(api, { params })
+            .then(res => {
+                setProducts(res.data.data.proizvodi);
+                setTotal(res.data.data.total);
+            })
+        axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=${state.searchParams.pol}`)
+            .then(res => {
+                setCategoriesData(res.data.data);
+            })
+        setRenderPage(true);
+    },[state, colors, brands]);
 
     const handlePageChange = (pageNumber) => {
         setActivePage(pageNumber);
@@ -74,30 +98,30 @@ export const ProductListPage = () => {
                             <a className='breadcrumb-item' onClick={()=> {
                                 // @ts-ignore
                                 store.dispatch(clearSearchParams());
-                                store.dispatch(setPolSearchParams(searchParams.pol ? searchParams.pol : "zenski"));
-                            }}>{searchParams.pol === 'zenski' ? 'Žene' : 'Muškarci'} </a>
+                                store.dispatch(setPolSearchParams(state.searchParams.pol ? state.searchParams.pol : "zenski"));
+                            }}>{state.searchParams.pol === 'zenski' ? 'Žene' : 'Muškarci'} </a>
                             {
-                                searchParams.kategorija !== 0 &&
+                                state.searchParams.kategorija !== 0 &&
                                 <a
-                                    onClick={() => store.dispatch(setKategorijaTipSearchParam(Number(searchParams.kategorija), 0))}
-                                    className='breadcrumb-item'>{firstLetter(`${categoriesData?.find((item: any) => item.value === searchParams.kategorija)?.label}`)}</a>
+                                    onClick={() => store.dispatch(setKategorijaTipSearchParam(Number(state.searchParams.kategorija), 0))}
+                                    className='breadcrumb-item'>{firstLetter(`${categoriesData?.find((item: any) => item.value === state.searchParams.kategorija)?.label}`)}</a>
                             }
                             {
-                                searchParams.tip !== 0 &&
+                                state.searchParams.tip !== 0 &&
                                 <a href="/product-list"
-                                   className='breadcrumb-item'>{firstLetter(`${categoriesData?.find((item: any) => item.value === searchParams.kategorija)?.tip.find((item: any) => item.value === searchParams.tip)?.label}`)}</a>
+                                   className='breadcrumb-item'>{firstLetter(`${categoriesData?.find((item: any) => item.value === state.searchParams.kategorija)?.tip.find((item: any) => item.value === state.searchParams.tip)?.label}`)}</a>
                             }
                         </div>
                         <Row>
                             <Col xs="12" md="3" className="filters mt-4 d-none d-md-block">
                                 <div className="filter-name rounded-3 text-center pt-3">
-                                    <a onClick={()=>window.location.reload()}>{searchParams.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
+                                    <a onClick={()=>window.location.reload()}>{state.searchParams.pol === 'zenski' ? 'ŽENE' : 'MUŠKARCI'}</a>
                                 </div>
                                 <div className="filter-section ps-3 pt-4">
                                     {
                                         categoriesData?.map((catData: any) => {
                                             return (
-                                                <Filter filter={catData}/>
+                                                <Filter filter={catData} pol={state.searchParams.pol}/>
                                             );
                                         })
                                     }
@@ -106,8 +130,8 @@ export const ProductListPage = () => {
                                     <p>FILTERI</p>
                                 </div>
                                 <div className="filter-section pt-2">
-                                    <FilterBoje state={this} />
-                                    <FilterBrendovi state={this} />
+                                    <FilterBoje setColors={setColors} colors={colors}/>
+                                    <FilterBrendovi setBrands={setBrands} brands={brands} />
                                 </div>
                             </Col>
                             <Col xs="12" md="9" className={'min-height-500'}>

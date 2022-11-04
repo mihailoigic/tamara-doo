@@ -17,9 +17,6 @@ export default function FilterBoje(props) {
     const subSectionRef = useRef();
     const [boje, setBoje] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
-    const [colors, setColors] = useState([]);
-    const colorsInfo = useSelector(state => state.colors);
-    const collorsArray = [colorsInfo];
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/boje`)
@@ -31,42 +28,9 @@ export default function FilterBoje(props) {
     function handleInputChange(event) {
         const target = event.target;
         if (target.checked) {
-            let state;
-            if (props.state.state.bojeState === '') {
-                state = `${target.value}`;
-            } else {
-                state = `${props.state.state.bojeState},${target.value}`;
-            }
-            props.state.setState({bojeState: state});
+            props.setColors(current => [...current, target.value]);
         } else {
-            let state = props.state.state.bojeState.split(',');
-            for (var i = 0; i < state.length; i++) {
-                if (state[i] === target.value) {
-                    state[i] = '';
-                }
-            }
-            let string = '';
-            state.forEach((item, index) => {
-                if (item !== '') {
-                    if (index === state.length-2) {
-                        if (state[index+1] === '') {
-                            string = `${string}${item}`;
-                        } else {
-                            string = `${string}${item},`;
-                        }
-                    } else {
-                        if (index === state.length-1) {
-                            string = `${string}${item}`;
-                        } else {
-                            string = `${string}${item},`;
-                        }
-                    }
-                }
-            })
-            if (string.length === 1) {
-
-            }
-            props.state.setState({bojeState: string});
+            props.setColors(current => current.filter((color) => color !== target.value));
         }
     }
     return (

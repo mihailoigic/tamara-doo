@@ -26,42 +26,9 @@ export default function FilterBrendovi(props) {
     function handleInputChange(event) {
         const target = event.target;
         if (target.checked) {
-            let state;
-            if (props.state.state.brendState === '') {
-                state = `${target.value}`;
-            } else {
-                state = `${props.state.state.brendState},${target.value}`;
-            }
-            props.state.setState({brendState: state});
+            props.setBrands(current => [...current, target.value]);
         } else {
-            let state = props.state.state.brendState.split(',');
-            for (var i = 0; i < state.length; i++) {
-                if (state[i] === target.value) {
-                    state[i] = '';
-                }
-            }
-            let string = '';
-            state.forEach((item, index) => {
-                if (item !== '') {
-                    if (index === state.length-2) {
-                        if (state[index+1] === '') {
-                            string = `${string}${item}`;
-                        } else {
-                            string = `${string}${item},`;
-                        }
-                    } else {
-                        if (index === state.length-1) {
-                            string = `${string}${item}`;
-                        } else {
-                            string = `${string}${item},`;
-                        }
-                    }
-                }
-            })
-            if (string.length === 1) {
-
-            }
-            props.state.setState({brendState: string});
+            props.setBrands(current => current.filter((color) => color !== target.value));
         }
     }
     return (
@@ -72,16 +39,14 @@ export default function FilterBrendovi(props) {
                         className='filter-boje-title ps-2 mb-2'
                         onClick={() => {
                             setFilterActive(!filterActive)
-                            props.state.setState({ filterState: false })
                         }}>Brendovi
                     </div>
                 </Col>
                 <Col xs="2" lg="2" className="clickable float-end" onClick={() => {
                     setFilterActive(!filterActive)
-                    props.state.setState({ filterState: false })
                 }}>
                     {
-                        filterActive && !props.state.state.filterState ?
+                        filterActive ?
                             <MdArrowDropDown onClick={() => {
                                 setFilterActive(false)
                             }}/> : <MdArrowLeft onClick={() => {
@@ -92,7 +57,7 @@ export default function FilterBrendovi(props) {
             </Row>
             <Row className='ps-3 pe-3 pt-2'>
                 <div className='filter-boje ps-3 pe-3' ref={subSectionRef}
-                     style={filterActive && !props.state.state.filterState ? {height: subSectionRef.current.scrollHeight - 100 + "px"} : {height: "0px"}}>
+                     style={filterActive ? {height: subSectionRef.current.scrollHeight - 100 + "px"} : {height: "0px"}}>
                     {
                         brendovi?.map((item) => {
                             return (

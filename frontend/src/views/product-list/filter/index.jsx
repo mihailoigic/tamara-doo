@@ -13,7 +13,7 @@ import {
 function Filter(props) {
     const [searchParams, setSearchParams] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
-    const {filter, mobile = false, gender='zenski'} = props;
+    const {filter, mobile = false, pol='zenski'} = props;
     const subSectionRef = useRef();
     return (
         <>
@@ -33,7 +33,7 @@ function Filter(props) {
                                     <p className="filter-item mt-1 mb-0" onClick={() => {
                                         history.push('/product-list');
                                         props.mobile && props.setShowSubMenu(false);
-                                        store.dispatch(setPolSearchParams(gender));
+                                        store.dispatch(setPolSearchParams(pol));
                                         store.dispatch(setKategorijaTipSearchParam(filter.value, item.value));
                                     }}>{firstLetter(item.label)}</p>
                                 );
