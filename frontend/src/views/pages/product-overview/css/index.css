@@ -60,6 +60,17 @@
     text-justify: inter-word;
 }
 
+.text-22 {
+    font-size: 22px;
+}
+
+.text-15 {
+    font-size: 15px;
+}
+
+.kolicina-input {
+    width: 40px;
+}
 
 .color-item {
     border-radius: 5px;

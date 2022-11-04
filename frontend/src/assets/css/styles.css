@@ -415,6 +415,30 @@ ul li:hover .man {
     transition: visibility 0s, opacity 0.5s linear;
 }
 
+.buy-btn {
+    width: 150px;
+    height: 50px;
+    background-color: #e3dad5;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buy-btn:hover {
+    background-color: #e3dad1;
+}
+
+.cartItem {
+    min-width: 1000px;
+    background-color: #f5f1f0;
+    display: flex;
+    border-radius: 10px;
+}
+
+.cart-item-img {
+    width: 80px;
+    height: 106px;
+}
+
 .b-width {
     width: 150px;
 }
@@ -515,6 +539,10 @@ ul li:hover .man {
 }
 
 @media screen and (max-width: 700px){
+
+    .cartItem {
+        max-width: 360px;
+    }
     .mt-50-mobile {
         margin-top: 50px;
     }

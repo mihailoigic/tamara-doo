@@ -78,6 +78,13 @@ export const filterSearchParams = (searchParams: any) => {
     return api;
 }
 
+export const addToCart = (proizvod: any) => {
+    let cartItems = JSON.parse(<string>localStorage.getItem("cartItems"));
+    if (cartItems === null) cartItems = [];
+    cartItems.push(proizvod);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+}
+
 export const getSearchParams = (searchParams: any, colors: any, brands: any) => {
     let params: any = {};
     params.start = searchParams.start;

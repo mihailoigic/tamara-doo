@@ -53,6 +53,7 @@ const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
     kategorija: item.kategorijaTipPodtip[0]?.forKategorijaSifrarnik.naziv,
     tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik?.naziv,
     podtip: getPodtip(item),
+    cena: item.cena
   };
 };
 

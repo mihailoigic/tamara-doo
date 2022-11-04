@@ -14,7 +14,7 @@ import {useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 import {IoArrowBackCircleSharp} from 'react-icons/io5';
 import history from "../../../utilities/history";
-import {removeUnderline, scrollToTop} from "../../../utilities/util";
+import {addToCart, removeUnderline, scrollToTop} from "../../../utilities/util";
 import DubinaKorpe from "../../components/returnDubinuKorpe";
 
 function isKorpaOrCarapa(niz) {
@@ -36,6 +36,7 @@ function ProductOverviewPage() {
     const [proizvod, setProizvod] = useState(null);
     const [tip, setTip] = useState("");
     const [podtipValue, setpodTipValue] = useState("Dubina korpe :");
+    const [kolicina, setKolicina] = useState(1);
 
     useEffect(() => {
         scrollToTop();
@@ -66,6 +67,10 @@ function ProductOverviewPage() {
             backgroundImage: `url(${process.env.PUBLIC_URL + `/Imgs/${defaultSlika}`})`,
             backgroundPosition: `${x}% ${y}%`
         });
+    }
+
+    function handleChangeKolicina(event) {
+        setKolicina(event.target.value);
     }
     return (
         <>
@@ -185,8 +190,10 @@ function ProductOverviewPage() {
                                             })
                                         }</p>
                                     }
-                                    {console.log(proizvod)}
-                                    <p className='mt-3 mb-0 text-justify'>Cena : {proizvod.cena} RSD</p>
+                                    <p className="mt-2 mb-0">Kolicina:</p>
+                                    <input className="me-2 mt-1 kolicina-input" defaultValue={kolicina} onChange={()=>handleChangeKolicina} />
+                                        <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : 2000 <span className={'text-15'}>RSD</span></p>
+                                    <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto" onClick={()=>addToCart({proizvod: proizvod, kolicina: kolicina})}>Dodaj u korpu</div>
                                 </Col>
                             </Row>
                         </Container>

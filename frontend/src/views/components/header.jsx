@@ -14,6 +14,7 @@ import ReactDOM from "react-dom";
 import {FaSearch, FaUser} from 'react-icons/fa';
 import {BsInfoLg} from 'react-icons/bs';
 import {IoAddCircle} from 'react-icons/io5';
+import {FaShoppingCart} from 'react-icons/fa';
 import store from "../../app/store";
 import {clearSearchParams, setPolSearchParams, setSearchSearchParams} from "../../app/store/searchParams/actions";
 
@@ -138,6 +139,10 @@ function Header(props) {
                                 showAdmin &&
                                 <IoAddCircle className='user-icon cursor-pointer'
                                              onClick={() => history.push('/admin-page')}/>
+                            }
+                            {
+                                <FaShoppingCart className='user-icon cursor-pointer'
+                                                onClick={() => history.push('/cart-page')}/>
                             }
                         </Col>
                     </Row>
