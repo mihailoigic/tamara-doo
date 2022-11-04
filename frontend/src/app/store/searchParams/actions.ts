@@ -1,6 +1,6 @@
 import {
     IClearSearchParams,
-    ISearchParams,
+    ISearchParams, ISetFilterBrand, ISetFilterColor,
     ISetKategorijaTipSearchParam,
     ISetPolSearchParam,
     ISetSearchParamsAction,
@@ -8,14 +8,6 @@ import {
     ISetStartSearchParam,
 } from "./types";
 import ActionTypes from "../../../constants/ActionTypes";
-
-
-export function setSearchParams(searchParams: ISearchParams): ISetSearchParamsAction {
-    return {
-        type: ActionTypes.SET_SEARCH_PARAMS,
-        payload: searchParams,
-    };
-}
 
 export function setPolSearchParams(pol: string): ISetPolSearchParam {
     return {
@@ -49,5 +41,17 @@ export function setSearchSearchParams(search: string): ISetSearchSearchParam {
 export function clearSearchParams(): IClearSearchParams {
     return {
         type: ActionTypes.CLEAR_SEARCH_PARAMS
+    };
+}
+
+export function setFilterColor(): ISetFilterColor {
+    return {
+        type: ActionTypes.SET_FILTER_COLOR
+    };
+}
+
+export function setFilterBrand(): ISetFilterBrand {
+    return {
+        type: ActionTypes.SET_FILTER_BRAND
     };
 }

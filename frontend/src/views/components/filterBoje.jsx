@@ -18,8 +18,8 @@ export default function FilterBoje(props) {
     const [boje, setBoje] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
     const [colors, setColors] = useState([]);
-    const colorsInfo = useSelector(state => state.colors.colors);
-    const colorsArray = colorsInfo ? colorsInfo : [];
+    const colorsInfo = useSelector(state => state.colors);
+    const collorsArray = [colorsInfo];
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/boje`)
@@ -31,8 +31,13 @@ export default function FilterBoje(props) {
     function handleInputChange(event) {
         const target = event.target;
         if (target.checked) {
-            colorsArray.push(target.value);
-            store.dispatch(setFilterColor(colorsArray));
+            let state;
+            if (props.state.state.bojeState === '') {
+                state = `${target.value}`;
+            } else {
+                state = `${props.state.state.bojeState},${target.value}`;
+            }
+            props.state.setState({bojeState: state});
         } else {
             let state = props.state.state.bojeState.split(',');
             for (var i = 0; i < state.length; i++) {
