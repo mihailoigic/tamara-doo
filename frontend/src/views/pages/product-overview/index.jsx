@@ -37,6 +37,9 @@ function ProductOverviewPage() {
     const [tip, setTip] = useState("");
     const [podtipValue, setpodTipValue] = useState("Dubina korpe :");
     const [kolicina, setKolicina] = useState(1);
+    const [boja, setBoja] = useState(null);
+    const [velicina, setVelicina] = useState(null);
+    const [dubinaKorpe, setDubinaKorpe] = useState(null);
 
     useEffect(() => {
         scrollToTop();
@@ -72,6 +75,7 @@ function ProductOverviewPage() {
     function handleChangeKolicina(event) {
         setKolicina(event.target.value);
     }
+
     return (
         <>
             {
@@ -156,12 +160,16 @@ function ProductOverviewPage() {
                                         {
                                             proizvod.podtip[0] && proizvod.podtip.length >= 1 &&
                                             <Col md='12'>
-                                                <DubinaKorpe nameOfClass='size-item' product={proizvod}/>
+                                                <DubinaKorpe nameOfClass='size-item cursor-pointer'
+                                                             dubinaKorpe={dubinaKorpe} setDubinaKorpe={setDubinaKorpe}
+                                                             product={proizvod}/>
                                             </Col>
                                         }
                                         <Col md='12'>
                                             <p className='mt-3 mb-2'>Veličine :</p>
-                                            <Velicine nameOfClass='size-item' product={proizvod} floatEnd={false}/></Col>
+                                            <Velicine nameOfClass='size-item cursor-pointer' product={proizvod}
+                                                      velicina={velicina} setVelicina={setVelicina}
+                                                      floatEnd={false} isProductOverview={true}/></Col>
                                         <Col md='12'>
                                             <ul>
                                                 <li className='d-inline-block'>
@@ -175,7 +183,9 @@ function ProductOverviewPage() {
                                         </Col>
                                         <Col md='12'>
                                             <p className='mt-3 mb-2'>Boje :</p>
-                                            <Boje nameOfClass='color-item' product={proizvod} imgClass='rounded-3' showName={true} floatEnd={false}/>
+                                            <Boje nameOfClass='color-item cursor-pointer' boja={boja} setBoja={setBoja}
+                                                  product={proizvod} imgClass='rounded-3' showName={true}
+                                                  floatEnd={false}/>
                                         </Col>
                                         <div className='mt-3 hr'/>
                                     </Row>
@@ -191,9 +201,15 @@ function ProductOverviewPage() {
                                         }</p>
                                     }
                                     <p className="mt-2 mb-0">Kolicina:</p>
-                                    <input className="me-2 mt-1 kolicina-input" defaultValue={kolicina} onChange={()=>handleChangeKolicina} />
-                                        <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : 2000 <span className={'text-15'}>RSD</span></p>
-                                    <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto" onClick={()=>addToCart({proizvod: proizvod, kolicina: kolicina})}>Dodaj u korpu</div>
+                                    <input className="me-2 mt-1 kolicina-input" defaultValue={kolicina}
+                                           onChange={handleChangeKolicina}/>
+                                    <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : {proizvod.cena} <span
+                                        className={'text-15'}>RSD</span></p>
+                                    <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto"
+                                         onClick={() => addToCart({
+                                             proizvod: proizvod, kolicina: kolicina, dubinaKorpe: dubinaKorpe, velicina: velicina, boja:boja
+                                         })}>Dodaj u korpu
+                                    </div>
                                 </Col>
                             </Row>
                         </Container>

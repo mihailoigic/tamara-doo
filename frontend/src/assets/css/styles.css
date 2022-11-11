@@ -430,7 +430,6 @@ ul li:hover .man {
 .cartItem {
     min-width: 1000px;
     background-color: #f5f1f0;
-    display: flex;
     border-radius: 10px;
 }
 
@@ -536,6 +535,16 @@ ul li:hover .man {
 
 .item-carousel .slick-prev:hover, .item-carousel .slick-next:hover {
     color: black;
+}
+
+.selected-item {
+    border: 1px solid #c4bebb;
+    background-color: #f7efeb !important;
+}
+
+.cart-color-img {
+    max-width: 40px;
+    max-height: 40px;
 }
 
 @media screen and (max-width: 700px){

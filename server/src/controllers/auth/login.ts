@@ -12,8 +12,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
   const userRepository = getRepository(User);
   try {
+    console.log(email, password);
     const user = await userRepository.findOne({ where: { email } });
-    console.log(email, password, user);
     if (!user) {
       const customError = new CustomError(404, 'General', 'Not Found', ['Incorrect email or password']);
       return next(customError);

@@ -78,11 +78,30 @@ export const filterSearchParams = (searchParams: any) => {
     return api;
 }
 
+const findId = (cartItems: any) => {
+    let id = cartItems.length + 1;
+    const item = cartItems.find((item: any)=>item.cartId === id);
+    while (true) {
+        if (!item) {
+            return id;
+        } else {
+            id++;
+        }
+    }
+}
+
 export const addToCart = (proizvod: any) => {
     let cartItems = JSON.parse(<string>localStorage.getItem("cartItems"));
     if (cartItems === null) cartItems = [];
+    proizvod.cartId = findId(cartItems);
     cartItems.push(proizvod);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+}
+
+export const removeFromCart = (id: number) => {
+    let cartItems = JSON.parse(<string>localStorage.getItem("cartItems"));
+    const newCartItems = cartItems.filter((item: any) => item.cartId !== id);
+    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
 }
 
 export const getSearchParams = (searchParams: any, colors: any, brands: any) => {
