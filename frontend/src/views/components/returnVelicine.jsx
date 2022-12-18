@@ -4,7 +4,10 @@ import '../pages/product-overview/css/index.css';
 
 export default function Velicine(props) {
     useEffect(() => {
-        props.isProductOverview && props.setVelicina(props.product.velicine[0]);
+        const editItem = JSON.parse(localStorage.getItem("editItem"));
+        if (!editItem) {
+            props.isProductOverview && props.setVelicina(props.product.velicine[0]);
+        }
     }, []);
     return (
         <ul className={props.floatEnd ? 'd-inline-block float-end' : 'd-inline-block'}>

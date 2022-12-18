@@ -18,6 +18,7 @@ import EmailList from "../views/pages/email-list/emailList";
 import EmailListRemove from "../views/pages/email-list/emailListRemove";
 import EditProduct from "../views/pages/edit-product/index";
 import CartPage from "../views/pages/cartPage";
+import CheckoutPage from "../views/pages/checkout";
  
 const AppRouter = () => (
     <Router history={history}>
@@ -41,6 +42,7 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/edit-product`} component={EditProduct} />
             <Route exact path={`${Config.prefixUrl}/add-to-db`} component={AddToDBPage} />
             <Route exact path={`${Config.prefixUrl}/cart-page`} component={CartPage} />
+            <Route exact path={`${Config.prefixUrl}/checkout`} component={CheckoutPage} />
 
 
             <Route exact path={`${Config.prefixUrl}/email-list-remove/:id`} component={EmailListRemove} />

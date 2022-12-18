@@ -14,6 +14,9 @@ import {VelicineSifrarnik} from "../entities/Velicine";
 import {TipSifrarnik} from "../entities/Tip";
 import {PodtipSifrarnik} from "../entities/Podtip";
 import {User} from "../entities/users/User";
+import {Korisnik} from "../entities/Korisnik";
+import {Cart} from "../entities/Cart";
+import {CartItem} from "../entities/CartItem";
 
 const config: ConnectionOptions = {
   type: 'postgres',
@@ -25,7 +28,7 @@ const config: ConnectionOptions = {
   synchronize: false,
   logging: true,
   entities: ['typeorm/entities/**/*.*', Proizvod, ProizvodBoja, ProizvodSlike, ProizvodBrend, ProizvodVelicina, BojaSifrarnik,
-    BrendSifrarnik, KategorijeSifrarnik, KategorijaTipPodtip, KategorijaTip, VelicineSifrarnik, TipSifrarnik, PodtipSifrarnik, User],
+    BrendSifrarnik, KategorijeSifrarnik, KategorijaTipPodtip, KategorijaTip, VelicineSifrarnik, TipSifrarnik, PodtipSifrarnik, User, Korisnik, Cart, CartItem],
   migrations: ['typeorm/migrations/**/*.*'],
   subscribers: ['typeorm/subscriber/**/*.*'],
   cli: {

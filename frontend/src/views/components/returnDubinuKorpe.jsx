@@ -8,7 +8,10 @@ export default function DubinaKorpe(props) {
         niz.push(props.product.podtip[i]);
     }
     useEffect(()=>{
-        props.setDubinaKorpe(niz[0]);
+        const editItem = JSON.parse(localStorage.getItem("editItem"));
+        if (!editItem) {
+            props.setDubinaKorpe(niz[0]);
+        }
     },[])
     niz.sort();
     return (

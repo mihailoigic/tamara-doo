@@ -96,8 +96,20 @@
     border: 1px solid #86b7fe;
     background-color: #ffffff;
     position: absolute;
-    left: 35%;
+    left: 30%;
     top: 30%;
+}
+
+
+
+.popup-add-to-cart{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
 }
 
 .sub-header-title {
@@ -547,6 +559,11 @@ ul li:hover .man {
     max-height: 40px;
 }
 
+.checkout-block {
+    flex-direction: column;
+    max-width: 350px;
+}
+
 @media screen and (max-width: 700px){
 
     .cartItem {
@@ -588,5 +605,12 @@ ul li:hover .man {
         font-size: 40px;
         font-family: Flemish;
         cursor: pointer;
+    }
+
+    .popup-delete {
+        z-index: 2;
+        width: 90%;
+        height: 40%;
+        left: 5%;
     }
 }

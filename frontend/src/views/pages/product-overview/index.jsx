@@ -16,6 +16,7 @@ import {IoArrowBackCircleSharp} from 'react-icons/io5';
 import history from "../../../utilities/history";
 import {addToCart, removeUnderline, scrollToTop} from "../../../utilities/util";
 import DubinaKorpe from "../../components/returnDubinuKorpe";
+import Button from 'react-bootstrap/Button';
 
 function isKorpaOrCarapa(niz) {
     if (niz.includes('B'))
@@ -40,9 +41,23 @@ function ProductOverviewPage() {
     const [boja, setBoja] = useState(null);
     const [velicina, setVelicina] = useState(null);
     const [dubinaKorpe, setDubinaKorpe] = useState(null);
+    const [defaultSlika, setDefaultSlika] = useState(proizvod?.defaultSlika);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         scrollToTop();
+        const editItem = JSON.parse(localStorage.getItem("editItem"));
+        if (editItem) {
+            setVelicina(editItem.velicina);
+            setKolicina(editItem.kolicina);
+            setBoja(editItem.boja);
+            if (editItem.dubinaKorpe) {
+                setDubinaKorpe(editItem.dubinaKorpe);
+            }
+            setTimeout(() => {
+                localStorage.setItem('editItem', null);
+            }, 1000)
+        }
     }, [])
 
 
@@ -53,31 +68,42 @@ function ProductOverviewPage() {
                 setpodTipValue(isKorpaOrCarapa(res.data.data.podtip))
                 setDefaultSlika(res.data.data.defaultSlika);
                 setTip(res.data.data.tip === undefined ? "" : res.data.data.tip);
+                const editItem = JSON.parse(localStorage.getItem("editItem"));
+                if (!editItem) {
+                    setBoja(res.data.data?.boje[0]);
+                    setVelicina(res.data.data.velicine[0]);
+                }
             })
+
     }, [id]);
 
-    const [defaultSlika, setDefaultSlika] = useState(proizvod?.defaultSlika);
-    const [backgroundPosition, setBackgroundPosition] = useState({
-        backgroundImage: `url(${process.env.PUBLIC_URL + `/Imgs/${defaultSlika}`})`,
-        backgroundPosition: '0% 0%'
-    });
-
-    const handleMouseMove = e => {
-        const {left, top, width, height} = e.target.getBoundingClientRect();
-        const x = (e.pageX - left) / width * 100;
-        const y = (e.pageY - top) / height * 100;
-        setBackgroundPosition({
-            backgroundImage: `url(${process.env.PUBLIC_URL + `/Imgs/${defaultSlika}`})`,
-            backgroundPosition: `${x}% ${y}%`
-        });
-    }
 
     function handleChangeKolicina(event) {
         setKolicina(event.target.value);
     }
 
+    function getPhotosByColor(color) {
+        const filtered = proizvod?.slike.filter((slika) => slika.includes(color));
+        if (filtered && filtered.length > 0) {
+            return filtered;
+        }
+        return proizvod?.slike;
+    }
+
     return (
         <>
+            {
+                showPopup &&
+                <>
+                    <div className='background-popup'/>
+                    <div className='popup-delete text-center p-4'>
+                        <p className='h5'>Proizvod je dodat u korpu!</p>
+                        <p>Klikom na korpu u gornjem desnom uglu mozete videte sve dodate proizvode</p>
+                        <Button className='me-3'
+                                onClick={() => setShowPopup(false)}>Ok</Button>
+                    </div>
+                </>
+            }
             {
                 proizvod === null ? <Loader/> :
                     <>
@@ -91,7 +117,7 @@ function ProductOverviewPage() {
                                 <Col xs='12' md='2' className='d-none d-md-block p-0 text-center'>
                                     {
                                         proizvod !== null ?
-                                            proizvod?.slike.map((slika) => {
+                                            getPhotosByColor(boja).map((slika) => {
                                                 return (
                                                     <img
                                                         className={slika === defaultSlika ? 'active img-item mb-3 mx-auto rounded-3 p-0' : 'img-item mb-3 mx-auto rounded-3 p-0'}
@@ -110,19 +136,17 @@ function ProductOverviewPage() {
                                     }
                                 </Col>
                                 <Col xs='12' md='4'>
-                                    <figure onMouseMove={(e) => handleMouseMove(e)} style={backgroundPosition}>
                                         <img
                                             className="product-overview-img rounded-3"
                                             src={process.env.PUBLIC_URL + `/Imgs/${defaultSlika}`}
                                             alt="slider-photo"
                                         />
-                                    </figure>
                                 </Col>
                                 <Col xs='12' md='2' className='d-block d-md-none p-0 text-center'>
                                     <Row>
                                         {
                                             proizvod !== null ?
-                                                proizvod?.slike.map((slika) => {
+                                                getPhotosByColor(boja).map((slika) => {
                                                     return (
                                                         <Col xs='6'>
                                                             <img
@@ -183,9 +207,16 @@ function ProductOverviewPage() {
                                         </Col>
                                         <Col md='12'>
                                             <p className='mt-3 mb-2'>Boje :</p>
-                                            <Boje nameOfClass='color-item cursor-pointer' boja={boja} setBoja={setBoja}
-                                                  product={proizvod} imgClass='rounded-3' showName={true}
-                                                  floatEnd={false}/>
+                                            <Boje
+                                                nameOfClass='color-item cursor-pointer'
+                                                boja={boja}
+                                                setBoja={setBoja}
+                                                product={proizvod}
+                                                imgClass='rounded-3'
+                                                showName={true}
+                                                floatEnd={false}
+                                                getPhotosByColor={getPhotosByColor}
+                                                setDefaultSlika={setDefaultSlika}/>
                                         </Col>
                                         <div className='mt-3 hr'/>
                                     </Row>
@@ -206,9 +237,16 @@ function ProductOverviewPage() {
                                     <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : {proizvod.cena} <span
                                         className={'text-15'}>RSD</span></p>
                                     <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto"
-                                         onClick={() => addToCart({
-                                             proizvod: proizvod, kolicina: kolicina, dubinaKorpe: dubinaKorpe, velicina: velicina, boja:boja
-                                         })}>Dodaj u korpu
+                                         onClick={() => {
+                                             addToCart({
+                                                 proizvod: proizvod,
+                                                 kolicina: kolicina,
+                                                 dubinaKorpe: dubinaKorpe,
+                                                 velicina: velicina,
+                                                 boja: boja
+                                             });
+                                             setShowPopup(true);
+                                         }}>Dodaj u korpu
                                     </div>
                                 </Col>
                             </Row>

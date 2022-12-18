@@ -13,6 +13,7 @@ import { ProizvodVelicina } from './VelicineProizvod';
 import { ProizvodBrend } from './BrendProizvod';
 import { ProizvodSlike } from "./SlikeProizvod";
 import {KategorijaTipPodtip} from "./KategorijaTipPodtip";
+import {CartItem} from "./CartItem";
 
 @Entity('proizvod')
 export class Proizvod {
@@ -67,4 +68,7 @@ export class Proizvod {
 
   @OneToMany(() => KategorijaTipPodtip, (kategorijaTipPodtip) => kategorijaTipPodtip.forKategorijaProizvod)
   kategorijaTipPodtip: KategorijaTipPodtip[];
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.proizvodId)
+  cartItems: CartItem[];
 }
