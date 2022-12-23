@@ -4,10 +4,8 @@ import {getManager, getRepository} from 'typeorm';
 import { Proizvod } from "../../typeorm/entities/Proizvod";
 import { CustomError } from '../../utils/response/custom-error/CustomError';
 import {ProizvodSlike} from "../../typeorm/entities/SlikeProizvod";
-import {User} from "../../typeorm/entities/users/User";
 import {ProizvodBoja} from "../../typeorm/entities/BojeProizvod";
 import {ProizvodVelicina} from "../../typeorm/entities/VelicineProizvod";
-import {BojaSifrarnik} from "../../typeorm/entities/Boje";
 
 export const edit = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
@@ -41,16 +39,14 @@ export const edit = async (req: Request, res: Response, next: NextFunction) => {
             const customError = new CustomError(404, 'General', `Product with id:${id} not found.`, ['Product not found.']);
             return next(customError);
         }
-
         proizvodSingle.naziv = naziv;
         proizvodSingle.opis = opis;
         proizvodSingle.cena = cena;
-        proizvodSingle.proizvodBoja = await makeBoje(req, proizvodSingle);
-        proizvodSingle.proizvodVelicina = await makeVelicine(req, proizvodSingle);
-        proizvodSingle.proizvodSlike = await makeSlike(req, proizvodSingle);
-
         try {
-            await proizvodRepo.save({...proizvodSingle});
+            await proizvodRepo.save(proizvodSingle);
+            await makeBoje(req, proizvodSingle);
+            await makeVelicine(req, proizvodSingle);
+            await makeSlike(req, proizvodSingle);
             res.customSuccess(200, 'Product successfully saved.');
         } catch (err) {
             const customError = new CustomError(409, 'Raw', `Product '${proizvodSingle.naziv}' can't be saved.`, null, err);
@@ -62,44 +58,47 @@ export const edit = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-const makeBoje = async (req: Request, proizvod: Proizvod): Promise<ProizvodBoja[]> => {
+const makeBoje = async (req: Request, proizvod: Proizvod): Promise<void> => {
     const { boje } = req.body;
-    const bojeArray = [] as ProizvodBoja[];
     if (boje.length > 0) {
+        await getRepository(ProizvodBoja).delete({ forProizvodId: Number(proizvod.id) });
+        const bojeArray = [] as ProizvodBoja[];
         for (const bojaElement of boje) {
-            const boja = new ProizvodBoja();
-            boja.forBojaId = bojaElement;
-            boja.forProizvodId = Number(proizvod.id);
-            bojeArray.push(boja);
+                const boja = new ProizvodBoja();
+                boja.forBojaId = bojaElement;
+                boja.forProizvodId = Number(proizvod.id);
+                bojeArray.push(boja);
         }
+        await getManager().save(ProizvodBoja, bojeArray);
     }
-    return bojeArray;
 }
 
-const makeVelicine = async (req: Request, proizvod: Proizvod): Promise<ProizvodVelicina[]> => {
+const makeVelicine = async (req: Request, proizvod: Proizvod): Promise<void> => {
     const { velicine } = req.body;
-    const velicineArray = [] as ProizvodVelicina[];
     if (velicine.length > 0) {
+        const velicineArray = [] as ProizvodVelicina[];
+        await getRepository(ProizvodVelicina).delete({ forProizvodId: Number(proizvod.id) });
         for (const velicinaElement of velicine) {
             const velicina = new ProizvodVelicina();
             velicina.forVelicinaId = velicinaElement;
             velicina.forProizvodId = Number(proizvod.id);
             velicineArray.push(velicina);
         }
+        await getManager().save(ProizvodVelicina, velicineArray);
     }
-    return velicineArray;
 }
 
-const makeSlike = async (req: Request, proizvod: Proizvod): Promise<ProizvodSlike[]> => {
+const makeSlike = async (req: Request, proizvod: Proizvod): Promise<void> => {
     const { slike } = req.body;
-    const slikeArray = [] as ProizvodSlike[];
     if (slike.length > 0) {
+        const slikeArray = [] as ProizvodSlike[];
+        await getRepository(ProizvodSlike).delete({ forProizvodId: Number(proizvod.id) });
         for (const slikeElement of slike) {
             const slika = new ProizvodSlike();
             slika.urlSlike = slikeElement;
             slika.forProizvodId = Number(proizvod.id);
             slikeArray.push(slika);
         }
+        await getManager().save(ProizvodSlike, slikeArray);
     }
-    return slikeArray;
 }

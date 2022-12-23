@@ -1,5 +1,7 @@
 import {ISifrarnik} from "../entities/sifrarnik/types";
 import Sifrarnik from "../entities/sifrarnik/Sifrarnik";
+import {Proizvod} from "../../../server/src/typeorm/entities/Proizvod";
+import {ProizvodBoja} from "../../../server/src/typeorm/entities/BojeProizvod";
 
 export const detectIE = (): number | boolean => {
     const userAgent = window.navigator.userAgent;
@@ -66,9 +68,11 @@ export const prepareForSelect = (niz: any): ISifrarnik[] | undefined => {
 
 export const prepareValuesForSelect = (niz: any, apiNiz: any): ISifrarnik[] => {
     let sifrarnikArray: ISifrarnik[] = [];
-    niz.forEach((item: any) => {
-        const element = apiNiz.find((apiItem: any) => apiItem.label === item);
-        sifrarnikArray.push(new Sifrarnik(element.label, element.value));
+    niz?.forEach((item: any) => {
+        const element = apiNiz?.find((apiItem: any) => apiItem.label === item);
+        if (element) {
+            sifrarnikArray.push(new Sifrarnik(element.label, element.value));
+        }
     })
     return sifrarnikArray;
 }
