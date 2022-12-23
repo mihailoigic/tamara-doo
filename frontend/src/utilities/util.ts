@@ -64,6 +64,33 @@ export const prepareForSelect = (niz: any): ISifrarnik[] | undefined => {
     return sifrarnikArray;
 }
 
+export const prepareValuesForSelect = (niz: any, apiNiz: any): ISifrarnik[] => {
+    let sifrarnikArray: ISifrarnik[] = [];
+    niz.forEach((item: any) => {
+        const element = apiNiz.find((apiItem: any) => apiItem.label === item);
+        sifrarnikArray.push(new Sifrarnik(element.label, element.value));
+    })
+    return sifrarnikArray;
+}
+
+export const getValueFromMultiSelect = (selectedOptions: any) => {
+    let options: any[] = [];
+    if (selectedOptions.length === undefined) {
+        if (selectedOptions.value !== '') {
+            const value = Number(selectedOptions.value);
+            options.push(value);
+            return options;
+        } else {
+            return [];
+        }
+    }
+    selectedOptions.forEach((option: any) => {
+        const value = Number(option.value);
+        options.push(value);
+    })
+    return options;
+}
+
 export const filterSearchParams = (searchParams: any) => {
     let api = `?start=${searchParams.start}&pol=${searchParams.pol}`;
     if (searchParams.kategorija !== 0) {

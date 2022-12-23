@@ -11,7 +11,7 @@ import Select from 'react-select';
 import filtersData from "../../../data/filtersData";
 import axios from "axios";
 import Config from "../../../config/config";
-import {prepareForSelect, scrollToTop} from "../../../utilities/util";
+import {getValueFromMultiSelect, prepareForSelect, scrollToTop} from "../../../utilities/util";
 import history from "../../../utilities/history";
 
 function AddProductPage() {
@@ -122,23 +122,7 @@ function AddProductPage() {
         return true;
     }
 
-    function getValueFromMultiSelect(selectedOptions) {
-        let options: number = [];
-        if (selectedOptions.length === undefined) {
-            if (selectedOptions.value !== '') {
-                const value = Number(selectedOptions.value);
-                options.push(value);
-                return options;
-            } else {
-                return [];
-            }
-        }
-        selectedOptions.forEach((option) => {
-            const value = Number(option.value);
-            options.push(value);
-        })
-        return options;
-    }
+
 
     const handleSubmit = async (event) => {
         const form = event.currentTarget;

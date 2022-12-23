@@ -3,17 +3,19 @@ import Header from "../../components/header";
 import "../../../assets/css/styles.css";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {addToCart, maxCharacters, removeFromCart} from "../../../utilities/util";
+import {maxCharacters, removeFromCart} from "../../../utilities/util";
 import history from "../../../utilities/history";
+import Button from 'react-bootstrap/Button';
 
 export default function CartPage() {
     const cartItems = JSON.parse(localStorage.getItem("cartItems"));
     const [kolicina, setKolicina] = useState(1);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
 
     function fullPrice(cartItems) {
         let price = 0;
         cartItems.forEach((cartItem) => {
-           price += cartItem.proizvod.cena;
+           price += Math.round(cartItem.kolicina * cartItem.proizvod.cena);
         });
         return price;
     }
@@ -31,6 +33,18 @@ export default function CartPage() {
 
     return (
         <>
+            {
+                showDeletePopup &&
+                <>
+                    <div className='background-popup'/>
+                    <div className='popup-delete text-center p-4'>
+                        <p className='h5'>Proizvod je uspesno izbrisan iz korpe!</p>
+                        <Button className='me-3' onClick={() => {
+                            setShowDeletePopup(false);
+                        }}>Ok</Button>
+                    </div>
+                </>
+            }
             <Header/>
             {
                 cartItems && cartItems.length > 0 ?
@@ -70,10 +84,13 @@ export default function CartPage() {
                                             <p className="colorName ps-2 m-3">{maxCharacters(item.boja)}</p>
                                         </div>
                                         <p className="m-3">Količina: {item.kolicina}</p>
-                                        <p className='m-3'>Cena: {item.proizvod.cena}</p>
+                                        <p className='m-3'>Cena: {item.proizvod.cena} RSD</p>
                                         <div>
                                             <img src={process.env.PUBLIC_URL + `/Imgs/edit.png`} style={{height: '20px', width: '20px'}} className='m-3 cursor-pointer' onClick={() => handleEdit(item.proizvod.id, item.cartId, cartItems)}/>
-                                            <img src={process.env.PUBLIC_URL + `/Imgs/trash.png`} style={{height: '25px', width: '25px'}} className='m-3 cursor-pointer' onClick={() => removeFromCart(item.cartId)}/>
+                                            <img src={process.env.PUBLIC_URL + `/Imgs/trash.png`} style={{height: '25px', width: '25px'}} className='m-3 cursor-pointer' onClick={() => {
+                                                removeFromCart(item.cartId);
+                                                setShowDeletePopup(true);
+                                            }}/>
                                         </div>
                                     </div>
                                 );

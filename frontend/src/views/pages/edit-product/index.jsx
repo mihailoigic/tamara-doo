@@ -5,17 +5,17 @@ import Header from "../../components/header";
 import {
     useLocation
 } from "react-router-dom";
-import {prepareForSelect, scrollToTop} from "../../../utilities/util";
+import {getValueFromMultiSelect, prepareForSelect, prepareValuesForSelect, scrollToTop} from "../../../utilities/util";
 import axios from "axios";
 import Config from "../../../config/config";
 import {useParams} from "react-router-dom";
 import history from "../../../utilities/history";
 import Select from "react-select";
-import filtersData from "../../../data/filtersData";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import {IoCloseSharp} from "react-icons/all";
 
 function EditProduct() {
     const [renderPage, setRenderPage] = useState(false);
@@ -23,6 +23,9 @@ function EditProduct() {
     const [proizvod, setProizvod] = useState(null);
     const [tip, setTip] = useState("");
     const [component, setComponent] = useState(null);
+    const [apiSizes, setApiSizes] = useState(null);
+    const [apiColors, setApiColors] = useState(null);
+    const [slike, setSlike] = useState([]);
     let location = useLocation();
 
     useEffect(() => {
@@ -32,6 +35,15 @@ function EditProduct() {
         }).then(res => {
             setRenderPage(res.status === 200);
         })
+
+        axios.get(`${Config.api.baseUrl}v1/velicine`)
+            .then(res => {
+                setApiSizes(prepareForSelect(res.data.data));
+            })
+        axios.get(`${Config.api.baseUrl}v1/boje`)
+            .then(res => {
+                setApiColors(prepareForSelect(res.data.data));
+            })
     }, []);
 
     useEffect(() => {
@@ -47,18 +59,24 @@ function EditProduct() {
         axios.get(`${Config.api.baseUrl}v1/proizvod/${component}`)
             .then(res => {
                 setProizvod(res.data.data);
+                setSlike(res.data.data.slike);
             })
+
     }, [component]);
 
     const handleSubmit = async (event) => {
         const form = event.currentTarget;
         event.preventDefault();
         event.stopPropagation();
+
+        const cena = Number(event.currentTarget.cena.value);
+        const boje = getValueFromMultiSelect(event.currentTarget.boja);
+        const velicine = getValueFromMultiSelect(event.currentTarget.velicina);
         const naziv = event.currentTarget.naziv.value;
         const opis = event.currentTarget.opis.value;
-        const slike = getPicturesNames(document.getElementById('slike').files);
+        const formatedSlike = slike;
 
-        axios.put(`${Config.api.baseUrl}v1/izmeni-proizvod/${proizvod.id}`, { naziv: naziv, opis: opis, slike: slike }, {
+        axios.put(`${Config.api.baseUrl}v1/izmeni-proizvod/${proizvod.id}`, { naziv: naziv, opis: opis, slike: formatedSlike, boje: boje, velicine: velicine, cena: cena }, {
             headers: {"Authorization": localStorage.getItem("BearerToken")}
         })
             .then((response) => {
@@ -80,6 +98,11 @@ function EditProduct() {
             }
         }
         return picturesArray;
+    }
+
+    function deletePhoto(slika) {
+        const slikeNiz = slike.filter((s) => s !== slika);
+        setSlike(slikeNiz);
     }
 
     return (
@@ -153,65 +176,70 @@ function EditProduct() {
                                 {/*    />*/}
                                 {/*</Col>*/}
                             </Row>
-                            <Row className="mb-3">
-                                {/*<Col md="4">*/}
-                                {/*    <Form.Label>Veličine:</Form.Label>*/}
-                                {/*    <Select*/}
-                                {/*        isMulti*/}
-                                {/*        name="velicina"*/}
-                                {/*        options={apiSizes}*/}
-                                {/*        // options={filtersData.filters.sizes.find(item => {*/}
-                                {/*        //     return item.id === category*/}
-                                {/*        // })?.options}*/}
-                                {/*        className="basic-multi-select"*/}
-                                {/*        placeholder="Izaberi.."*/}
-                                {/*    />*/}
-                                {/*</Col>*/}
-                                {/*<Col md="4">*/}
-                                {/*    <Form.Label>Boje:</Form.Label>*/}
-                                {/*    <Select*/}
-                                {/*        isMulti*/}
-                                {/*        name="boja"*/}
-                                {/*        options={apiColors}*/}
-                                {/*        className="basic-multi-select"*/}
-                                {/*        placeholder="Izaberi.."*/}
-                                {/*    />*/}
-                                {/*</Col>*/}
-                                {/*<Form.Group as={Col} md="2" controlId="novo">*/}
-                                {/*    <Form.Label>Novo:</Form.Label>*/}
-                                {/*    <Form.Select aria-label="Default select example">*/}
-                                {/*        <option key={1} value='Da'>Da</option>*/}
-                                {/*        <option key={2} value='Ne'>Ne</option>*/}
-                                {/*    </Form.Select>*/}
-                                {/*</Form.Group>*/}
-                                {/*<Form.Group as={Col} md="2" controlId="moda">*/}
-                                {/*    <Form.Label>Moda:</Form.Label>*/}
-                                {/*    <Form.Select aria-label="Default select example">*/}
-                                {/*        <option key={1}>Da</option>*/}
-                                {/*        <option key={2}>Ne</option>*/}
-                                {/*    </Form.Select>*/}
-                                {/*</Form.Group>*/}
-                                {/*<Form.Group as={Col} md="2" controlId="cena">*/}
-                                {/*    <Form.Label>Cena:</Form.Label>*/}
-                                {/*    <Form.Control*/}
-                                {/*        required*/}
-                                {/*        type="text"*/}
-                                {/*        placeholder="3000"*/}
-                                {/*    />*/}
-                                {/*</Form.Group>*/}
+                                <Col md="4">
+                                    <Form.Label>Veličine:</Form.Label>
+                                    <Select
+                                        defaultValue={prepareValuesForSelect(proizvod.velicine, apiSizes)}
+                                        isMulti
+                                        name="velicina"
+                                        options={apiSizes}
+                                        // options={filtersData.filters.sizes.find(item => {
+                                        //     return item.id === category
+                                        // })?.options}
+                                        className="basic-multi-select"
+                                        placeholder="Izaberi.."
+                                    />
+                                </Col>
+                                <Col md="4">
+                                    <Form.Label>Boje:</Form.Label>
+                                    <Select
+                                        defaultValue={prepareValuesForSelect(proizvod.boje, apiColors)}
+                                        isMulti
+                                        name="boja"
+                                        options={apiColors}
+                                        className="basic-multi-select"
+                                        placeholder="Izaberi.."
+                                    />
+                                </Col>
+                                <Form.Group as={Col} md="2" controlId="cena">
+                                    <Form.Label>Cena:</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="text"
+                                        placeholder="3000"
+                                        defaultValue={proizvod.cena}
+                                    />
+                                </Form.Group>
+                            <div className='d-flex'>
+                                {
+                                    slike && slike.map((slika) => {
+                                        return(
+                                                <div className='mx-2'>
+                                                    <IoCloseSharp onClick={()=>deletePhoto(slika)} className='cursor-pointer'/>
+                                                    <img
+                                                        className="cart-item-img rounded-3 m-3"
+                                                        src={process.env.PUBLIC_URL + `/Imgs/${slika}`}
+                                                        alt="slider-photo"
+                                                    />
+                                                </div>
+                                        );
+                                    })
+                                }
+                            </div>
+                                <Row className="mb-3">
                                 <Col md="2">
                                     <input
+                                        onChange={(event)=> {
+                                            const slikeArray = slike;
+                                            setSlike(slikeArray.concat(getPicturesNames(document.getElementById('slike').files)))
+                                        }}
                                         className="mt-3 pt-3"
                                         type="file"
                                         id="slike"
                                         name="slike"
-                                        multiple/>
+                                        multiple
+                                        accept="image/*"/>
                                 </Col>
-                                {/*<Col md="5 text-center mt-4 bg-warning rounded pt-2 ms-2">*/}
-                                {/*    <p className={"d-inline"}>Slike imenovati u*/}
-                                {/*        formatu: <b><i>šifra</i>_<i>tipProizvoda</i></b> npr: [020_Podsuknja.jpg]*/}
-                                {/*    </p>*/}
-                                {/*</Col>*/}
                             </Row>
                             <Row className="mb-3">
                                 <Form.Group as={Col} md="12" controlId="opis">

@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
 import Config from "../../../config/config";
+import {MdOutlineDoneOutline} from 'react-icons/md';
 
 export default function CheckoutPage() {
     const [successfulCheckout, setSuccessfulCheckout] = useState(false);
@@ -33,6 +34,7 @@ export default function CheckoutPage() {
             if (response.status === 200) ;
             setSuccessfulCheckout(true);
             setBrojKupovine(response.data.data.id);
+            localStorage.setItem("cartItems", null);
         });
     }
     return (
@@ -41,6 +43,7 @@ export default function CheckoutPage() {
             {
                 successfulCheckout ?
                     <div className='container-fluid mt-5 text-center'>
+                        <MdOutlineDoneOutline className='mt-3 ms-3 menu-icon'/>
                         <p>Uspesno ste porucili proizvode iz korpe! Javicemo Vam se u najkracem mogucem roku!</p>
                         <p>Vas broj kupovine je: {brojKupovine}</p>
                     </div> :

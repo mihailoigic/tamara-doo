@@ -1,11 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getManager } from 'typeorm';
 import { CustomError } from '../../utils/response/custom-error/CustomError';
-
-import { BrendSifrarnik } from '../../typeorm/entities/Brend';
 import {Proizvod} from "../../typeorm/entities/Proizvod";
 import {ProizvodBoja} from "../../typeorm/entities/BojeProizvod";
-import {KategorijeSifrarnik} from "../../typeorm/entities/Kategorije";
 import {KategorijaTipPodtip} from "../../typeorm/entities/KategorijaTipPodtip";
 import {ProizvodBrend} from "../../typeorm/entities/BrendProizvod";
 import {ProizvodSlike} from "../../typeorm/entities/SlikeProizvod";
@@ -13,7 +10,6 @@ import {ProizvodVelicina} from "../../typeorm/entities/VelicineProizvod";
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
     const proizvod = makeProduct(req);
-    console.log(proizvod);
     try {
         const proizvodExists = await getManager().findOne(Proizvod, { naziv: proizvod.naziv});
         if(!proizvodExists){

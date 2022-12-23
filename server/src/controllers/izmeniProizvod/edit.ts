@@ -5,29 +5,55 @@ import { Proizvod } from "../../typeorm/entities/Proizvod";
 import { CustomError } from '../../utils/response/custom-error/CustomError';
 import {ProizvodSlike} from "../../typeorm/entities/SlikeProizvod";
 import {User} from "../../typeorm/entities/users/User";
+import {ProizvodBoja} from "../../typeorm/entities/BojeProizvod";
+import {ProizvodVelicina} from "../../typeorm/entities/VelicineProizvod";
+import {BojaSifrarnik} from "../../typeorm/entities/Boje";
 
 export const edit = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const { naziv, opis } = req.body;
+    const { naziv, opis, cena, boje, velicine, slike } = req.body;
 
     const proizvodRepo = getRepository(Proizvod);
     try {
-        const proizvod = await proizvodRepo.findOne({ where: { id } });
 
-        if (!proizvod) {
+        if (boje.length < 1 || velicine.length < 1 || slike.length < 1 || !naziv || !cena) {
+            const customError = new CustomError(400, 'Validation', `Validation error. Bad submit!`);
+            return next(customError);
+        }
+
+        const proizvodSingle = await proizvodRepo
+            .createQueryBuilder('proizvod')
+            .leftJoinAndSelect('proizvod.proizvodBoja', 'boje')
+            .leftJoinAndSelect('boje.forBojaSifrarnik', 'bojeNaziv')
+            .leftJoinAndSelect('proizvod.proizvodVelicina', 'velicina')
+            .leftJoinAndSelect('velicina.forVelicinaSifrarnik', 'velicinaNaziv')
+            .leftJoinAndSelect('proizvod.proizvodBrend', 'brend')
+            .leftJoinAndSelect('brend.forBrendSifrarnik', 'brendNaziv')
+            .leftJoinAndSelect('proizvod.proizvodSlike', 'slike')
+            .leftJoinAndSelect('proizvod.kategorijaTipPodtip', 'kategorijaTipPodTip')
+            .leftJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
+            .leftJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
+            .leftJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
+            .where(`proizvod.id = ${id}`)
+            .getOne();
+
+        if (!proizvodSingle) {
             const customError = new CustomError(404, 'General', `Product with id:${id} not found.`, ['Product not found.']);
             return next(customError);
         }
 
-        proizvod.naziv = naziv;
-        proizvod.opis = opis;
+        proizvodSingle.naziv = naziv;
+        proizvodSingle.opis = opis;
+        proizvodSingle.cena = cena;
+        proizvodSingle.proizvodBoja = await makeBoje(req, proizvodSingle);
+        proizvodSingle.proizvodVelicina = await makeVelicine(req, proizvodSingle);
+        proizvodSingle.proizvodSlike = await makeSlike(req, proizvodSingle);
 
-        await makeSlike(req, id, proizvod);
         try {
-            await proizvodRepo.save(proizvod);
+            await proizvodRepo.save({...proizvodSingle});
             res.customSuccess(200, 'Product successfully saved.');
         } catch (err) {
-            const customError = new CustomError(409, 'Raw', `Product '${proizvod.naziv}' can't be saved.`, null, err);
+            const customError = new CustomError(409, 'Raw', `Product '${proizvodSingle.naziv}' can't be saved.`, null, err);
             return next(customError);
         }
     } catch (err) {
@@ -36,29 +62,44 @@ export const edit = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-const makeSlike = async (req: Request, id: number | string, proizvod: Proizvod) => {
+const makeBoje = async (req: Request, proizvod: Proizvod): Promise<ProizvodBoja[]> => {
+    const { boje } = req.body;
+    const bojeArray = [] as ProizvodBoja[];
+    if (boje.length > 0) {
+        for (const bojaElement of boje) {
+            const boja = new ProizvodBoja();
+            boja.forBojaId = bojaElement;
+            boja.forProizvodId = Number(proizvod.id);
+            bojeArray.push(boja);
+        }
+    }
+    return bojeArray;
+}
+
+const makeVelicine = async (req: Request, proizvod: Proizvod): Promise<ProizvodVelicina[]> => {
+    const { velicine } = req.body;
+    const velicineArray = [] as ProizvodVelicina[];
+    if (velicine.length > 0) {
+        for (const velicinaElement of velicine) {
+            const velicina = new ProizvodVelicina();
+            velicina.forVelicinaId = velicinaElement;
+            velicina.forProizvodId = Number(proizvod.id);
+            velicineArray.push(velicina);
+        }
+    }
+    return velicineArray;
+}
+
+const makeSlike = async (req: Request, proizvod: Proizvod): Promise<ProizvodSlike[]> => {
     const { slike } = req.body;
+    const slikeArray = [] as ProizvodSlike[];
     if (slike.length > 0) {
-        let brojac = 0;
-        const slikeArray = [] as ProizvodSlike[];
         for (const slikeElement of slike) {
-            if (brojac === 0) {
-                proizvod.defaultSlika = slikeElement;
-            }
             const slika = new ProizvodSlike();
             slika.urlSlike = slikeElement;
-            slika.forProizvodId = Number(id);
+            slika.forProizvodId = Number(proizvod.id);
             slikeArray.push(slika);
-            brojac++;
         }
-
-        const proizvodSlikeRepo = getRepository(ProizvodSlike);
-        const niz = await proizvodSlikeRepo.find({where: {forproizvod: id}});
-
-        for (const item of niz) {
-            await proizvodSlikeRepo.delete(item.id);
-        }
-
-        await getManager().save(ProizvodSlike, slikeArray);
     }
+    return slikeArray;
 }
