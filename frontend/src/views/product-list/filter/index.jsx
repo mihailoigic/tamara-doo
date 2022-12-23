@@ -7,7 +7,7 @@ import {firstLetter} from "../../../utilities/util";
 import store from "../../../app/store";
 import {
     setKategorijaTipSearchParam,
-    setPolSearchParams,
+    setPolSearchParams, setStartSearchParams,
 } from "../../../app/store/searchParams/actions";
 
 function Filter(props) {
@@ -21,6 +21,7 @@ function Filter(props) {
                 <Col>
                     <p className="filter-item mb-0 pt-1" onClick={() => {
                         store.dispatch(setKategorijaTipSearchParam(filter.value,0));
+                        store.dispatch(setStartSearchParams(1));
                         !props.mobile && setFilterActive(!filterActive);
                         history.push('/product-list');
                         props.mobile && props.setShowSubMenu(false);

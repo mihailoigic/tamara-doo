@@ -72,6 +72,7 @@ export const ProductListPage = () => {
                 setCategoriesData(res.data.data);
             })
         setRenderPage(true);
+        setActivePage(Math.ceil(state.searchParams.start / 20));
     },[state, colors, brands]);
 
     const handlePageChange = (pageNumber) => {

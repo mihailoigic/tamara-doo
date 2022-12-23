@@ -1,9 +1,7 @@
 import {
-    IClearSearchParams,
-    ISearchParams, ISetFilterBrand, ISetFilterColor,
+    IClearSearchParams,ISetFilterBrand, ISetFilterColor,
     ISetKategorijaTipSearchParam,
     ISetPolSearchParam,
-    ISetSearchParamsAction,
     ISetSearchSearchParam,
     ISetStartSearchParam,
 } from "./types";
