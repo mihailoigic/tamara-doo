@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 
 import { ProizvodBoja } from './BojeProizvod';
+import {DiscountBoja} from "./DiscountBoja";
+import {Discount} from "./Discount";
 
 @Entity('bojaSifrarnik')
 export class BojaSifrarnik {
@@ -14,4 +16,7 @@ export class BojaSifrarnik {
 
   @OneToMany(() => ProizvodBoja, (proizvodBoja) => proizvodBoja.forBojaSifrarnik)
   bojaProizvod: ProizvodBoja[];
+
+  @OneToMany(() => DiscountBoja, (discountBoja) => discountBoja.forBojaSifrarnik)
+  bojaDiscount: DiscountBoja[];
 }

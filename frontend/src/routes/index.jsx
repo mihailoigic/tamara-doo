@@ -21,6 +21,7 @@ import CartPage from "../views/pages/cartPage";
 import CheckoutPage from "../views/pages/checkout";
 import OrdersPage from "../views/pages/active-orders";
 import OrderPage from "../views/pages/order";
+import AddDiscountPage from "../views/pages/add-discount";
  
 const AppRouter = () => (
     <Router history={history}>
@@ -37,6 +38,7 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/admin`} component={LogInPage} />
 
             <Route exact path={`${Config.prefixUrl}/product-list`} component={ProductListPage} />
+            <Route path={`${Config.prefixUrl}/product/:id`} component={ProductOverviewPage} />
 
             <Route exact path={`${Config.prefixUrl}/admin-page`} component={AdminPage} />
 
@@ -47,11 +49,11 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/checkout`} component={CheckoutPage} />
             <Route exact path={`${Config.prefixUrl}/orders`} component={OrdersPage} />
             <Route exact path={`${Config.prefixUrl}/order/:id`} component={OrderPage} />
+            <Route exact path={`${Config.prefixUrl}/add-discount`} component={AddDiscountPage} />
 
             <Route exact path={`${Config.prefixUrl}/email-list-remove/:id`} component={EmailListRemove} />
             <Route exact path={`${Config.prefixUrl}/email-list`} component={EmailList} />
 
-            <Route path={`${Config.prefixUrl}/product/:id`} component={ProductOverviewPage} />
 
 
             <Redirect from='/' to={`${Config.prefixUrl}/home`} />

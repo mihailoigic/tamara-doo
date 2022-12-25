@@ -58,11 +58,17 @@ export const maxCharacters = (string: string): string => {
 }
 
 
-export const prepareForSelect = (niz: any): ISifrarnik[] | undefined => {
+export const prepareForSelect = (niz: any, isDefault = false): ISifrarnik[] | undefined => {
     let sifrarnikArray: ISifrarnik[] = [];
-    niz?.forEach((item: any)=>{
-        sifrarnikArray.push(new Sifrarnik(item.naziv, item.id));
-    });
+    if (isDefault) {
+        niz?.forEach((item: any)=>{
+            sifrarnikArray.push(new Sifrarnik(item.label, item.value));
+        });
+    } else {
+        niz?.forEach((item: any)=>{
+            sifrarnikArray.push(new Sifrarnik(item.naziv, item.id));
+        });
+    }
     return sifrarnikArray;
 }
 

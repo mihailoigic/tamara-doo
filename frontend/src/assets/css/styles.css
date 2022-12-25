@@ -97,7 +97,7 @@
     background-color: #ffffff;
     position: absolute;
     left: 30%;
-    top: 30%;
+    top: 80px;
 }
 
 
@@ -570,6 +570,10 @@ ul li:hover .man {
 
 .max-width-100 {
     max-width: 100px;
+}
+
+.max-width-300 {
+    max-width: 300px;
 }
 
 @media screen and (max-width: 700px){

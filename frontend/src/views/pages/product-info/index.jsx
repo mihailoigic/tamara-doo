@@ -17,10 +17,28 @@ function ProductCard(props) {
         setSrc(process.env.PUBLIC_URL + `/Imgs/${removeUnderline(product.defaultSlika)}`);
     }, [product.defaultSlika])
 
+    function calculateDiscount() {
+        let discount = 0;
+        if (product.discounts?.length > 0) {
+            product.discounts.forEach(item => {
+                discount += Number(item.procenat);
+            })
+            return Math.round(discount * 100);
+        }
+        return null;
+    }
+
     return (
         <>
             <div className={`${props.shadow && 'shadow'} product-info-container ${props.carousel && 'carousel-size'}`} onClick={() => history.push(`/product/${product.id}`)} onMouseOver={()=>setShowSizes(true)} onMouseLeave={()=>setShowSizes(false)}>
                 <div className="product">
+                    {
+                        calculateDiscount() &&
+                        <div className=''>
+                            <p className='position-absolute discount-p'>{calculateDiscount()}%</p>
+                            <img className='discount-photo' src={process.env.PUBLIC_URL + `/Imgs/discount.png`} />
+                        </div>
+                    }
                     <img
                         className={props.carousel ? "carousel-img" : "product-img"}
                         src={src}

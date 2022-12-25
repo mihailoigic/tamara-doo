@@ -19,6 +19,7 @@ import proizvodLast from "./proizvodLast";
 import emailList from "./emailList";
 import izmeniProizvod from "./izmeniProizvod";
 import checkout from "./checkout";
+import discount from "./discount";
 
 const router = Router();
 
@@ -37,6 +38,7 @@ router.use('/proizvod-last', proizvodLast);
 router.use('/email-list', emailList);
 router.use('/izmeni-proizvod', izmeniProizvod);
 router.use('/checkout', checkout);
+router.use('/add-discount', discount);
 
 router.use('/proizvod/velicine', proizvodVelicine);
 router.use('/proizvod/boje', proizvodBoje);

@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import "../../../assets/css/styles.css";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {maxCharacters, removeFromCart} from "../../../utilities/util";
+import {maxCharacters, removeFromCart, scrollToTop} from "../../../utilities/util";
 import history from "../../../utilities/history";
 import Button from 'react-bootstrap/Button';
 
@@ -39,7 +39,7 @@ export default function CartPage() {
                     <div className='background-popup'/>
                     <div className='popup-delete text-center p-4'>
                         <p className='h5'>Proizvod je uspesno izbrisan iz korpe!</p>
-                        <Button className='me-3' onClick={() => {
+                        <Button className='me-3 mt-3' onClick={() => {
                             setShowDeletePopup(false);
                         }}>Ok</Button>
                     </div>
@@ -90,6 +90,7 @@ export default function CartPage() {
                                             <img src={process.env.PUBLIC_URL + `/Imgs/trash.png`} style={{height: '25px', width: '25px'}} className='m-3 cursor-pointer' onClick={() => {
                                                 removeFromCart(item.cartId);
                                                 setShowDeletePopup(true);
+                                                scrollToTop();
                                             }}/>
                                         </div>
                                     </div>

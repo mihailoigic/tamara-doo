@@ -33,7 +33,31 @@
     border-top-right-radius: 10px !important;
 }
 
+.product {
+    position: relative;
+}
+
+.discount-p {
+    top: 23px;
+    right: 0;
+    z-index: 6;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.discount-photo {
+    transform: rotate(45deg);
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 10px;
+    right: -10px;
+    z-index: 5;
+}
+
 .product-img {
+    position: relative;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 200px;

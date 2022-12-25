@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from 'typeorm';
 import { ProizvodBrend } from "./BrendProizvod";
+import {DiscountBrend} from "./DiscountBrend";
 
 @Entity('brendSifrarnik')
 export class BrendSifrarnik {
@@ -13,4 +14,7 @@ export class BrendSifrarnik {
 
     @OneToOne(()=> ProizvodBrend)
     brendProizvod: ProizvodBrend;
+
+    @OneToMany(() => DiscountBrend, (discountBrend) => discountBrend.forBrendSifrarnik)
+    brendDiscount: DiscountBrend[];
 }

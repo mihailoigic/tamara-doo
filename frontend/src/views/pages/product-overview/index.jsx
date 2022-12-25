@@ -43,6 +43,7 @@ function ProductOverviewPage() {
     const [dubinaKorpe, setDubinaKorpe] = useState(null);
     const [defaultSlika, setDefaultSlika] = useState(proizvod?.defaultSlika);
     const [showPopup, setShowPopup] = useState(false);
+    const [isDiscountActive, setIsDiscountActive] = useState(false);
 
     useEffect(() => {
         scrollToTop();
@@ -77,6 +78,16 @@ function ProductOverviewPage() {
 
     }, [id]);
 
+
+    function calculatePrice() {
+        let price = proizvod.cena;
+        if (proizvod.discounts.length > 0) {
+            proizvod.discounts.forEach(discount => {
+                price -= proizvod.cena * discount.procenat;
+            })
+            return price;
+        }
+    }
 
     function handleChangeKolicina(event) {
         setKolicina(event.target.value);
@@ -234,7 +245,7 @@ function ProductOverviewPage() {
                                     <p className="mt-2 mb-0">Kolicina:</p>
                                     <input className="me-2 mt-1 kolicina-input" defaultValue={kolicina}
                                            onChange={handleChangeKolicina}/>
-                                    <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : {proizvod.cena} <span
+                                    <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : {calculatePrice() ? <><del>{proizvod.cena}</del> {calculatePrice()}</> : <>{proizvod.cena}</>} <span
                                         className={'text-15'}>RSD</span></p>
                                     <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto"
                                          onClick={() => {
@@ -246,6 +257,7 @@ function ProductOverviewPage() {
                                                  boja: boja
                                              });
                                              setShowPopup(true);
+                                             scrollToTop();
                                          }}>Dodaj u korpu
                                     </div>
                                 </Col>

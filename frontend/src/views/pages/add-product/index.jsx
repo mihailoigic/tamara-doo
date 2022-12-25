@@ -288,9 +288,6 @@ function AddProductPage() {
                                             isMulti
                                             name="velicina"
                                             options={apiSizes}
-                                            // options={filtersData.filters.sizes.find(item => {
-                                            //     return item.id === category
-                                            // })?.options}
                                             className="basic-multi-select"
                                             placeholder="Izaberi.."
                                         />
