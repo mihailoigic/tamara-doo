@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Config from "../../../config/config";
-import {maxCharacters, removeFromCart} from "../../../utilities/util";
+import {currencyFormat, maxCharacters, removeFromCart} from "../../../utilities/util";
 import history from "../../../utilities/history";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -39,7 +39,7 @@ export default function OrderPage() {
     function fullPrice() {
         let price = 0;
         data.cartItems.forEach(item => {
-            price += Math.round(item.kolicina * item.proizvodId.cena);
+            price += Math.round(item.kolicina * item.cena);
         });
         return price;
     }
@@ -139,13 +139,13 @@ export default function OrderPage() {
                                                             <p className="colorName ps-2 m-3">{maxCharacters(item.boja)}</p>
                                                         </div>
                                                         <p className="m-3">Količina: {item.kolicina}</p>
-                                                        <p className='m-3'>Cena: {item.proizvodId.cena} RSD</p>
+                                                        <p className='m-3'>Cena: {currencyFormat(item.cena)} RSD</p>
                                                     </div>
                                                 );
                                             })
                                         }
                                         <hr/>
-                                        <p className="text-center">Ukupna cena: {fullPrice()} RSD</p>
+                                        <p className="text-center">Ukupna cena: {currencyFormat(fullPrice())} RSD</p>
                                     </div> : <p className='text-center text-22 mt-5'>Za ovu pordzbinu ne postoje stavke!</p>
                             }
                         </div>

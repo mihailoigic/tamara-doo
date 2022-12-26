@@ -42,14 +42,16 @@ export function clearSearchParams(): IClearSearchParams {
     };
 }
 
-export function setFilterColor(): ISetFilterColor {
+export function setFilterColor(colors: string[]): ISetFilterColor {
     return {
-        type: ActionTypes.SET_FILTER_COLOR
+        type: ActionTypes.SET_FILTER_COLOR,
+        payload: colors
     };
 }
 
-export function setFilterBrand(): ISetFilterBrand {
+export function setFilterBrand(brands: string[]): ISetFilterBrand {
     return {
-        type: ActionTypes.SET_FILTER_BRAND
+        type: ActionTypes.SET_FILTER_BRAND,
+        payload: brands
     };
 }

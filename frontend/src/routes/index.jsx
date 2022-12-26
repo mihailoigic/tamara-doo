@@ -22,6 +22,8 @@ import CheckoutPage from "../views/pages/checkout";
 import OrdersPage from "../views/pages/active-orders";
 import OrderPage from "../views/pages/order";
 import AddDiscountPage from "../views/pages/add-discount";
+import AddDiscountOnePage from "../views/pages/add-discount-one";
+import PopularProducts from "../views/pages/popular-products";
  
 const AppRouter = () => (
     <Router history={history}>
@@ -50,6 +52,8 @@ const AppRouter = () => (
             <Route exact path={`${Config.prefixUrl}/orders`} component={OrdersPage} />
             <Route exact path={`${Config.prefixUrl}/order/:id`} component={OrderPage} />
             <Route exact path={`${Config.prefixUrl}/add-discount`} component={AddDiscountPage} />
+            <Route exact path={`${Config.prefixUrl}/add-discount-one`} component={AddDiscountOnePage} />
+            <Route exact path={`${Config.prefixUrl}/najprodavaniji-proizvodi`} component={PopularProducts} />
 
             <Route exact path={`${Config.prefixUrl}/email-list-remove/:id`} component={EmailListRemove} />
             <Route exact path={`${Config.prefixUrl}/email-list`} component={EmailList} />

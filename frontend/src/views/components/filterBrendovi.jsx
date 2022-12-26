@@ -6,6 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {MdArrowDropDown, MdArrowLeft} from "react-icons/md";
 import {firstLetterAllWords} from "../../utilities/util";
+import store from "../../app/store";
+import {setFilterBrand, setFilterColor} from "../../app/store/searchParams/actions";
+import {useSelector} from "react-redux";
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
@@ -15,6 +18,7 @@ export default function FilterBrendovi(props) {
     const subSectionRef = useRef();
     const [brendovi, setBrend] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
+    const state = useSelector(state => state);
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/brend`)
@@ -24,11 +28,16 @@ export default function FilterBrendovi(props) {
     }, []);
 
     function handleInputChange(event) {
+        const filterBrands = [...state.searchParams.filterBrands];
         const target = event.target;
         if (target.checked) {
+            filterBrands.push(event.target.value);
             props.setBrands(current => [...current, target.value]);
+            store.dispatch(setFilterBrand(filterBrands));
         } else {
+            const niz = filterBrands.filter(color => color !== target.value);
             props.setBrands(current => current.filter((color) => color !== target.value));
+            store.dispatch(setFilterBrand(niz));
         }
     }
     return (

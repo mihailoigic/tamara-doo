@@ -27,6 +27,12 @@
     src: url(../fonts/Magazine.ttf);
 }
 
+
+
+.a:hover {
+    color: black;
+}
+
 .header-desktop {
     display: block;
 }

@@ -20,6 +20,7 @@ import emailList from "./emailList";
 import izmeniProizvod from "./izmeniProizvod";
 import checkout from "./checkout";
 import discount from "./discount";
+import popularProducts from "./popularProducts";
 
 const router = Router();
 
@@ -39,6 +40,7 @@ router.use('/email-list', emailList);
 router.use('/izmeni-proizvod', izmeniProizvod);
 router.use('/checkout', checkout);
 router.use('/add-discount', discount);
+router.use('/popular-products', popularProducts);
 
 router.use('/proizvod/velicine', proizvodVelicine);
 router.use('/proizvod/boje', proizvodBoje);

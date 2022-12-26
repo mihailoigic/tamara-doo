@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import {MdArrowDropDown, MdArrowLeft} from "react-icons/md";
 import {useSelector} from "react-redux";
 import store from "../../app/store";
-import {setFilterColor} from "../../app/store/colorFilter/actions";
+import {setFilterColor} from "../../app/store/searchParams/actions";
 
 String.prototype.replaceAt = function (index, replacement) {
     return this.substr(0, index) + replacement + this.substr(index + replacement.length);
@@ -17,6 +17,7 @@ export default function FilterBoje(props) {
     const subSectionRef = useRef();
     const [boje, setBoje] = useState(null);
     const [filterActive, setFilterActive] = useState(false);
+    const state = useSelector(state => state);
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/boje`)
@@ -26,11 +27,16 @@ export default function FilterBoje(props) {
     }, []);
 
     function handleInputChange(event) {
+        const filterColors = [...state.searchParams.filterColors];
         const target = event.target;
         if (target.checked) {
+            filterColors.push(target.value);
             props.setColors(current => [...current, target.value]);
+            store.dispatch(setFilterColor(filterColors));
         } else {
+            const niz = filterColors.filter(color => color !== target.value);
             props.setColors(current => current.filter((color) => color !== target.value));
+            store.dispatch(setFilterColor(niz));
         }
     }
     return (

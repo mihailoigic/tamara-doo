@@ -21,6 +21,9 @@ export class CartItem {
     @Column()
     kolicina: number;
 
+    @Column()
+    cena: number;
+
     @ManyToOne(() => Proizvod, (proizvod) => proizvod.cartItems, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn([{ name: 'proizvodid', referencedColumnName: 'id' }])
     proizvodId: Proizvod;

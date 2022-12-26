@@ -1,6 +1,5 @@
 import {ISearchParams} from "./types";
 import ActionTypes from '../../../constants/ActionTypes';
-import brend from "../../../../../server/src/routes/v1/brend";
 
 const initialState: ISearchParams = {
     kategorija: 0,
@@ -8,10 +7,8 @@ const initialState: ISearchParams = {
     pol: 'zenski',
     start: 1,
     search: "",
-    filters: {
-        boje: [],
-        brend: []
-    }
+    filterColors: [],
+    filterBrands: []
 };
 const searchParamsReducer = (
     state = initialState,
@@ -49,9 +46,20 @@ const searchParamsReducer = (
                 pol: 'zenski',
                 start: 1,
                 search: "",
-                filters: { boje: [], brend: []},
+                filterColors: [],
+                filterBrands: []
             }
-    }
+        case ActionTypes.SET_FILTER_COLOR:
+            return {
+                ...state,
+                filterColors: action.payload,
+            }
+        case ActionTypes.SET_FILTER_BRAND:
+            return {
+                ...state,
+                filterBrands: action.payload,
+            }
+}
     return state;
 };
 

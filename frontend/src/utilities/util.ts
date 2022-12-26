@@ -35,6 +35,10 @@ export const detectIE = (): number | boolean => {
     return false;
 };
 
+export function currencyFormat(num: number) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
 export const removeUnderline = (string: string): string => {
     return string.replaceAll(' ', '_');
 }
@@ -141,7 +145,8 @@ export const removeFromCart = (id: number) => {
     localStorage.setItem("cartItems", JSON.stringify(newCartItems));
 }
 
-export const getSearchParams = (searchParams: any, colors: any, brands: any) => {
+export const getSearchParams = (searchParams: any) => {
+    console.log('dsada', searchParams);
     let params: any = {};
     params.start = searchParams.start;
     params.pol = searchParams.pol;
@@ -154,14 +159,14 @@ export const getSearchParams = (searchParams: any, colors: any, brands: any) => 
     if (searchParams.search !== "") {
         params.search = searchParams.search;
     }
-    if (colors?.length > 0 || brands?.length > 0) {
+    if (searchParams.filterColors?.length > 0 || searchParams.filterBrands?.length > 0) {
         params.filters = {};
     }
-    if (colors?.length > 0) {
-        params.filters.boje = colors;
+    if (searchParams.filterColors?.length > 0) {
+        params.filters.boje = searchParams.filterColors;
     }
-    if (brands?.length > 0) {
-        params.filters.brend = brands;
+    if (searchParams.filterBrands?.length > 0) {
+        params.filters.brend = searchParams.filterBrands;
     }
 
     return params;

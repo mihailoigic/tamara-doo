@@ -64,6 +64,21 @@ function EditProduct() {
 
     }, [component]);
 
+    const handleDeleteDiscount = (id) => {
+        axios.delete(`${Config.api.baseUrl}v1/add-discount/${id}`, {
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    alert("Uspesno obrisan popust!");
+                } else {
+                    alert("Neuspesno obrisan popust!");
+
+                }
+                window.location.reload();
+            });
+    }
+
     const handleSubmit = async (event) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -249,6 +264,19 @@ function EditProduct() {
                             </Row>
                             <Button type="submit">Izmeni proizvod</Button>
                         </form>
+                        <hr/>
+                        <div className='mt-3'>
+                            <p>Popusti:</p>
+                            {
+                                proizvod.discountOne?.map(item => {
+                                    return(
+                                        <div>
+                                            <p className='d-inline-block me-3'>{item.procenat}</p><Button className='d-inline-block' onClick={()=>handleDeleteDiscount(item.id)}>Izbrisi popust</Button>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </Container> :
                     <p className='text-center h4 mt-20'>Molimo ulogujte se <a href="" className="link"
                                                                               onClick={() => history.push('/admin')}>ovde</a>

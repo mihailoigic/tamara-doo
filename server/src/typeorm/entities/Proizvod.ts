@@ -14,6 +14,7 @@ import { ProizvodBrend } from './BrendProizvod';
 import { ProizvodSlike } from "./SlikeProizvod";
 import {KategorijaTipPodtip} from "./KategorijaTipPodtip";
 import {CartItem} from "./CartItem";
+import {DiscountOne} from "./DiscountOne";
 
 @Entity('proizvod')
 export class Proizvod {
@@ -71,4 +72,7 @@ export class Proizvod {
 
   @OneToMany(() => CartItem, (cartItem) => cartItem.proizvodId)
   cartItems: CartItem[];
+
+  @OneToMany(() => DiscountOne, (discountOne) => discountOne.forDiscountOneProizvod)
+  discountOne: DiscountOne[];
 }

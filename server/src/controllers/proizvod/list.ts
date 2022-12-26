@@ -4,6 +4,7 @@ import {getRepository} from 'typeorm';
 import {Proizvod} from '../../typeorm/entities/Proizvod';
 import {CustomError} from '../../utils/response/custom-error/CustomError';
 import {Discount} from "../../typeorm/entities/Discount";
+import {DiscountOne} from "../../typeorm/entities/DiscountOne";
 
 const COUNT = 20;
 
@@ -25,6 +26,7 @@ export const list = async (req: Request, res: Response, next: NextFunction) => {
             .innerJoinAndSelect('kategorijaTipPodTip.forKategorijaSifrarnik', 'kategorijaNaziv')
             .leftJoinAndSelect('kategorijaTipPodTip.forTipSifrarnik', 'tipNaziv')
             .leftJoinAndSelect('kategorijaTipPodTip.forPodtipSifrarnik', 'podtipNaziv')
+            .leftJoinAndSelect('proizvod.discountOne', 'discountOne')
             .skip(Number(start) - 1)
             .take(Number(count))
             .andWhere(searchTerm ? `proizvod.naziv ILike '%${searchTerm}%'` : 'TRUE')
@@ -108,7 +110,7 @@ const attachDiscounts = async (discounts: Discount[], proizvod: proizvodResponse
 }
 
 const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
-    return <proizvodResponseModel>{
+    return <proizvodResponseModel><unknown>{
         id: item.id,
         brend: item.proizvodBrend.forBrendSifrarnik.naziv,
         naziv: item.naziv,
@@ -123,6 +125,7 @@ const makeSingleResponseItem = (item: Proizvod): proizvodResponseModel => {
         kategorija: item.kategorijaTipPodtip[0]?.forKategorijaSifrarnik.naziv,
         tip: item.kategorijaTipPodtip[0]?.forTipSifrarnik?.naziv,
         podtip: getPodtip(item),
+        discountOne: item.discountOne,
     };
 };
 
@@ -142,6 +145,7 @@ interface proizvodResponseModel {
     tip: string | null;
     podtip: string[] | null;
     discounts?: DiscountResponseModel[];
+    discountOne?: DiscountOne;
 }
 
 interface DiscountResponseModel {

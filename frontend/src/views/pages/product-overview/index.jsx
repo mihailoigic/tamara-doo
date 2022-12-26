@@ -14,7 +14,7 @@ import {useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 import {IoArrowBackCircleSharp} from 'react-icons/io5';
 import history from "../../../utilities/history";
-import {addToCart, removeUnderline, scrollToTop} from "../../../utilities/util";
+import {addToCart, currencyFormat, removeUnderline, scrollToTop} from "../../../utilities/util";
 import DubinaKorpe from "../../components/returnDubinuKorpe";
 import Button from 'react-bootstrap/Button';
 
@@ -81,11 +81,14 @@ function ProductOverviewPage() {
 
     function calculatePrice() {
         let price = proizvod.cena;
-        if (proizvod.discounts.length > 0) {
-            proizvod.discounts.forEach(discount => {
+        if (proizvod.discounts?.length > 0 || proizvod.discountOne?.length > 0) {
+            proizvod.discounts?.forEach(discount => {
                 price -= proizvod.cena * discount.procenat;
             })
-            return price;
+            proizvod.discountOne?.forEach(discount => {
+                price -= proizvod.cena * discount.procenat;
+            })
+            return Math.round(price);
         }
     }
 
@@ -245,10 +248,19 @@ function ProductOverviewPage() {
                                     <p className="mt-2 mb-0">Kolicina:</p>
                                     <input className="me-2 mt-1 kolicina-input" defaultValue={kolicina}
                                            onChange={handleChangeKolicina}/>
-                                    <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena : {calculatePrice() ? <><del>{proizvod.cena}</del> {calculatePrice()}</> : <>{proizvod.cena}</>} <span
-                                        className={'text-15'}>RSD</span></p>
+                                    <p className='mt-3 mb-0 text-22 me-5 pe-5'>Cena: &nbsp;
+                                        {/*{calculatePrice() ? <>*/}
+                                        {/*<del>{currencyFormat(proizvod.cena)} RSD</del>&nbsp;*/}
+                                        {/*{currencyFormat(calculatePrice())}</> :*/}
+                                        {/*<>{currencyFormat(proizvod.cena)} RSD</>} <span*/}
+                                        {/*className={'text-15'}>RSD</span>*/}
+                                        {calculatePrice() ?
+                                            <><del>{currencyFormat(proizvod.cena)}</del>&nbsp;
+                                                {currencyFormat(calculatePrice())}</>
+                                            : currencyFormat(proizvod.cena)} <span className='text-15'>RSD</span></p>
                                     <div className="buy-btn text-center py-2 mt-2 justify-content-center mx-auto"
                                          onClick={() => {
+                                             proizvod.cenaSaPopustom = calculatePrice() ?? null;
                                              addToCart({
                                                  proizvod: proizvod,
                                                  kolicina: kolicina,

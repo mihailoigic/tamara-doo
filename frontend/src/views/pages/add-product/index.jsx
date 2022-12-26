@@ -369,7 +369,7 @@ function AddProductPage() {
                                         <Col md='1' className='pt-3 p-0 col-2'>
                                             <p>{`ID`}</p>
                                         </Col>
-                                        <Col md='3' className='pt-3 p-0 col-2'>
+                                        <Col md='2' className='pt-3 p-0 col-2'>
                                             <p>{`NAZIV`}</p>
                                         </Col>
                                         <Col md='2' className='pt-3 p-0 col-2'>
@@ -378,7 +378,7 @@ function AddProductPage() {
                                         <Col md='2' className='pt-3 p-0 col-3'>
                                             <p>{`KATEGORIJA`}</p>
                                         </Col>
-                                        <Col md='2' className='pt-3 p-0 col-3'>
+                                        <Col md='3' className='pt-3 p-0 col-3'>
                                             <p>{`IZMENA`}</p>
                                         </Col>
                                         <Col md='2' className='pt-3 p-0 col-3'>
@@ -395,7 +395,7 @@ function AddProductPage() {
                                                         <Col md='1' className='pt-3 p-0 col-2'>
                                                             <p>{`${proizvod.id}`}</p>
                                                         </Col>
-                                                        <Col md='3' className='pt-3 p-0 col-2'>
+                                                        <Col md='2' className='pt-3 p-0 col-2'>
                                                             <p>{`${proizvod.naziv}`}</p>
                                                         </Col>
                                                         <Col md='2' className='pt-3 p-0 col-2'>
@@ -404,7 +404,15 @@ function AddProductPage() {
                                                         <Col md='2' className='pt-3 p-0 col-3'>
                                                             <p>{`${proizvod.kategorija}`}</p>
                                                         </Col>
-                                                        <Col md='2' className='pt-2 p-0 col-3'>
+                                                        <Col md='3' className='pt-2 p-0 col-3'>
+                                                            <Button
+                                                                className='me-2'
+                                                                variant="info"
+                                                                onClick={() => {
+                                                                history.push('/add-discount-one', {state: proizvod.id})
+                                                            }}>
+                                                                Dodaj popust
+                                                            </Button>
                                                             <Button
                                                                 variant="info"
                                                                 onClick={() => {

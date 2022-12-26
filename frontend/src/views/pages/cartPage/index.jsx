@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import "../../../assets/css/styles.css";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {maxCharacters, removeFromCart, scrollToTop} from "../../../utilities/util";
+import {currencyFormat, maxCharacters, removeFromCart, scrollToTop} from "../../../utilities/util";
 import history from "../../../utilities/history";
 import Button from 'react-bootstrap/Button';
 
@@ -15,7 +15,11 @@ export default function CartPage() {
     function fullPrice(cartItems) {
         let price = 0;
         cartItems.forEach((cartItem) => {
-           price += Math.round(cartItem.kolicina * cartItem.proizvod.cena);
+            if (cartItem.proizvod.cenaSaPopustom) {
+                price += Math.round(cartItem.kolicina * cartItem.proizvod.cenaSaPopustom);
+            } else {
+                price += Math.round(cartItem.kolicina * cartItem.proizvod.cena);
+            }
         });
         return price;
     }
@@ -84,7 +88,8 @@ export default function CartPage() {
                                             <p className="colorName ps-2 m-3">{maxCharacters(item.boja)}</p>
                                         </div>
                                         <p className="m-3">Količina: {item.kolicina}</p>
-                                        <p className='m-3'>Cena: {item.proizvod.cena} RSD</p>
+                                        <p className='m-3'>Cena: {item.proizvod.cenaSaPopustom ?
+                                            <><del>{currencyFormat(item.proizvod.cena)}</del> {currencyFormat(Math.round(item.proizvod.cenaSaPopustom))}</> : currencyFormat(item.proizvod.cena)} <span className='text-15'>RSD</span></p>
                                         <div>
                                             <img src={process.env.PUBLIC_URL + `/Imgs/edit.png`} style={{height: '20px', width: '20px'}} className='m-3 cursor-pointer' onClick={() => handleEdit(item.proizvod.id, item.cartId, cartItems)}/>
                                             <img src={process.env.PUBLIC_URL + `/Imgs/trash.png`} style={{height: '25px', width: '25px'}} className='m-3 cursor-pointer' onClick={() => {
@@ -103,7 +108,7 @@ export default function CartPage() {
                                  history.push(`/checkout`);
                              }}>Kupi
                         </div>
-                        <p className="text-center">Cena: {fullPrice(cartItems)} RSD</p>
+                        <p className="text-center">Cena: {currencyFormat(fullPrice(cartItems))} RSD</p>
                     </div> : <p className='text-center text-22 mt-5'>Trenutno nema proizvoda u korpi!</p>
             }
         </>

@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import {getManager, getRepository} from 'typeorm';
 import { CustomError } from '../../utils/response/custom-error/CustomError';
 import {Cart} from "../../typeorm/entities/Cart";
+import {Discount} from "../../typeorm/entities/Discount";
+import {Proizvod} from "../../typeorm/entities/Proizvod";
 
 export const getOrders = async (req: Request, res: Response, next: NextFunction) => {
     const { status = null, brojKupovine = null } = req.query;
@@ -14,6 +16,8 @@ export const getOrders = async (req: Request, res: Response, next: NextFunction)
             .andWhere(status ? `cart.status = '${status}'` : 'TRUE')
             .andWhere(brojKupovine ? `cart.brojKupovine ILike '%${brojKupovine}%'` : 'TRUE')
             .getMany();
+
+
         if(orders && orders.length < 1){
             const customError = new CustomError(404, 'Raw', `There are no ${status} orders!`, null);
             return next(customError);

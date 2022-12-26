@@ -38,7 +38,7 @@ export const ProductListPage = () => {
 
     useEffect(()=>{
         scrollToTop();
-        const params = getSearchParams(state.searchParams, colors, brands);
+        const params = getSearchParams(state.searchParams);
         let api = `${Config.api.baseUrl}v1/proizvod`;
         if (!params.start) {
             api+='?start=1&pol=zenski'
@@ -57,7 +57,7 @@ export const ProductListPage = () => {
 
     useEffect(()=>{
         scrollToTop();
-        const params = getSearchParams(state.searchParams, colors, brands);
+        const params = getSearchParams(state.searchParams);
         let api = `${Config.api.baseUrl}v1/proizvod`;
         if (!params.start) {
             api+='?start=1&pol=zenski'
@@ -141,10 +141,15 @@ export const ProductListPage = () => {
                                         products?.map((product) => {
                                             return (
                                                 <div className='col-6 col-xs-6 col-md-6 col-lg-4 col-xl-3 p-0'>
-                                                    <ProductCard
+                                                        <ProductCard
                                                         product={product}
                                                         onClick={() => history.push(`/product/${product.id}`)}
-                                                    />
+                                                        />
+                                                    {/*    <a href={`/product/${product.id}`}>*/}
+                                                    {/*        <ProductCard*/}
+                                                    {/*            product={product}*/}
+                                                    {/*        />*/}
+                                                    {/*</a>*/}
                                                 </div>
                                             );
                                         })

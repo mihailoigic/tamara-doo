@@ -6,12 +6,8 @@ export interface ISearchParams {
     start?: number;
     pol?: string;
     search?: string;
-    filters?: Filters;
-}
-
-export interface Filters {
-    boje: number[],
-    brend: number[]
+    filterColors?: string[];
+    filterBrands?: string[];
 }
 
 export interface ISetPolSearchParam {
@@ -40,8 +36,10 @@ export interface IClearSearchParams {
 
 export interface ISetFilterColor {
     type: typeof ActionTypes.SET_FILTER_COLOR;
+    payload: any;
 }
 
 export interface ISetFilterBrand {
     type: typeof ActionTypes.SET_FILTER_BRAND;
+    payload: any;
 }

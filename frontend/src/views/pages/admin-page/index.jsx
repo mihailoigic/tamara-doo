@@ -87,6 +87,15 @@ export default function AdminPage() {
                             Dodaj popust
                         </Button>
                     </Row>
+                    <Row className='mt-5'>
+                        <Button className='w-25 mx-auto' onClick={()=>{
+                            history.push('/najprodavaniji-proizvodi')
+                        }
+                        }>
+                            Najprodavaniji proizvodi
+                        </Button>
+                    </Row>
+
                 </Container> :
                     <p className='text-center h4  mt-20'>Molimo ulogujte se <a href="" className="link" onClick={()=>history.push('/admin')}>ovde</a></p>
             }

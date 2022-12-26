@@ -21,11 +21,11 @@ export class DiscountBrend {
     @Column('int', { name: 'fordiscount', nullable: true })
     forDiscountId: number | null;
 
-    @ManyToOne(() => Discount, (discount) => discount.brendovi, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    @ManyToOne(() => Discount, (discount) => discount.brendovi, { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' })
     @JoinColumn([{ name: 'fordiscount', referencedColumnName: 'id' }])
     forBrendDiscount: Proizvod;
 
-    @ManyToOne(() => BrendSifrarnik, (brend) => brend.brendDiscount, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+    @ManyToOne(() => BrendSifrarnik, (brend) => brend.brendDiscount, { onDelete: 'NO ACTION', onUpdate: 'NO ACTION' })
     @JoinColumn([{ name: 'forbrend', referencedColumnName: 'id' }])
     forBrendSifrarnik: BrendSifrarnik;
 }

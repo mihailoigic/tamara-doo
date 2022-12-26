@@ -70,6 +70,7 @@ const getKorisnik = (req: Request): Korisnik => {
 const getCartItems = (req: Request, cart: Cart): CartItem[] => {
     const cartItems: CartItem[] = [];
     req.body.cartItems.forEach(item => {
+        const cena = item.proizvod.cenaSaPopustom ?? item.proizvod.cena;
         const cartItem = new CartItem();
         cartItem.proizvodId = item.proizvod.id;
         cartItem.cartId = cart;
@@ -77,6 +78,7 @@ const getCartItems = (req: Request, cart: Cart): CartItem[] => {
         cartItem.velicina = item.velicina;
         cartItem.dubinaKorpe = item.dubinaKorpe;
         cartItem.kolicina = item.kolicina;
+        cartItem.cena = cena;
         cartItems.push(cartItem);
     });
     return cartItems;

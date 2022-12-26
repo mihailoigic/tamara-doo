@@ -17,6 +17,7 @@ export default function AddDiscountPage() {
     const [apiColors, setApiColors] = useState(null);
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [popusti, setPopusti] = useState(null);
 
     useEffect(() => {
         axios.get(`${Config.api.baseUrl}v1/kategorijatip?pol=zenski`)
@@ -31,6 +32,11 @@ export default function AddDiscountPage() {
         //     .then(res => {
         //         setApiColors(prepareForSelect(res.data.data));
         //     })
+        axios.get(`${Config.api.baseUrl}v1/add-discount`, {
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
+        }).then(res => {
+                setPopusti(res.data.data);
+            })
     }, [])
 
     const handleSubmit = async (event) => {
@@ -60,11 +66,26 @@ export default function AddDiscountPage() {
             window.location.reload();
         });
     }
+
+    const handleDeleteDiscount = (id) => {
+        axios.put(`${Config.api.baseUrl}v1/add-discount/update/${id}`, {},{
+            headers: {"Authorization": localStorage.getItem("BearerToken")}
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    alert("Uspesno obrisan popust!");
+                } else {
+                    alert("Neuspesno obrisan popust!");
+
+                }
+                window.location.reload();
+            });
+    }
     return (
         <>
             <Header />
-            <div className='mt-5'>
-                <form onSubmit={handleSubmit} className="d-flex flex-column m-5">
+            <div className='mt-5 d-flex flex-column m-5'>
+                <form onSubmit={handleSubmit} className="">
                     <div className='m-3'>
                         <p>Naziv: </p>
                         <input type='text' name='naziv' />
@@ -123,6 +144,20 @@ export default function AddDiscountPage() {
                         <Button type='submit' className='max-width-300'>Primeni popust</Button>
                     </div>
                 </form>
+                <div className='mt-5'>
+                    <p>Popusti:</p>
+                    {
+                        popusti && popusti.map(item => {
+                            return(
+                                <div>
+                                    <p className='d-inline-block m-1'>Naziv: {item.naziv}</p>
+                                    <p className='d-inline-block m-1'>Procenat: {item.procenat}</p>
+                                    <Button className='d-inline-block m-1' onClick={()=>handleDeleteDiscount(item.id)}>Izbrisi popust</Button>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </>
     );
